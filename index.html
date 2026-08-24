@@ -1,0 +1,1886 @@
+<meta charset="UTF-8">
+<title>Carnet d'Étoiles de Madeline</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Delius&display=swap" rel="stylesheet">
+<style>
+/* ============ TOKENS ============ */
+:root{
+  --paper:#FFF7EC;
+  --paper-card:#FFFDF9;
+  --paper-card-2:#FFF1DE;
+  --ink:#332640;
+  --ink-soft:#5B4B68;
+  --ink-faint:#8B7D97;
+  --line:#E7D8C4;
+  --folder-bg:#EDE6DD;
+  --folder-ink:#6B6178;
+  --folder-line:#D8CEC0;
+  --good:#3F7D52;
+  --good-soft:#DEEFE1;
+  --bad:#B14E3E;
+  --bad-soft:#F6E1DC;
+  --star-color:#D99A2B;
+  --shadow: 0 10px 26px -10px rgba(51,38,64,.35);
+  --shadow-sm: 0 4px 12px -6px rgba(51,38,64,.3);
+  --f1:#B8792C; --f1-soft:#F6E7CC;
+  --f2:#BE5C36; --f2-soft:#F7E1D3;
+  --f3:#AC4964; --f3-soft:#F5DCE3;
+  --f4:#824B93; --f4-soft:#EADDF0;
+  --f5:#59519B; --f5-soft:#E0DEF0;
+  --f6:#33508A; --f6-soft:#DBE2F1;
+  --owl-body:#B98A5E; --owl-belly:#F6E9D2; --owl-beak:#E8933D; --owl-outline:#332640;
+  --card-ink:#332640; --card-ink-soft:#5B4B68; --card-chip-bg:#F6EEDF;
+  --font-display:'Delius','Segoe Print','Bradley Hand',cursive;
+  --font-body:'Atkinson Hyperlegible','Segoe UI',system-ui,sans-serif;
+  --r-sm:8px; --r-md:14px; --r-lg:24px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#201A33;
+    --paper-card:#2A2245;
+    --paper-card-2:#332A52;
+    --ink:#F3ECE0;
+    --ink-soft:#CDC1DA;
+    --ink-faint:#948AA8;
+    --line:#463A63;
+    --folder-bg:#2A2440;
+    --folder-ink:#B7ACC8;
+    --folder-line:#463D5E;
+    --good:#6BBE84;
+    --good-soft:#26402E;
+    --bad:#E28C79;
+    --bad-soft:#452C2C;
+    --star-color:#F0C15A;
+    --shadow: 0 10px 30px -8px rgba(0,0,0,.6);
+    --shadow-sm: 0 4px 14px -6px rgba(0,0,0,.55);
+    --f1-soft:#4A3A22; --f2-soft:#4A3427; --f3-soft:#452A35;
+    --f4-soft:#392946; --f5-soft:#2C2A49; --f6-soft:#212C48;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#201A33; --paper-card:#2A2245; --paper-card-2:#332A52;
+  --ink:#F3ECE0; --ink-soft:#CDC1DA; --ink-faint:#948AA8;
+  --line:#463A63; --folder-bg:#2A2440; --folder-ink:#B7ACC8; --folder-line:#463D5E;
+  --good:#6BBE84; --good-soft:#26402E; --bad:#E28C79; --bad-soft:#452C2C;
+  --star-color:#F0C15A;
+  --shadow: 0 10px 30px -8px rgba(0,0,0,.6); --shadow-sm: 0 4px 14px -6px rgba(0,0,0,.55);
+  --f1-soft:#4A3A22; --f2-soft:#4A3427; --f3-soft:#452A35;
+  --f4-soft:#392946; --f5-soft:#2C2A49; --f6-soft:#212C48;
+}
+
+/* ============ RESET / BASE ============ */
+*,*::before,*::after{ box-sizing:border-box; }
+html{ font-size:106%; }
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:var(--font-body); font-size:1.05rem; line-height:1.55;
+  overflow-x:hidden; -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3{ font-family:var(--font-display); font-weight:400; line-height:1.15; text-wrap:balance; margin:0 0 .4em; }
+p{ margin:0 0 .8em; }
+button{ font:inherit; }
+input,textarea{ font:inherit; }
+:focus-visible{ outline:3px solid currentColor; outline-offset:2px; }
+img,svg{ display:block; max-width:100%; }
+.visually-hidden{ position:absolute; width:1px;height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; }
+}
+
+/* ============ LAYOUT SHELL ============ */
+#app{ position:relative; min-height:100vh; }
+.topbar{
+  position:sticky; top:0; z-index:40;
+  display:flex; align-items:center; gap:.75rem;
+  padding:.6rem 1rem; background:color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter:blur(8px); border-bottom:1px solid var(--line);
+}
+.topbar-title{ font-family:var(--font-display); font-size:1.3rem; display:flex; align-items:center; gap:.5rem; flex:1; min-width:0; }
+.topbar-title small{ font-family:var(--font-body); font-size:.62rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-faint); display:block; }
+.topbar-owl{ width:34px; height:34px; flex:none; }
+.starcount{
+  display:flex; align-items:center; gap:.3rem; font-weight:700;
+  font-variant-numeric:tabular-nums; background:var(--paper-card-2);
+  border:1px solid var(--line); border-radius:999px; padding:.3rem .7rem .3rem .5rem;
+  white-space:nowrap;
+}
+.starcount svg{ width:18px; height:18px; color:var(--star-color); }
+.icon-btn{
+  border:1px solid var(--line); background:var(--paper-card); color:var(--ink);
+  width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  cursor:pointer; flex:none; transition:transform .15s, background .2s;
+}
+.icon-btn:hover{ transform:translateY(-2px); background:var(--paper-card-2); }
+.icon-btn svg{ width:19px; height:19px; }
+.back-btn{
+  border:none; background:none; color:var(--ink); font-family:var(--font-body); font-weight:700;
+  display:flex; align-items:center; gap:.35rem; cursor:pointer; padding:.4rem .2rem; flex:none;
+}
+.back-btn svg{ width:20px; height:20px; }
+.back-btn:hover{ text-decoration:underline; }
+.back-btn[hidden]{ display:none; }
+
+.view{ display:none; }
+.view.active{ display:block; animation:viewIn .35s ease; }
+@keyframes viewIn{ from{ opacity:0; transform:translateY(6px);} to{ opacity:1; transform:none;} }
+
+/* ============ MAP / HOME VIEW ============ */
+#sky{
+  position:relative; overflow:hidden;
+  background:linear-gradient(160deg,#C68A44 0%,#BC6E49 18%,#AE5468 38%,#8B4F91 56%,#5E5299 75%,#334E86 100%);
+  padding:2.4rem 1.2rem 3.5rem;
+}
+#starfield{ position:absolute; inset:0; pointer-events:none; }
+.bgstar{ position:absolute; border-radius:50%; background:#fff; opacity:.5; animation:twinkle 3.2s ease-in-out infinite; }
+@keyframes twinkle{ 0%,100%{ opacity:.15; transform:scale(.7);} 50%{ opacity:.9; transform:scale(1);} }
+
+.hero{ position:relative; z-index:2; max-width:760px; margin:0 auto 2rem; text-align:center; color:#FFF7EC; }
+.hero-owl-wrap{ width:120px; height:120px; margin:0 auto .6rem; }
+.hero h1{ font-size:clamp(2.1rem,5vw + 1rem,3.2rem); margin-bottom:.25rem; text-shadow:0 3px 12px rgba(0,0,0,.25); }
+.hero p{ font-size:1.1rem; opacity:.95; max-width:46ch; margin:0 auto; }
+.hero .speech{ margin-top:1rem; }
+
+.map-wrap{ position:relative; z-index:2; max-width:920px; margin:0 auto; }
+.constellation-svg{ position:absolute; inset:0; width:100%; height:100%; overflow:visible; z-index:0; }
+.constellation-svg line{ stroke:rgba(255,247,236,.35); stroke-width:2; stroke-dasharray:3 7; stroke-linecap:round; transition:stroke .6s, stroke-dasharray .6s, stroke-width .6s; }
+.constellation-svg line.lit{ stroke:#FFE9B0; stroke-dasharray:0; stroke-width:2.5; filter:drop-shadow(0 0 4px rgba(255,220,140,.9)); }
+
+.map-grid{
+  position:relative; z-index:1; display:grid; gap:1.4rem 1.1rem;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+}
+.fiche-card{
+  --accent: var(--f1); --accent-soft: var(--f1-soft);
+  position:relative; background:rgba(255,253,249,.96); color:var(--card-ink);
+  border-radius:var(--r-lg); padding:1.1rem 1.1rem 1rem; text-align:left;
+  border:none; cursor:pointer; box-shadow:var(--shadow); font-family:var(--font-body);
+  display:flex; flex-direction:column; gap:.55rem;
+  transition:transform .2s ease, box-shadow .2s ease;
+}
+:root[data-theme="dark"] .fiche-card, @media (prefers-color-scheme:dark){ .fiche-card{ } }
+.fiche-card:hover, .fiche-card:focus-visible{ transform:translateY(-5px) rotate(-.3deg); box-shadow:0 16px 30px -10px rgba(0,0,0,.45); }
+.fiche-card::before{
+  content:""; position:absolute; inset:0; border-radius:var(--r-lg); padding:2px;
+  background:linear-gradient(135deg,var(--accent),transparent 60%); opacity:.55;
+  -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor; mask-composite:exclude; pointer-events:none;
+}
+.fiche-card-top{ display:flex; align-items:center; gap:.7rem; }
+.badge-icon{
+  width:46px; height:46px; flex:none; border-radius:50%; background:var(--accent-soft);
+  color:var(--accent); display:flex; align-items:center; justify-content:center; padding:9px;
+}
+.badge-icon svg{ width:100%; height:100%; }
+.fiche-eyebrow{ font-size:.68rem; font-weight:700; letter-spacing:.09em; text-transform:uppercase; color:var(--accent); }
+.fiche-card h2{ font-size:1.28rem; margin:0; color:var(--card-ink); }
+.fiche-card .desc{ font-size:.88rem; color:var(--card-ink-soft); margin:0; flex:1; }
+.fiche-card-bottom{ display:flex; align-items:center; justify-content:space-between; gap:.5rem; margin-top:.2rem; }
+.stars-row{ display:flex; gap:.15rem; }
+.stars-row svg{ width:19px; height:19px; color:var(--line); }
+.stars-row svg.filled{ color:var(--star-color); }
+.status-pill{
+  font-size:.72rem; font-weight:700; padding:.28rem .65rem; border-radius:999px;
+  background:var(--accent); color:#fff9ef;
+}
+.status-pill.todo{ background:var(--card-chip-bg); color:var(--accent); }
+
+.parents-toggle-wrap{ position:relative; z-index:1; max-width:920px; margin:1.8rem auto 0; }
+.folder{
+  background:var(--folder-bg); border:1px solid var(--folder-line); border-radius:var(--r-md);
+  color:var(--folder-ink); overflow:hidden;
+}
+.folder-tab{
+  width:100%; text-align:left; background:none; border:none; cursor:pointer; color:inherit;
+  font-family:var(--font-body); font-weight:700; font-size:.95rem;
+  display:flex; align-items:center; gap:.5rem; padding:.75rem 1rem;
+}
+.folder-tab svg{ width:16px; height:16px; transition:transform .25s; flex:none; }
+.folder-tab[aria-expanded="true"] svg.chev{ transform:rotate(90deg); }
+.folder-body{ padding:0 1.1rem 1rem; font-size:.92rem; line-height:1.6; }
+.folder-body p{ margin:0 0 .7rem; }
+.folder-body .corrige-line{ margin:0 0 .35rem; }
+.folder table{ border-collapse:collapse; width:100%; }
+.folder th,.folder td{ border:1px solid var(--folder-line); padding:.35rem .5rem; text-align:left; font-size:.85rem; }
+
+/* ============ OWL MASCOT ============ */
+.owl-svg{ width:100%; height:100%; overflow:visible; }
+.owl-shadow{ fill:rgba(0,0,0,.18); }
+.owl-body-group{ transform-origin:80px 140px; animation:owlFloat 3.6s ease-in-out infinite; }
+@keyframes owlFloat{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-4px);} }
+.owl-body{ fill:var(--owl-body); }
+.owl-belly{ fill:var(--owl-belly); }
+.owl-ear{ fill:var(--owl-body); }
+.owl-wing{ fill:color-mix(in srgb, var(--owl-body) 78%, #000); transform-box:fill-box; transform-origin:center; transition:transform .4s cubic-bezier(.34,1.56,.64,1); }
+.owl-beak,.owl-foot{ fill:var(--owl-beak); }
+.owl-eye-white{ fill:#FFFDF7; stroke:var(--owl-outline); stroke-width:1.4; }
+.owl-pupil{ fill:#332640; }
+.owl-spark{ fill:#FFFDF7; }
+.owl-eye{ transform-box:fill-box; transform-origin:center; }
+.owl-cheek{ fill:#EE9E93; opacity:0; transition:opacity .3s; }
+.owl.blink .owl-eye{ animation:owlBlink .26s ease; }
+@keyframes owlBlink{ 0%,100%{ transform:scaleY(1);} 50%{ transform:scaleY(.12);} }
+.owl.cheer .owl-wing-l{ transform:rotate(-56deg) translate(-3px,-8px); }
+.owl.cheer .owl-wing-r{ transform:rotate(56deg) translate(3px,-8px); }
+.owl.cheer .owl-cheek{ opacity:1; }
+.owl.cheer .owl-body-group{ animation:owlHop .55s ease; }
+@keyframes owlHop{ 0%{transform:translateY(0) rotate(0);} 30%{transform:translateY(-15px) rotate(-4deg);} 60%{transform:translateY(0) rotate(3deg);} 100%{transform:translateY(0) rotate(0);} }
+.owl.oops .owl-body-group{ animation:owlTilt .5s ease; }
+@keyframes owlTilt{ 0%,100%{transform:rotate(0);} 30%{transform:rotate(-6deg);} 60%{transform:rotate(4deg);} }
+
+.owl-widget{
+  position:fixed; right:14px; bottom:14px; z-index:50; display:flex; flex-direction:column;
+  align-items:flex-end; gap:.4rem; pointer-events:none;
+}
+.owl-widget .bubble{
+  pointer-events:none; max-width:min(72vw,260px); background:var(--paper-card); color:var(--ink);
+  border:2px solid var(--line); border-radius:16px 16px 4px 16px; padding:.55rem .8rem;
+  font-family:var(--font-display); font-size:1.05rem; line-height:1.3; box-shadow:var(--shadow-sm);
+  opacity:0; transform:translateY(6px) scale(.96); transition:opacity .25s, transform .25s;
+}
+.owl-widget .bubble.show{ opacity:1; transform:none; }
+.owl-widget-icon{ width:74px; height:74px; pointer-events:auto; cursor:pointer; background:none; border:none; padding:0; }
+@media (max-width:640px){ .owl-widget-icon{ width:60px; height:60px;} .owl-widget{ right:10px; bottom:10px;} }
+
+/* ============ FICHE PAGE ============ */
+.fiche-page{ max-width:760px; margin:0 auto; padding:1.4rem 1.1rem 6rem; }
+.fiche-head{ display:flex; align-items:flex-start; gap:.9rem; margin-bottom:1.4rem; }
+.fiche-head .badge-icon{ width:58px; height:58px; padding:11px; }
+.fiche-head h1{ font-size:1.9rem; margin:0 0 .15rem; color:var(--accent); }
+.fiche-head .fiche-eyebrow{ display:block; margin-bottom:.15rem; }
+.fiche-head .stars-row svg{ width:22px; height:22px; }
+
+.section-label{
+  font-size:.72rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--accent); margin:2.2rem 0 .7rem;
+}
+.section-label:first-of-type{ margin-top:0; }
+
+.lesson-card{
+  position:relative; background:var(--paper-card); border:1px solid var(--line); border-radius:var(--r-lg);
+  padding:1.1rem 1.2rem 1.2rem; margin-bottom:1rem; box-shadow:var(--shadow-sm);
+}
+.lesson-card:nth-of-type(odd){ transform:rotate(-.5deg); }
+.lesson-card:nth-of-type(even){ transform:rotate(.5deg); }
+@media (max-width:520px){ .lesson-card{ transform:none !important; } }
+.lesson-card::before{
+  content:""; position:absolute; top:-9px; left:28px; width:52px; height:18px;
+  background:var(--accent-soft); opacity:.85; border-radius:3px; transform:rotate(-3deg);
+}
+.rule-title{ font-family:var(--font-display); font-size:1.2rem; color:var(--accent); margin:0 0 .15rem; }
+.rule-desc{ margin:0 0 .3rem; }
+.rule-example{
+  font-style:normal; display:inline-block; background:var(--accent-soft); color:var(--ink);
+  padding:.25rem .6rem; border-radius:var(--r-sm); font-weight:700; margin-top:.15rem;
+}
+.tagline{
+  display:inline-block; font-size:.68rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--accent); background:var(--accent-soft); padding:.2rem .55rem; border-radius:999px; margin-bottom:.4rem;
+}
+.lesson-note{ margin-bottom:.6rem; }
+.lesson-steps{ list-style:none; margin:.4rem 0 0; padding:0; display:flex; flex-direction:column; gap:.4rem; }
+.lesson-steps li{ display:flex; gap:.6rem; align-items:baseline; }
+.step-num{
+  flex:none; width:1.5em; height:1.5em; border-radius:50%; background:var(--accent); color:#fff9ef;
+  font-weight:700; font-size:.78rem; display:flex; align-items:center; justify-content:center;
+}
+.lesson-table-wrap{ overflow-x:auto; margin-top:.3rem; }
+.lesson-table{ border-collapse:collapse; width:100%; min-width:480px; }
+.lesson-table th{ font-size:.72rem; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-faint); text-align:left; padding:.4rem .55rem; border-bottom:2px solid var(--line); }
+.lesson-table td{ padding:.45rem .55rem; border-bottom:1px solid var(--line); font-size:.94rem; }
+.lesson-table td:first-child{ font-weight:700; color:var(--accent); }
+.mini-scroll-btn{
+  display:inline-flex; align-items:center; gap:.4rem; background:var(--accent-soft); color:var(--accent);
+  border:none; border-radius:999px; padding:.4rem .85rem; font-weight:700; font-size:.85rem; cursor:pointer;
+  margin:0 0 1.2rem;
+}
+
+.exercise-card{
+  background:var(--paper-card); border:1px solid var(--line); border-radius:var(--r-lg);
+  padding:1rem 1.1rem 1.1rem; margin-bottom:1rem; box-shadow:var(--shadow-sm);
+}
+.exercise-head{ display:flex; align-items:center; justify-content:space-between; gap:.6rem; margin-bottom:.3rem; flex-wrap:wrap; }
+.exercise-head h3{ font-size:1.15rem; margin:0; }
+.exercise-instr{ color:var(--ink-soft); font-size:.92rem; margin-bottom:.7rem; }
+.item-card{ padding:.7rem 0; border-top:1px dashed var(--line); }
+.exercise-card .item-card:first-of-type{ border-top:none; padding-top:.1rem; }
+.item-prompt{ margin:0 0 .5rem; font-size:1.05rem; line-height:1.7; white-space:pre-line; }
+.item-feedback{ font-size:.9rem; font-weight:700; min-height:1.2em; margin-top:.3rem; }
+.item-feedback.good{ color:var(--good); }
+.item-feedback.bad{ color:var(--bad); }
+
+.mcq-group{ display:inline-flex; flex-wrap:wrap; gap:.4rem; vertical-align:middle; margin:.15rem .2rem; }
+.opt-btn{
+  font-family:var(--font-body); font-weight:700; font-size:.95rem; padding:.42rem .85rem;
+  border-radius:10px; border:2px solid var(--line); background:var(--paper-card-2,var(--paper));
+  color:var(--ink); cursor:pointer; transition:transform .15s ease, background .2s, border-color .2s, color .2s;
+}
+.opt-btn:hover:not(:disabled){ border-color:var(--accent); transform:translateY(-2px); }
+.opt-btn.correct{ background:var(--good); border-color:var(--good); color:#fff; }
+.opt-btn.flash-wrong{ animation:shake .4s ease; border-color:var(--bad); color:var(--bad); }
+.opt-btn.dim{ opacity:.4; }
+.opt-btn:disabled{ cursor:default; }
+@keyframes shake{ 10%,90%{transform:translateX(-2px)} 20%,80%{transform:translateX(4px)} 30%,50%,70%{transform:translateX(-7px)} 40%,60%{transform:translateX(7px)} }
+
+.fillinput{
+  font-family:var(--font-body); font-variant-numeric:tabular-nums; font-weight:700; font-size:1rem;
+  padding:.32rem .55rem; border-radius:8px; border:2px solid var(--line); background:var(--paper);
+  color:var(--ink); width:5.2em; text-align:center; margin:0 .15rem;
+}
+.fillinput.wide{ width:11em; text-align:left; }
+.fillinput.xwide{ width:100%; max-width:22em; }
+.fillinput.correct{ border-color:var(--good); background:var(--good-soft); }
+.fillinput.wrong{ border-color:var(--bad); background:var(--bad-soft); animation:shake .4s ease; }
+.fillinput:disabled{ opacity:.85; }
+
+.verify-btn,.reveal-btn,.mini-scroll-btn,.selfreport-btn,.chip-btn,.reset-btn,.replay-btn{
+  cursor:pointer; font-family:var(--font-body);
+}
+.verify-btn{
+  display:inline-flex; align-items:center; gap:.3rem; background:var(--accent); color:#fff9ef; border:none;
+  border-radius:999px; padding:.42rem .95rem; font-weight:700; font-size:.9rem; margin-top:.3rem;
+}
+.verify-btn:hover{ filter:brightness(1.08); }
+
+.write-extra{ margin-top:.5rem; display:flex; flex-direction:column; gap:.5rem; align-items:flex-start; }
+.writearea{
+  width:100%; max-width:46em; border:2px solid var(--line); border-radius:var(--r-sm); padding:.55rem .7rem;
+  background:var(--paper); color:var(--ink); resize:vertical; min-height:2.6em;
+}
+.reveal-btn{
+  background:var(--accent-soft); color:var(--accent); border:none; border-radius:999px;
+  padding:.42rem .9rem; font-weight:700; font-size:.9rem;
+}
+.model-answer{
+  background:var(--good-soft); border:1px solid var(--good); border-radius:var(--r-sm); color:var(--ink);
+  padding:.55rem .75rem; font-size:.95rem; max-width:46em;
+}
+.selfreport-row{ display:flex; flex-wrap:wrap; align-items:center; gap:.5rem; font-size:.92rem; }
+.selfreport-btn{
+  background:var(--paper-card-2,var(--paper)); border:2px solid var(--line); border-radius:999px;
+  padding:.36rem .8rem; font-weight:700; font-size:.85rem;
+}
+.selfreport-btn.selected{ border-color:var(--accent); background:var(--accent-soft); color:var(--accent); }
+.selfreport-btn:disabled:not(.selected){ opacity:.4; }
+.selfreport-row[hidden]{ display:none; }
+
+.chip-row{ display:flex; flex-wrap:wrap; gap:.5rem; margin:.4rem 0; }
+.chip-btn{
+  background:var(--paper-card-2,var(--paper)); border:2px solid var(--accent); color:var(--accent);
+  border-radius:12px; padding:.5rem 1rem; font-weight:700; font-size:1.05rem;
+}
+.chip-btn:disabled{ opacity:.35; }
+.order-slots{ display:flex; gap:.5rem; min-height:2.8em; align-items:center; flex-wrap:wrap; margin:.3rem 0; }
+.order-slot{
+  min-width:3.4em; text-align:center; border:2px dashed var(--line); border-radius:10px; padding:.4rem .6rem;
+  font-weight:700; color:var(--ink-faint);
+}
+.order-slot.filled{ border-style:solid; border-color:var(--accent); color:var(--ink); background:var(--accent-soft); }
+.order-reset{ background:none; border:none; color:var(--ink-faint); text-decoration:underline; font-size:.85rem; cursor:pointer; }
+
+.seg-grid{ display:flex; gap:4px; margin:.3rem 0; }
+.seg-btn{
+  width:2.4rem; height:2.4rem; border:2px solid var(--accent); border-radius:6px; background:var(--paper);
+  cursor:pointer; padding:0;
+}
+.seg-btn.filled{ background:var(--accent); }
+.colorbar-block{ margin-bottom:.7rem; }
+.colorbar-label{ font-weight:700; font-size:.9rem; margin-bottom:.25rem; }
+
+.reset-row{ text-align:center; margin-top:1.6rem; }
+.reset-btn{
+  background:none; border:1px solid var(--line); color:var(--ink-faint); border-radius:999px;
+  padding:.45rem 1rem; font-size:.85rem;
+}
+.reset-btn.armed{ border-color:var(--bad); color:var(--bad); font-weight:700; }
+
+.completion-banner{
+  display:none; align-items:center; gap:.8rem; background:var(--accent); color:#fff9ef;
+  border-radius:var(--r-lg); padding:1rem 1.2rem; margin-bottom:1.4rem; box-shadow:var(--shadow);
+}
+.completion-banner.show{ display:flex; animation:bannerPop .5s ease; }
+@keyframes bannerPop{ 0%{ transform:scale(.9); opacity:0;} 60%{ transform:scale(1.03);} 100%{ transform:scale(1); opacity:1;} }
+.completion-banner h3{ margin:0; font-size:1.3rem; }
+.completion-banner .stars-row svg{ width:24px; height:24px; color:#fff9ef; }
+.completion-banner .stars-row svg.filled{ color:#FFE9A8; }
+
+/* ============ FX ============ */
+#fxLayer{ position:fixed; inset:0; pointer-events:none; z-index:999; overflow:hidden; }
+.particle{ position:absolute; width:8px; height:8px; border-radius:2px; animation-name:particleFly; animation-timing-function:ease-out; animation-fill-mode:forwards; }
+@keyframes particleFly{ to{ transform:translate(var(--dx),var(--dy)) rotate(300deg); opacity:0; } }
+
+.modal-backdrop{
+  position:fixed; inset:0; background:rgba(20,14,32,.72); z-index:1000; display:none;
+  align-items:center; justify-content:center; padding:1.2rem;
+}
+.modal-backdrop.show{ display:flex; animation:fadeIn .3s ease; }
+@keyframes fadeIn{ from{opacity:0} to{opacity:1} }
+.modal-card{
+  background:var(--paper-card); color:var(--ink); border-radius:var(--r-lg); padding:1.8rem 1.6rem;
+  max-width:420px; text-align:center; box-shadow:var(--shadow); animation:modalPop .5s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes modalPop{ from{ transform:scale(.7); opacity:0;} to{ transform:scale(1); opacity:1;} }
+.modal-card .trophy{ width:110px; height:110px; margin:0 auto .6rem; }
+.modal-card h2{ font-size:1.7rem; margin-bottom:.3rem; }
+.modal-card p{ color:var(--ink-soft); }
+.modal-close{
+  margin-top:.6rem; background:var(--f4); color:#fff9ef; border:none; border-radius:999px;
+  padding:.55rem 1.3rem; font-weight:700; cursor:pointer;
+}
+
+@media (max-width:640px){
+  .fiche-head{ flex-wrap:wrap; }
+  .hero-owl-wrap{ width:96px; height:96px; }
+}
+</style>
+
+<div id="app">
+  <div class="topbar">
+    <button class="back-btn" id="backBtn" hidden type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      <span>La carte du ciel</span>
+    </button>
+    <div class="topbar-title">
+      <svg class="topbar-owl" viewBox="0 0 160 160" id="topbarOwl"></svg>
+      <span>Carnet d'Étoiles <small>de Madeline</small></span>
+    </div>
+    <div class="starcount" id="starCount" aria-live="polite">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.9 6.4 6.9.7-5.2 4.7 1.5 6.9L12 17.6 5.9 21.2l1.5-6.9-5.2-4.7 6.9-.7z"/></svg>
+      <span id="starCountText">0 / 18</span>
+    </div>
+    <button class="icon-btn" id="muteBtn" type="button" aria-label="Couper ou activer le son"></button>
+  </div>
+
+  <div class="view active" id="view-map">
+    <div id="sky">
+      <div id="starfield"></div>
+      <div class="hero">
+        <div class="hero-owl-wrap"><svg class="owl-svg" id="heroOwl" viewBox="0 0 160 160"></svg></div>
+        <h1>Le carnet d'étoiles</h1>
+        <p>Plume le hibou t'attend pour allumer six étoiles avant la rentrée en CM1&nbsp;! Choisis une île de ciel pour commencer.</p>
+        <div class="speech" id="heroSpeech" aria-live="polite"></div>
+      </div>
+      <div class="map-wrap">
+        <svg class="constellation-svg" id="constellationSvg"></svg>
+        <div class="map-grid" id="mapGrid"></div>
+      </div>
+    </div>
+    <div class="parents-toggle-wrap">
+      <div class="folder">
+        <button class="folder-tab" id="parentsToggleHome" aria-expanded="false" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="7" width="18" height="12" rx="1.5"/><path d="M3 8l9 6 9-6"/></svg>
+          Coin des parents
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" style="margin-left:auto"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
+        <div class="folder-body" id="parentsBodyHome" hidden></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="view" id="view-fiche">
+    <div class="fiche-page" id="fichePage"></div>
+  </div>
+
+  <div id="fxLayer"></div>
+  <div class="owl-widget" id="owlWidget">
+    <div class="bubble" id="owlBubble"></div>
+    <button class="owl-widget-icon" id="owlWidgetBtn" type="button" aria-label="Parler à Plume">
+      <svg class="owl-svg" id="widgetOwl" viewBox="0 0 160 160"></svg>
+    </button>
+  </div>
+
+  <div class="modal-backdrop" id="finaleModal">
+    <div class="modal-card">
+      <svg class="trophy" viewBox="0 0 100 100">
+        <path d="M35 55 L20 95 L38 88 L48 100 L58 80 Z" fill="var(--f3)"/>
+        <path d="M65 55 L80 95 L62 88 L52 100 L42 80 Z" fill="var(--f5)"/>
+        <circle cx="50" cy="42" r="32" fill="var(--star-color)" stroke="#332640" stroke-width="2"/>
+        <path d="M50 22l6.5 14.3 15.5 1.6-11.7 10.6 3.4 15.5L50 55.9 36.3 64l3.4-15.5-11.7-10.6 15.5-1.6z" fill="var(--paper-card)"/>
+      </svg>
+      <h2>Six étoiles allumées !</h2>
+      <p>Bravo Madeline, tu as terminé les six fiches. Le CM1 n'a qu'à bien se tenir !</p>
+      <button class="modal-close" id="finaleCloseBtn" type="button">Retourner voir le ciel</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ============ UTILITIES ============ */
+function normSpaces(s){ return String(s).replace(/[\s\u00A0\u202F]/g,''); }
+function checkNumber(input, expected, part){
+  part = part||{};
+  let s = normSpaces(input).toLowerCase();
+  if(part.unit){ s = s.replace(String(part.unit).toLowerCase(),''); }
+  s = s.replace(',', '.');
+  if(!/^-?\d+(\.\d+)?$/.test(s)) return false;
+  const v = parseFloat(s);
+  return !isNaN(v) && Math.abs(v-expected) < 0.001;
+}
+function checkFraction(input, num, den){
+  const m = normSpaces(input).match(/^(\d+)\/(\d+)$/);
+  if(!m) return false;
+  return parseInt(m[1],10)===num && parseInt(m[2],10)===den;
+}
+function checkDuration(input, h, m){
+  let s = normSpaces(input).toLowerCase().replace(',', '.');
+  let match = s.match(/^(\d{1,2})h(\d{0,2})(?:min)?$/) || s.match(/^(\d{1,2}):(\d{0,2})$/);
+  if(!match) return false;
+  const hh = parseInt(match[1],10);
+  const mm = match[2]===''?0:parseInt(match[2],10);
+  return hh===h && mm===m;
+}
+function checkMoney(input, expected){
+  let s = normSpaces(input).toLowerCase().replace('€','').replace(',', '.');
+  if(!/^-?\d+(\.\d+)?$/.test(s)) return false;
+  const v = parseFloat(s);
+  return !isNaN(v) && Math.abs(v-expected) < 0.005;
+}
+function checkContainsWord(input, word){
+  return String(input||'').toLowerCase().indexOf(String(word).toLowerCase()) !== -1;
+}
+function reducedMotion(){ return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; }
+function pickVaried(pool, lastKey){
+  if(pool.length===1) return pool[0];
+  let idx;
+  do{ idx = Math.floor(Math.random()*pool.length); } while(pool.length>1 && idx===lastKey.v);
+  lastKey.v = idx;
+  return pool[idx];
+}
+function el(tag, cls, html){
+  const e = document.createElement(tag);
+  if(cls) e.className = cls;
+  if(html!==undefined) e.innerHTML = html;
+  return e;
+}
+
+/* ============ ITEM-DEFINITION HELPERS ============ */
+function tmpl(str){
+  const parts = []; const re = /\{(\d+)\}/g; let last = 0, m;
+  while((m = re.exec(str))){
+    if(m.index>last) parts.push(str.slice(last,m.index));
+    parts.push({b:parseInt(m[1],10)});
+    last = re.lastIndex;
+  }
+  if(last<str.length) parts.push(str.slice(last));
+  return parts;
+}
+function opts(words){ return words.map(w=>({v:w.toLowerCase(), l:w})); }
+function mcq(options, answer){ return {kind:'mcq', options:options, answer:answer}; }
+function fill(expected, extra){ return Object.assign({kind:'fill', expected:expected}, extra||{}); }
+function frac(num,den){ return {kind:'fraction', num:num, den:den}; }
+function dur(h,m){ return {kind:'duration', h:h, m:m}; }
+function money(v){ return {kind:'money', v:v}; }
+function textPart(expected, extra){ return Object.assign({kind:'text', expected:expected, wide:true}, extra||{}); }
+function write(model, criteria){ return {kind:'write', model:model||null, criteria:criteria||null}; }
+
+const OPT_TYPE = [ {v:'d',l:'Déclarative'}, {v:'i',l:'Interrogative'}, {v:'m',l:'Impérative'}, {v:'e',l:'Exclamative'} ];
+const OPT_FORME = [ {v:'aff',l:'Affirmative'}, {v:'neg',l:'Négative'} ];
+const OPT_CMP = [ {v:'lt',l:'<'}, {v:'gt',l:'>'}, {v:'eq',l:'='} ];
+const OPT_RULE = [ {v:'num',l:'numérateur commun'}, {v:'den',l:'dénominateur commun'} ];
+const OPT_OUINON = [ {v:'oui',l:'Un mot fonctionne'}, {v:'non',l:'Aucun mot ne fonctionne'} ];
+
+/* ============ BADGE ICONS ============ */
+const BADGES = [
+null,
+'<path d="M8 9h32a3 3 0 0 1 3 3v16a3 3 0 0 1-3 3H21l-9 8v-8H8a3 3 0 0 1-3-3V12a3 3 0 0 1 3-3z" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"/><circle cx="17" cy="20" r="1.9" fill="currentColor"/><circle cx="24" cy="20" r="1.9" fill="currentColor"/><circle cx="31" cy="20" r="1.9" fill="currentColor"/>',
+'<line x1="24" y1="6" x2="24" y2="42" stroke="currentColor" stroke-width="1.6" stroke-dasharray="3 3" opacity=".6"/><ellipse cx="15" cy="24" rx="9" ry="6" fill="none" stroke="currentColor" stroke-width="2.6" transform="rotate(-18 15 24)"/><ellipse cx="33" cy="24" rx="9" ry="6" fill="none" stroke="currentColor" stroke-width="2.6" transform="rotate(18 33 24)"/>',
+'<path d="M14 10 Q8 24 14 38" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><path d="M34 10 Q40 24 34 38" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><line x1="17" y1="24" x2="31" y2="24" stroke="currentColor" stroke-width="2" stroke-dasharray="2 4" stroke-linecap="round"/><circle cx="24" cy="24" r="3" fill="currentColor"/>',
+'<circle cx="24" cy="24" r="16" fill="none" stroke="currentColor" stroke-width="2.6"/><path d="M24 24 L24 8 A16 16 0 0 1 38.9 32 Z" fill="currentColor" opacity=".85"/><line x1="24" y1="24" x2="24" y2="8" stroke="currentColor" stroke-width="2"/><line x1="24" y1="24" x2="38.9" y2="32" stroke="currentColor" stroke-width="2"/><line x1="24" y1="24" x2="9.1" y2="32" stroke="currentColor" stroke-width="2"/>',
+'<path d="M10 22 L14 38 Q24 42 34 38 L38 22" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/><line x1="8" y1="22" x2="40" y2="22" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><circle cx="18" cy="16" r="2.4" fill="currentColor"/><circle cx="24" cy="13" r="2.4" fill="currentColor"/><circle cx="30" cy="16" r="2.4" fill="currentColor"/><circle cx="41" cy="10" r="2.4" fill="currentColor" opacity=".5"/>',
+'<rect x="5" y="18" width="30" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="2.4"/><line x1="11" y1="18" x2="11" y2="23" stroke="currentColor" stroke-width="2"/><line x1="17" y1="18" x2="17" y2="25" stroke="currentColor" stroke-width="2"/><line x1="23" y1="18" x2="23" y2="23" stroke="currentColor" stroke-width="2"/><line x1="29" y1="18" x2="29" y2="25" stroke="currentColor" stroke-width="2"/><circle cx="36" cy="33" r="8" fill="var(--paper-card)" stroke="currentColor" stroke-width="2.4"/><line x1="36" y1="33" x2="36" y2="28" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="36" y1="33" x2="39.3" y2="34.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>'
+];
+function badgeSvg(n){ return '<svg viewBox="0 0 48 48">'+BADGES[n]+'</svg>'; }
+
+/* ============ OWL MASCOT TEMPLATE ============ */
+function owlMarkup(){
+  return '<ellipse class="owl-shadow" cx="80" cy="150" rx="32" ry="6"/>'+
+  '<g class="owl-body-group">'+
+    '<path class="owl-wing owl-wing-l" d="M40 90 Q18 100 26 130 Q40 128 46 108 Z"/>'+
+    '<path class="owl-wing owl-wing-r" d="M120 90 Q142 100 134 130 Q120 128 114 108 Z"/>'+
+    '<ellipse class="owl-foot" cx="66" cy="142" rx="8" ry="4"/>'+
+    '<ellipse class="owl-foot" cx="94" cy="142" rx="8" ry="4"/>'+
+    '<ellipse class="owl-body" cx="80" cy="92" rx="46" ry="52"/>'+
+    '<ellipse class="owl-belly" cx="80" cy="106" rx="27" ry="33"/>'+
+    '<path class="owl-ear" d="M52 46 L60 62 L44 60 Z"/>'+
+    '<path class="owl-ear" d="M108 46 L100 62 L116 60 Z"/>'+
+    '<circle class="owl-cheek" cx="50" cy="88" r="7"/>'+
+    '<circle class="owl-cheek" cx="110" cy="88" r="7"/>'+
+    '<g class="owl-eye owl-eye-l"><circle class="owl-eye-white" cx="62" cy="76" r="15"/><circle class="owl-pupil" cx="64" cy="77" r="7"/><circle class="owl-spark" cx="60" cy="72" r="2.2"/></g>'+
+    '<g class="owl-eye owl-eye-r"><circle class="owl-eye-white" cx="98" cy="76" r="15"/><circle class="owl-pupil" cx="100" cy="77" r="7"/><circle class="owl-spark" cx="96" cy="72" r="2.2"/></g>'+
+    '<path class="owl-beak" d="M76 90 L84 90 L80 100 Z"/>'+
+  '</g>';
+}
+const owlEls = [];
+function initOwls(){
+  ['topbarOwl','heroOwl','widgetOwl'].forEach(id=>{
+    const svg = document.getElementById(id);
+    if(!svg) return;
+    svg.classList.add('owl');
+    svg.innerHTML = owlMarkup();
+    owlEls.push(svg);
+  });
+}
+function owlReact(mood){
+  owlEls.forEach(o=>{
+    o.classList.remove('cheer','oops');
+    void o.offsetWidth;
+    if(mood) o.classList.add(mood);
+    if(mood){ setTimeout(()=>o.classList.remove(mood), 900); }
+  });
+}
+setInterval(function(){
+  if(reducedMotion()) return;
+  owlEls.forEach(o=>{ o.classList.add('blink'); setTimeout(()=>o.classList.remove('blink'), 300); });
+}, 4200);
+
+/* ============ SOUND ============ */
+let audioCtx = null;
+let muted = (localStorage.getItem('madeline_muted')==='1');
+function ensureAudio(){ if(!audioCtx){ try{ audioCtx = new (window.AudioContext||window.webkitAudioContext)(); }catch(e){} } return audioCtx; }
+function tone(freq, start, dur2, type, gainPeak){
+  if(muted) return;
+  const ctx = ensureAudio(); if(!ctx) return;
+  const osc = ctx.createOscillator(); const gain = ctx.createGain();
+  osc.type = type||'sine'; osc.frequency.value = freq;
+  osc.connect(gain); gain.connect(ctx.destination);
+  const t0 = ctx.currentTime + start;
+  gain.gain.setValueAtTime(0.0001, t0);
+  gain.gain.linearRampToValueAtTime(gainPeak||0.14, t0+0.02);
+  gain.gain.exponentialRampToValueAtTime(0.0001, t0+dur2);
+  osc.start(t0); osc.stop(t0+dur2+0.03);
+}
+function playCorrect(){ tone(880,0,0.14); tone(1320,0.08,0.18); }
+function playRetry(){ tone(210,0,0.16,'sine',0.09); }
+function playFiche(){ [523,659,784,1047].forEach((f,i)=>tone(f,i*0.11,0.24)); }
+function playFinale(){ [523,659,784,1047,1319].forEach((f,i)=>tone(f,i*0.1,0.4)); }
+function updateMuteBtn(){
+  const b = document.getElementById('muteBtn');
+  b.innerHTML = muted
+    ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"/><line x1="16" y1="9" x2="21" y2="15"/><line x1="21" y1="9" x2="16" y2="15"/></svg>'
+    : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18 6a9 9 0 0 1 0 12"/></svg>';
+  b.setAttribute('aria-pressed', String(muted));
+}
+
+/* ============ FX: PARTICLES ============ */
+function burstAt(x, y, mood, count){
+  if(reducedMotion()) return;
+  const layer = document.getElementById('fxLayer');
+  const palette = mood==='good' ? ['#D99A2B','#3F7D52','#FFE9B0','#F0C15A'] : ['#B14E3E','#E28C79'];
+  const n = count || 12;
+  for(let i=0;i<n;i++){
+    const p = el('span','particle');
+    const ang = (Math.random()*140-70-90) * Math.PI/180;
+    const dist = 30+Math.random()*70;
+    p.style.setProperty('--dx', (Math.cos(ang)*dist)+'px');
+    p.style.setProperty('--dy', (Math.sin(ang)*dist+50)+'px');
+    p.style.left = x+'px'; p.style.top = y+'px';
+    p.style.background = palette[Math.floor(Math.random()*palette.length)];
+    p.style.borderRadius = Math.random()>0.5 ? '50%':'2px';
+    p.style.animationDuration = (700+Math.random()*400)+'ms';
+    layer.appendChild(p);
+    setTimeout(()=>p.remove(), 1200);
+  }
+}
+function burstNear(node, mood, count){
+  const r = node.getBoundingClientRect();
+  burstAt(r.left+r.width/2, r.top+r.height/2, mood, count);
+}
+function burstBig(mood){
+  if(reducedMotion()) return;
+  const w = window.innerWidth;
+  for(let i=0;i<5;i++){ burstAt(w*(i+1)/6, 40, mood, 22); }
+}
+
+/* ============ FICHES DATA ============ */
+const FICHES = [
+{
+  id:1, color:'f1', badge:1, title:"Les types de phrases et la négation",
+  eyebrow:"Grammaire", desc:"Déclarative, interrogative, impérative, exclamative… et la négation.",
+  lesson:[
+    {k:'rule', tag:'Type', title:'Déclarative', desc:"Elle raconte ou explique quelque chose. Elle se termine par un point.", ex:"Le chat dort."},
+    {k:'rule', tag:'Type', title:'Interrogative', desc:"Elle pose une question. Elle se termine par un point d'interrogation.", ex:"Où est le chat ?"},
+    {k:'rule', tag:'Type', title:'Impérative', desc:"Elle donne un ordre ou un conseil. Il n'y a pas de sujet écrit.", ex:"Range ta chambre !"},
+    {k:'rule', tag:'Type', title:'Exclamative', desc:"Elle exprime une émotion forte. Elle se termine par un point d'exclamation.", ex:"Comme il fait beau !"},
+    {k:'note', text:"En plus de son TYPE, une phrase a toujours une FORME : affirmative ou négative."},
+    {k:'rule', tag:'Forme', title:'Affirmative', desc:"Rien de spécial.", ex:"Je mange une pomme."},
+    {k:'rule', tag:'Forme', title:'Négative', desc:"Le verbe est encadré par « ne...pas », « ne...plus », « ne...jamais » ou « ne...rien ».", ex:"Je ne mange pas de pomme."},
+    {k:'tip', text:"Je me demande d'abord « qu'est-ce que fait cette phrase ? » pour trouver le TYPE. Ensuite je cherche « ne...pas » et ses cousins pour trouver la FORME."}
+  ],
+  exercises:[
+    {num:1, titre:"Trouve le type de chaque phrase", etoiles:1, consigne:"Écris : déclarative, interrogative, impérative ou exclamative.", items:[
+      {id:'f1e1a', t:tmpl("a) Le chat dort sur le tapis. {0}"), parts:[mcq(OPT_TYPE,'d')]},
+      {id:'f1e1b', t:tmpl("b) Range ta chambre ! {0}"), parts:[mcq(OPT_TYPE,'m')]},
+      {id:'f1e1c', t:tmpl("c) Quelle heure est-il ? {0}"), parts:[mcq(OPT_TYPE,'i')]},
+      {id:'f1e1d', t:tmpl("d) Comme ce gâteau est bon ! {0}"), parts:[mcq(OPT_TYPE,'e')]}
+    ]},
+    {num:2, titre:"Trouve la forme de chaque phrase", etoiles:1, consigne:"Écris : affirmative ou négative.", items:[
+      {id:'f1e2a', t:tmpl("a) Je mange une pomme. {0}"), parts:[mcq(OPT_FORME,'aff')]},
+      {id:'f1e2b', t:tmpl("b) Je ne mange pas de pomme. {0}"), parts:[mcq(OPT_FORME,'neg')]},
+      {id:'f1e2c', t:tmpl("c) Il pleut aujourd'hui. {0}"), parts:[mcq(OPT_FORME,'aff')]},
+      {id:'f1e2d', t:tmpl("d) Il ne pleut jamais ici. {0}"), parts:[mcq(OPT_FORME,'neg')]}
+    ]},
+    {num:3, titre:"Trouve le type ET la forme", etoiles:2, consigne:"", items:[
+      {id:'f1e3a', t:tmpl("a) Ne touche pas à ce vase !\nType : {0}\nForme : {1}"), parts:[mcq(OPT_TYPE,'m'),mcq(OPT_FORME,'neg')]},
+      {id:'f1e3b', t:tmpl("b) Est-ce que tu viens ?\nType : {0}\nForme : {1}"), parts:[mcq(OPT_TYPE,'i'),mcq(OPT_FORME,'aff')]},
+      {id:'f1e3c', t:tmpl("c) Nous n'irons pas au parc.\nType : {0}\nForme : {1}"), parts:[mcq(OPT_TYPE,'d'),mcq(OPT_FORME,'neg')]},
+      {id:'f1e3d', t:tmpl("d) Ferme la porte, s'il te plaît.\nType : {0}\nForme : {1}"), parts:[mcq(OPT_TYPE,'m'),mcq(OPT_FORME,'aff')]}
+    ]},
+    {num:4, titre:"Repère les négations moins visibles", etoiles:2, consigne:"Attention : « ne...plus », « ne...rien » et « ne...personne » sont aussi des négations.", items:[
+      {id:'f1e4a', t:tmpl("a) Elle ne mange plus de bonbons. {0}"), parts:[mcq(OPT_FORME,'neg')]},
+      {id:'f1e4b', t:tmpl("b) Je ne vois personne dans la rue. {0}"), parts:[mcq(OPT_FORME,'neg')]},
+      {id:'f1e4c', t:tmpl("c) Il ne dit rien. {0}"), parts:[mcq(OPT_FORME,'neg')]},
+      {id:'f1e4d', t:tmpl("d) Elle boit du chocolat chaud. {0}"), parts:[mcq(OPT_FORME,'aff')]}
+    ]},
+    {num:5, titre:"Transforme en phrase négative", etoiles:3, consigne:"", items:[
+      {id:'f1e5a', t:tmpl("a) Tu aimes les épinards."), parts:[write("Tu n'aimes pas les épinards.")]},
+      {id:'f1e5b', t:tmpl("b) Nous allons à la piscine."), parts:[write("Nous n'allons pas à la piscine.")]},
+      {id:'f1e5c', t:tmpl("c) Elle a fini ses devoirs."), parts:[write("Elle n'a pas fini ses devoirs.")]}
+    ]},
+    {num:6, titre:"Transforme en phrase interrogative", etoiles:3, consigne:"Deux façons possibles : avec « est-ce que » ou en inversant le sujet et le verbe.", items:[
+      {id:'f1e6a', t:tmpl("a) Tu as faim."), parts:[write("Est-ce que tu as faim ? / As-tu faim ?")]},
+      {id:'f1e6b', t:tmpl("b) Il fait beau."), parts:[write("Est-ce qu'il fait beau ? / Fait-il beau ?")]}
+    ]},
+    {num:7, titre:"Transforme en phrase impérative", etoiles:3, consigne:"", items:[
+      {id:'f1e7a', t:tmpl("a) Tu dois fermer la fenêtre."), parts:[write("Ferme la fenêtre !")]},
+      {id:'f1e7b', t:tmpl("b) Vous devez vous taire."), parts:[write("Taisez-vous !")]}
+    ]},
+    {num:8, titre:"Défi : écris toi-même", etoiles:3, consigne:"", items:[
+      {id:'f1e8a', t:tmpl("a) Une phrase déclarative négative sur les vacances."), parts:[write(null,"une phrase déclarative ET négative (ne...pas/plus/jamais/rien) qui parle des vacances.")]},
+      {id:'f1e8b', t:tmpl("b) Une phrase interrogative sur un copain ou une copine."), parts:[write(null,"une vraie question, avec un point d'interrogation.")]},
+      {id:'f1e8c', t:tmpl("c) Une phrase impérative affirmative pour aider à la maison."), parts:[write(null,"un ordre ou un conseil affirmatif (pas de « ne...pas ») pour aider à la maison.")]}
+    ]}
+  ],
+  corrige:[
+    "Exercice 1 : a) déclarative — b) impérative — c) interrogative — d) exclamative.",
+    "Exercice 2 : a) affirmative — b) négative — c) affirmative — d) négative.",
+    "Exercice 3 : a) impérative, négative — b) interrogative, affirmative — c) déclarative, négative — d) impérative, affirmative.",
+    "Exercice 4 : a) négative — b) négative — c) négative — d) affirmative.",
+    "Exercice 5 : a) Tu n'aimes pas les épinards. — b) Nous n'allons pas à la piscine. — c) Elle n'a pas fini ses devoirs.",
+    "Exercice 6 : a) Est-ce que tu as faim ? / As-tu faim ? — b) Est-ce qu'il fait beau ? / Fait-il beau ?",
+    "Exercice 7 : a) Ferme la fenêtre ! — b) Taisez-vous !",
+    "Exercice 8 : réponses libres. Vérifiez uniquement que le type demandé et la ponctuation correspondent (et la négation pour la a)."
+  ]
+},
+{
+  id:2, color:'f2', badge:2, title:"Les homophones et/est, on/ont, son/sont, a/à, ou/où",
+  eyebrow:"Orthographe", desc:"La méthode du mot de remplacement pour ne plus les confondre.",
+  lesson:[
+    {k:'note', text:"La méthode est toujours la même : je remplace le mot par un autre, et je regarde si la phrase reste correcte."},
+    {k:'table', headers:['Mot','Nature','Je remplace par','Exemple'], rows:[
+      ['et','relie deux mots','« et puis »','Léo et Madeline jouent.'],
+      ['est','verbe être','« était »','Marie est contente.'],
+      ['on','pronom','« il » ou « elle »','On joue dehors.'],
+      ['ont','verbe avoir','« avaient »','Ils ont un chien.'],
+      ['son','déterminant','« mon » ou « ton »','Il prend son sac.'],
+      ['sont','verbe être','« étaient »','Ils sont fatigués.'],
+      ['a','verbe avoir','« avait »','Il a soif.'],
+      ['à','préposition','(rien ne marche)','Il va à l’école.'],
+      ['ou','un choix','« ou bien »','Lait ou jus ?'],
+      ['où','lieu ou temps','(rien ne marche)','Où habites-tu ?']
+    ]}
+  ],
+  exercises:[
+    {num:1, titre:"et / est", etoiles:1, consigne:"", items:[
+      {id:'f2e1a', t:tmpl("a) Léo {0} Madeline jouent au ballon."), parts:[mcq(opts(['et','est']),'et')]},
+      {id:'f2e1b', t:tmpl("b) Le ciel {0} bleu aujourd'hui."), parts:[mcq(opts(['et','est']),'est')]},
+      {id:'f2e1c', t:tmpl("c) Elle {0} contente de sa note."), parts:[mcq(opts(['et','est']),'est')]},
+      {id:'f2e1d', t:tmpl("d) Le chat {0} le chien dorment."), parts:[mcq(opts(['et','est']),'et')]}
+    ]},
+    {num:2, titre:"on / ont", etoiles:1, consigne:"", items:[
+      {id:'f2e2a', t:tmpl("a) {0} va à la piscine cet après-midi."), parts:[mcq(opts(['On','Ont']),'on')]},
+      {id:'f2e2b', t:tmpl("b) Ils {0} mangé toute la tarte."), parts:[mcq(opts(['on','ont']),'ont')]},
+      {id:'f2e2c', t:tmpl("c) {0} doit se dépêcher."), parts:[mcq(opts(['On','Ont']),'on')]},
+      {id:'f2e2d', t:tmpl("d) Mes parents {0} acheté une voiture."), parts:[mcq(opts(['on','ont']),'ont')]}
+    ]},
+    {num:3, titre:"son / sont", etoiles:1, consigne:"", items:[
+      {id:'f2e3a', t:tmpl("a) Il range {0} cartable."), parts:[mcq(opts(['son','sont']),'son')]},
+      {id:'f2e3b', t:tmpl("b) Les enfants {0} dans la cour."), parts:[mcq(opts(['son','sont']),'sont')]},
+      {id:'f2e3c', t:tmpl("c) Elle a perdu {0} stylo."), parts:[mcq(opts(['son','sont']),'son')]},
+      {id:'f2e3d', t:tmpl("d) Elles {0} déjà parties."), parts:[mcq(opts(['son','sont']),'sont')]}
+    ]},
+    {num:4, titre:"a / à", etoiles:2, consigne:"", items:[
+      {id:'f2e4a', t:tmpl("a) Madeline {0} fait un joli dessin."), parts:[mcq(opts(['a','à']),'a')]},
+      {id:'f2e4b', t:tmpl("b) Elle va {0} l'école en vélo."), parts:[mcq(opts(['a','à']),'à')]},
+      {id:'f2e4c', t:tmpl("c) Il n'{0} pas de devoirs ce soir."), parts:[mcq(opts(['a','à']),'a')]},
+      {id:'f2e4d', t:tmpl("d) Nous partons {0} la mer demain."), parts:[mcq(opts(['a','à']),'à')]}
+    ]},
+    {num:5, titre:"ou / où", etoiles:2, consigne:"", items:[
+      {id:'f2e5a', t:tmpl("a) Tu préfères le rouge {0} le bleu ?"), parts:[mcq(opts(['ou','où']),'ou')]},
+      {id:'f2e5b', t:tmpl("b) {0} as-tu rangé tes affaires ?"), parts:[mcq(opts(['Ou','Où']),'où')]},
+      {id:'f2e5c', t:tmpl("c) Je ne sais pas {0} il est parti."), parts:[mcq(opts(['ou','où']),'où')]},
+      {id:'f2e5d', t:tmpl("d) Veux-tu du sucre {0} du miel ?"), parts:[mcq(opts(['ou','où']),'ou')]}
+    ]},
+    {num:6, titre:"Deux homophones dans la même phrase", etoiles:2, consigne:"", items:[
+      {id:'f2e6a', t:tmpl("a) Léo {0} Madeline {1} déjà là."), parts:[mcq(opts(['et','est']),'et'), mcq(opts(['son','sont']),'sont')]},
+      {id:'f2e6b', t:tmpl("b) Sais-tu {0} ils {1} rangé leurs affaires ?"), parts:[mcq(opts(['ou','où']),'où'), mcq(opts(['on','ont']),'ont')]}
+    ]},
+    {num:7, titre:"Trois homophones ou plus", etoiles:3, consigne:"", items:[
+      {id:'f2e7a', t:tmpl("a) Madeline {0} rangé {1} cartable ; elle {2} très organisée."), parts:[mcq(opts(['a','à']),'a'), mcq(opts(['son','sont']),'son'), mcq(opts(['et','est']),'est')]},
+      {id:'f2e7b', t:tmpl("b) {0} {1}-ils trouvé ce trésor, dans le grenier {2} dans la cave ?"), parts:[mcq(opts(['Ou','Où']),'où'), mcq(opts(['on','ont']),'ont'), mcq(opts(['ou','où']),'ou')]}
+    ]},
+    {num:8, titre:"Texte à trous", etoiles:3, consigne:"", items:[
+      {id:'f2e8a', t:tmpl("Ce matin, Léo {0} Madeline vont {1} l'école. Leurs cahiers {2} restés à la maison. {3} les {4}-ils oubliés ? Peut-être sur la table, {5} dans le sac de sport."),
+        parts:[mcq(opts(['et','est']),'et'), mcq(opts(['a','à']),'à'), mcq(opts(['son','sont']),'sont'), mcq(opts(['Ou','Où']),'où'), mcq(opts(['on','ont']),'ont'), mcq(opts(['ou','où']),'ou')]}
+    ]},
+    {num:9, titre:"Défi : justifie et invente", etoiles:3, consigne:"Choisis le bon mot ET écris le mot de remplacement qui le prouve.", items:[
+      {id:'f2e9a', t:tmpl("a) Il {0} mangé son goûter. → je remplace par : {1}"), parts:[mcq(opts(['a','à']),'a'), textPart('avait',{placeholder:'avait'})]},
+      {id:'f2e9b', t:tmpl("b) Elle habite {0} Málaga. → {1}"), parts:[mcq(opts(['a','à']),'à'), mcq(OPT_OUINON,'non')]},
+      {id:'f2e9c', t:tmpl("c) Les chats {0} dans le jardin. → je remplace par : {1}"), parts:[mcq(opts(['son','sont']),'sont'), textPart('étaient',{placeholder:'étaient'})]},
+      {id:'f2e9d', t:tmpl("d) Écris une phrase avec « où » et une autre avec « ou »."), parts:[write(null,"une phrase avec « où » (lieu/temps) et une avec « ou » (un choix).")]}
+    ]}
+  ],
+  corrige:[
+    "Exercice 1 : a) et — b) est — c) est — d) et.",
+    "Exercice 2 : a) On — b) ont — c) On — d) ont.",
+    "Exercice 3 : a) son — b) sont — c) son — d) sont.",
+    "Exercice 4 : a) a — b) à — c) a — d) à.",
+    "Exercice 5 : a) ou — b) Où — c) où — d) ou.",
+    "Exercice 6 : a) et, sont — b) où, ont.",
+    "Exercice 7 : a) a, son, est — b) Où, ont, ou.",
+    "Exercice 8 : et, à, sont, Où, ont, ou (dans cet ordre).",
+    "Exercice 9 : a) a → « avait » — b) à → aucun remplacement ne marche — c) sont → « étaient ». d) réponse libre, vérifiez le sens (lieu pour « où », choix pour « ou »)."
+  ]
+},
+{
+  id:3, color:'f3', badge:3, title:"Encadrer un nombre entre deux centaines",
+  eyebrow:"Numération", desc:"Trouver le nombre rond juste en dessous et juste au-dessus.",
+  lesson:[
+    {k:'note', text:"Encadrer un nombre dans une unité donnée, c'est trouver le nombre rond juste en dessous et celui juste au-dessus."},
+    {k:'rule', tag:'Méthode', title:'Entre deux dizaines', desc:"Je regarde le chiffre des unités : je descends à la dizaine du dessous (dernier chiffre = 0), je monte à la dizaine du dessus (+10)."},
+    {k:'rule', tag:'Méthode', title:'Entre deux centaines', desc:"Je regarde les deux derniers chiffres : je descends à la centaine du dessous, je monte à la centaine du dessus (+100)."},
+    {k:'rule', tag:'Méthode', title:'Entre deux milliers', desc:"Je regarde les trois derniers chiffres : je descends au millier du dessous, je monte au millier du dessus (+1000)."},
+    {k:'steps', title:"Exemple pas à pas : encadrer 4 587 entre deux centaines", steps:[
+      "Les deux derniers chiffres sont « 87 ».",
+      "Je les remplace par « 00 » pour la borne du dessous : 4 500.",
+      "J'ajoute 100 pour trouver la borne du dessus : 4 600.",
+      "Résultat : 4 500 < 4 587 < 4 600."
+    ]},
+    {k:'tip', text:"Le nombre encadré ne doit jamais être égal à une des deux bornes."}
+  ],
+  exercises:[
+    {num:1, titre:"Encadre entre deux dizaines (nombres à 2 chiffres)", etoiles:1, consigne:"", items:[
+      {id:'f3e1a', t:tmpl("a) {0} < 34 < {1}"), parts:[fill(30),fill(40)]},
+      {id:'f3e1b', t:tmpl("b) {0} < 78 < {1}"), parts:[fill(70),fill(80)]},
+      {id:'f3e1c', t:tmpl("c) {0} < 62 < {1}"), parts:[fill(60),fill(70)]}
+    ]},
+    {num:2, titre:"Encadre entre deux dizaines (nombres à 3 chiffres)", etoiles:1, consigne:"", items:[
+      {id:'f3e2a', t:tmpl("a) {0} < 253 < {1}"), parts:[fill(250),fill(260)]},
+      {id:'f3e2b', t:tmpl("b) {0} < 486 < {1}"), parts:[fill(480),fill(490)]}
+    ]},
+    {num:3, titre:"Encadre entre deux centaines (nombres à 3 chiffres)", etoiles:2, consigne:"", items:[
+      {id:'f3e3a', t:tmpl("a) {0} < 347 < {1}"), parts:[fill(300),fill(400)]},
+      {id:'f3e3b', t:tmpl("b) {0} < 782 < {1}"), parts:[fill(700),fill(800)]}
+    ]},
+    {num:4, titre:"Encadre entre deux centaines (nombres à 4 chiffres)", etoiles:2, consigne:"", items:[
+      {id:'f3e4a', t:tmpl("a) {0} < 4 587 < {1}"), parts:[fill(4500),fill(4600)]},
+      {id:'f3e4b', t:tmpl("b) {0} < 2 219 < {1}"), parts:[fill(2200),fill(2300)]},
+      {id:'f3e4c', t:tmpl("c) {0} < 9 340 < {1}"), parts:[fill(9300),fill(9400)]}
+    ]},
+    {num:5, titre:"Encadre entre deux milliers", etoiles:2, consigne:"", items:[
+      {id:'f3e5a', t:tmpl("a) {0} < 4 587 < {1}"), parts:[fill(4000),fill(5000)]},
+      {id:'f3e5b', t:tmpl("b) {0} < 7 102 < {1}"), parts:[fill(7000),fill(8000)]}
+    ]},
+    {num:6, titre:"Attention, ça piège ! (changement de millier)", etoiles:3, consigne:"Encadre entre deux centaines.", items:[
+      {id:'f3e6a', t:tmpl("a) {0} < 3 998 < {1}"), parts:[fill(3900),fill(4000)]},
+      {id:'f3e6b', t:tmpl("b) {0} < 5 007 < {1}"), parts:[fill(5000),fill(5100)]}
+    ]},
+    {num:7, titre:"Retrouve le nombre mystère", etoiles:3, consigne:"", items:[
+      {id:'f3e7a', t:tmpl("a) 4 200 < n < 4 300. Il se termine par 56. n = {0}"), parts:[fill(4256)]},
+      {id:'f3e7b', t:tmpl("b) 7 000 < n < 8 000 et 7 300 < n < 7 400. Il se termine par 45. n = {0}"), parts:[fill(7345)]}
+    ]},
+    {num:8, titre:"Défi : problème", etoiles:3, consigne:"Un stade contient exactement 6 748 spectateurs un soir de match.", items:[
+      {id:'f3e8a', t:tmpl("Entre quelles deux centaines ce nombre est-il encadré ? {0} < 6 748 < {1}"), parts:[fill(6700),fill(6800)]},
+      {id:'f3e8b', t:tmpl("Entre quels deux milliers ce nombre est-il encadré ? {0} < 6 748 < {1}"), parts:[fill(6000),fill(7000)]}
+    ]}
+  ],
+  corrige:[
+    "Exercice 1 : a) 30 < 34 < 40 — b) 70 < 78 < 80 — c) 60 < 62 < 70.",
+    "Exercice 2 : a) 250 < 253 < 260 — b) 480 < 486 < 490.",
+    "Exercice 3 : a) 300 < 347 < 400 — b) 700 < 782 < 800.",
+    "Exercice 4 : a) 4 500 < 4 587 < 4 600 — b) 2 200 < 2 219 < 2 300 — c) 9 300 < 9 340 < 9 400.",
+    "Exercice 5 : a) 4 000 < 4 587 < 5 000 — b) 7 000 < 7 102 < 8 000.",
+    "Exercice 6 : a) 3 900 < 3 998 < 4 000 — b) 5 000 < 5 007 < 5 100. Le piège : la centaine du dessous de 5 007 est bien 5 000, pas 4 900.",
+    "Exercice 7 : a) n = 4 256 — b) n = 7 345.",
+    "Exercice 8 : 6 700 < 6 748 < 6 800 et 6 000 < 6 748 < 7 000."
+  ]
+},
+{
+  id:4, color:'f4', badge:4, title:"Comparer et calculer avec des fractions",
+  eyebrow:"Fractions", desc:"Numérateur, dénominateur, comparaisons, additions et soustractions.",
+  lesson:[
+    {k:'note', text:"Dans une fraction a/b : b est le nombre de parts égales du tout (le dénominateur), a est le nombre de parts prises (le numérateur)."},
+    {k:'rule', tag:'Règle 1', title:'Même dénominateur', desc:"Je compare les numérateurs. Le plus grand numérateur donne la plus grande fraction.", ex:"3/5 < 4/5 car 3 < 4"},
+    {k:'rule', tag:'Règle 2 — piège', title:'Même numérateur', desc:"Plus le dénominateur est grand, plus les parts sont petites, donc la fraction est plus petite.", ex:"2/7 < 2/3 car les septièmes sont plus petits que les tiers"},
+    {k:'rule', tag:'Calcul', title:'Addition et soustraction (même dénominateur)', desc:"Je garde le dénominateur, je calcule seulement avec les numérateurs.", ex:"2/8 + 3/8 = 5/8"},
+    {k:'tip', text:"En cas de doute, je dessine une bande ou un cercle partagé en parts égales."}
+  ],
+  exercises:[
+    {num:1, titre:"Compare (même dénominateur)", etoiles:1, consigne:"", items:[
+      {id:'f4e1a', t:tmpl("a) 2/6 {0} 5/6"), parts:[mcq(OPT_CMP,'lt')]},
+      {id:'f4e1b', t:tmpl("b) 7/9 {0} 4/9"), parts:[mcq(OPT_CMP,'gt')]},
+      {id:'f4e1c', t:tmpl("c) 3/4 {0} 1/4"), parts:[mcq(OPT_CMP,'gt')]}
+    ]},
+    {num:2, titre:"Colorie puis compare", etoiles:1, consigne:"Colorie 3/5 de la première bande, puis 4/5 de la seconde.", items:[
+      {id:'f4e2a', custom:'colorbar', bars:[{target:3,segs:5,label:'Bande 1 — colorie 3/5'},{target:4,segs:5,label:'Bande 2 — colorie 4/5'}],
+       cmpOptions:[{v:'b1',l:'La bande 1 (3/5)'},{v:'b2',l:'La bande 2 (4/5)'}], cmpAnswer:'b2', cmpQuestion:"Laquelle est la plus grande ?"}
+    ]},
+    {num:3, titre:"Compare (même numérateur — le piège)", etoiles:2, consigne:"", items:[
+      {id:'f4e3a', t:tmpl("a) 2/5 {0} 2/8"), parts:[mcq(OPT_CMP,'gt')]},
+      {id:'f4e3b', t:tmpl("b) 3/4 {0} 3/10"), parts:[mcq(OPT_CMP,'gt')]},
+      {id:'f4e3c', t:tmpl("c) 1/3 {0} 1/6"), parts:[mcq(OPT_CMP,'gt')]}
+    ]},
+    {num:4, titre:"Trouve la bonne règle, puis compare", etoiles:2, consigne:"Dis d'abord si c'est le numérateur ou le dénominateur qui est commun.", items:[
+      {id:'f4e4a', t:tmpl("a) 4/7 {0} 4/9\ncommun : {1}"), parts:[mcq(OPT_CMP,'gt'), mcq(OPT_RULE,'num')]},
+      {id:'f4e4b', t:tmpl("b) 5/8 {0} 3/8\ncommun : {1}"), parts:[mcq(OPT_CMP,'gt'), mcq(OPT_RULE,'den')]},
+      {id:'f4e4c', t:tmpl("c) 5/9 {0} 5/6\ncommun : {1}"), parts:[mcq(OPT_CMP,'lt'), mcq(OPT_RULE,'num')]}
+    ]},
+    {num:5, titre:"Additionne", etoiles:2, consigne:"", items:[
+      {id:'f4e5a', t:tmpl("a) 1/6 + 3/6 = {0}"), parts:[frac(4,6)]},
+      {id:'f4e5b', t:tmpl("b) 2/8 + 5/8 = {0}"), parts:[frac(7,8)]},
+      {id:'f4e5c', t:tmpl("c) 3/10 + 4/10 = {0}"), parts:[frac(7,10)]}
+    ]},
+    {num:6, titre:"Soustrais", etoiles:2, consigne:"", items:[
+      {id:'f4e6a', t:tmpl("a) 5/6 − 2/6 = {0}"), parts:[frac(3,6)]},
+      {id:'f4e6b', t:tmpl("b) 7/9 − 4/9 = {0}"), parts:[frac(3,9)]},
+      {id:'f4e6c', t:tmpl("c) 8/10 − 3/10 = {0}"), parts:[frac(5,10)]}
+    ]},
+    {num:7, titre:"Mélange addition et soustraction", etoiles:3, consigne:"", items:[
+      {id:'f4e7a', t:tmpl("a) 2/4 + 1/4 = {0}"), parts:[frac(3,4)]},
+      {id:'f4e7b', t:tmpl("b) 9/12 − 5/12 = {0}"), parts:[frac(4,12)]},
+      {id:'f4e7c', t:tmpl("c) 3/6 + 2/6 = {0}"), parts:[frac(5,6)]}
+    ]},
+    {num:8, titre:"Problème", etoiles:3, consigne:"Une pizza est coupée en 8 parts égales. Léo en mange 2/8, sa sœur en mange 3/8.", items:[
+      {id:'f4e8a', t:tmpl("Quelle fraction ont-ils mangée à eux deux ? {0}"), parts:[frac(5,8)]},
+      {id:'f4e8b', t:tmpl("Quelle fraction de la pizza reste-t-il ? {0}"), parts:[frac(3,8)]}
+    ]},
+    {num:9, titre:"Défi : range puis calcule", etoiles:3, consigne:"Range ces fractions dans l'ordre croissant, puis calcule la somme des deux plus petites.", items:[
+      {id:'f4e9a', custom:'order', chips:['3/8','6/8','1/8'], order:['1/8','3/8','6/8']},
+      {id:'f4e9b', t:tmpl("Somme des deux plus petites : {0}"), parts:[frac(4,8)]}
+    ]}
+  ],
+  corrige:[
+    "Exercice 1 : a) 2/6 < 5/6 — b) 7/9 > 4/9 — c) 3/4 > 1/4.",
+    "Exercice 2 : 4/5 est plus grand que 3/5 (4 parts coloriées valent plus que 3 parts identiques).",
+    "Exercice 3 : a) 2/5 > 2/8 — b) 3/4 > 3/10 — c) 1/3 > 1/6. Dans les trois cas, le dénominateur le plus petit donne la fraction la plus grande.",
+    "Exercice 4 : a) numérateur commun, 4/7 > 4/9 — b) dénominateur commun, 5/8 > 3/8 — c) numérateur commun, 5/9 < 5/6.",
+    "Exercice 5 : a) 4/6 — b) 7/8 — c) 7/10.",
+    "Exercice 6 : a) 3/6 — b) 3/9 — c) 5/10.",
+    "Exercice 7 : a) 3/4 — b) 4/12 — c) 5/6.",
+    "Exercice 8 : 5/8 mangée à eux deux ; il reste 3/8.",
+    "Exercice 9 : ordre croissant 1/8 < 3/8 < 6/8 ; somme des deux plus petites = 1/8 + 3/8 = 4/8."
+  ]
+},
+{
+  id:5, color:'f5', badge:5, title:"Problèmes de partage avec reste",
+  eyebrow:"Problèmes", desc:"Le quotient, le reste, et la vérification qui ne trompe jamais.",
+  lesson:[
+    {k:'note', text:"Partager équitablement, c'est diviser : je cherche combien de fois le nombre de parts « rentre » dans le total. Il y a deux résultats à distinguer : le QUOTIENT (ce que reçoit chaque part) et le RESTE (ce qu'il reste, trop petit pour faire une part de plus)."},
+    {k:'steps', title:"Exemple : partager 29 billes en 4 sacs", steps:[
+      "Table de 4 : 4, 8, 12, 16, 20, 24, 28...",
+      "28 est juste en dessous de 29.",
+      "quotient = 7 (car 4 × 7 = 28)",
+      "reste = 29 − 28 = 1"
+    ]},
+    {k:'rule', tag:'Toujours vérifier', title:'(quotient × diviseur) + reste = dividende', desc:"Le reste doit toujours être plus petit que le diviseur."},
+    {k:'tip', text:"Piège fréquent : un problème pose parfois deux questions à la suite (le partage normal, puis une variante « et si on en avait plus ? »). Il faut bien répondre aux deux séparément."}
+  ],
+  exercises:[
+    {num:1, titre:"Partage exact, sans reste", etoiles:1, consigne:"", items:[
+      {id:'f5e1a', t:tmpl("a) 12 bonbons entre 4 enfants. Chacun en a combien ? {0}"), parts:[fill(3)]},
+      {id:'f5e1b', t:tmpl("b) 20 images entre 5 albums. Chaque album en a combien ? {0}"), parts:[fill(4)]}
+    ]},
+    {num:2, titre:"Partage avec un reste évident", etoiles:1, consigne:"", items:[
+      {id:'f5e2a', t:tmpl("a) 13 bonbons entre 4 enfants. Chacun en a combien ? {0}  Il en reste combien ? {1}"), parts:[fill(3,{label:'par enfant'}),fill(1,{label:'reste'})]},
+      {id:'f5e2b', t:tmpl("b) 17 images entre 5 albums. Chaque album en a combien ? {0}  Il en reste combien ? {1}"), parts:[fill(3,{label:'par album'}),fill(2,{label:'reste'})]}
+    ]},
+    {num:3, titre:"Nombres un peu plus grands", etoiles:2, consigne:"", items:[
+      {id:'f5e3a', t:tmpl("a) 45 crayons entre 6 trousses. Combien par trousse ? {0}  Combien en reste-t-il ? {1}"), parts:[fill(7),fill(3)]},
+      {id:'f5e3b', t:tmpl("b) 58 billes entre 7 sacs. Combien par sac ? {0}  Combien en reste-t-il ? {1}"), parts:[fill(8),fill(2)]}
+    ]},
+    {num:4, titre:"Deux questions à la suite (comme dans l'évaluation)", etoiles:2, consigne:"On partage équitablement 40 œufs entre 6 boîtes.", items:[
+      {id:'f5e4a', t:tmpl("Combien d'œufs par boîte ? {0}  Combien en reste-t-il ? {1}"), parts:[fill(6),fill(4)]},
+      {id:'f5e4b', t:tmpl("Et si on avait eu 48 œufs, combien par boîte ? {0}  Combien en resterait-il ? {1}"), parts:[fill(8),fill(0)]}
+    ]},
+    {num:5, titre:"Il faut d'abord calculer le total", etoiles:3, consigne:"Léo a 24 billes. Son frère lui en donne 15 de plus. Ils rangent toutes les billes également dans 5 sacs.", items:[
+      {id:'f5e5a', t:tmpl("Total de billes : {0}  Billes par sac : {1}  Il en reste : {2}"), parts:[fill(39,{label:'total'}),fill(7,{label:'par sac'}),fill(4,{label:'reste'})]}
+    ]},
+    {num:6, titre:"Problème de boîtes pleines", etoiles:3, consigne:"On veut ranger 50 œufs dans des boîtes de 6 œufs chacune.", items:[
+      {id:'f5e6a', t:tmpl("Combien de boîtes peut-on remplir complètement ? {0}  Combien d'œufs restent en dehors ? {1}"), parts:[fill(8,{label:'boîtes'}),fill(2,{label:'restants'})]}
+    ]},
+    {num:7, titre:"Défi : avec vérification", etoiles:3, consigne:"On partage 67 stylos entre 8 trousses.", items:[
+      {id:'f5e7a', t:tmpl("Combien par trousse ? {0}  Combien en reste-t-il ? {1}"), parts:[fill(8),fill(3)]},
+      {id:'f5e7b', t:tmpl("Écris l'opération qui vérifie ton résultat."), parts:[write("8 × 8 + 3 = 67")]}
+    ]}
+  ],
+  corrige:[
+    "Exercice 1 : a) 3 par enfant — b) 4 par album.",
+    "Exercice 2 : a) 3 par enfant, reste 1 — b) 3 par album, reste 2.",
+    "Exercice 3 : a) 7 par trousse, reste 3 — b) 8 par sac, reste 2.",
+    "Exercice 4 : avec 40 œufs, 6 par boîte, reste 4. Avec 48 œufs, 8 par boîte, reste 0.",
+    "Exercice 5 : total 24 + 15 = 39 billes ; 7 billes par sac, reste 4.",
+    "Exercice 6 : 8 boîtes pleines (6 × 8 = 48), il reste 2 œufs.",
+    "Exercice 7 : 8 stylos par trousse, reste 3. Vérification : 8 × 8 + 3 = 67."
+  ]
+},
+{
+  id:6, color:'f6', badge:6, title:"Grandeurs et mesures",
+  eyebrow:"Mesures", desc:"Conversions, durées, monnaie et périmètre.",
+  lesson:[
+    {k:'tag', text:'A. Les conversions'},
+    {k:'table', headers:['Grandeur','Équivalences'], rows:[
+      ['Longueurs','1 km = 1 000 m,  1 m = 100 cm,  1 cm = 10 mm'],
+      ['Masses','1 kg = 1 000 g'],
+      ['Contenances','1 L = 100 cL = 10 dL']
+    ]},
+    {k:'note', text:"D'une grande unité vers une petite, je multiplie (j'ajoute des zéros). D'une petite vers une grande, je divise."},
+    {k:'tag', text:'B. Les durées'},
+    {k:'note', text:"1 heure = 60 minutes. Méthode : j'additionne d'abord les minutes. Si j'obtiens 60 minutes ou plus, je retire 60 minutes et j'ajoute 1 heure."},
+    {k:'tag', text:'C. La monnaie'},
+    {k:'note', text:"Les euros et les centimes s'écrivent avec une virgule (exemple : 4,56 €). J'additionne ou je soustrais comme n'importe quel nombre à virgule, en alignant bien les virgules."},
+    {k:'tag', text:'D. Le périmètre'},
+    {k:'rule', tag:'Rectangle', title:'périmètre = (longueur + largeur) × 2', desc:"Le périmètre, c'est la somme de tous les côtés."},
+    {k:'rule', tag:'Carré', title:'périmètre = côté × 4', desc:"Tous les côtés d'un carré sont égaux."}
+  ],
+  exercises:[
+    {num:1, titre:"Conversions (grande vers petite unité)", etoiles:1, consigne:"", items:[
+      {id:'f6e1a', t:tmpl("a) 4 m = {0} cm"), parts:[fill(400,{unit:'cm'})]},
+      {id:'f6e1b', t:tmpl("b) 3 kg = {0} g"), parts:[fill(3000,{unit:'g'})]},
+      {id:'f6e1c', t:tmpl("c) 2 L = {0} cL"), parts:[fill(200,{unit:'cl'})]}
+    ]},
+    {num:2, titre:"Conversions (petite vers grande unité)", etoiles:1, consigne:"", items:[
+      {id:'f6e2a', t:tmpl("a) 500 cm = {0} m"), parts:[fill(5,{unit:'m'})]},
+      {id:'f6e2b', t:tmpl("b) 4 000 g = {0} kg"), parts:[fill(4,{unit:'kg'})]},
+      {id:'f6e2c', t:tmpl("c) 300 cL = {0} L"), parts:[fill(3,{unit:'l'})]}
+    ]},
+    {num:3, titre:"Conversions avec le kilomètre", etoiles:2, consigne:"", items:[
+      {id:'f6e3a', t:tmpl("a) 2 km = {0} m"), parts:[fill(2000,{unit:'m'})]},
+      {id:'f6e3b', t:tmpl("b) 6 000 m = {0} km"), parts:[fill(6,{unit:'km'})]}
+    ]},
+    {num:4, titre:"Additionne des durées (sans dépasser 60 minutes)", etoiles:2, consigne:"", items:[
+      {id:'f6e4a', t:tmpl("a) 2 h 10 + 1 h 15 = {0}"), parts:[dur(3,25)]},
+      {id:'f6e4b', t:tmpl("b) 3 h 20 + 2 h 30 = {0}"), parts:[dur(5,50)]}
+    ]},
+    {num:5, titre:"Additionne des durées (avec dépassement de 60 minutes)", etoiles:2, consigne:"", items:[
+      {id:'f6e5a', t:tmpl("a) 2 h 45 + 1 h 30 = {0}"), parts:[dur(4,15)]},
+      {id:'f6e5b', t:tmpl("b) 1 h 50 + 0 h 40 = {0}"), parts:[dur(2,30)]}
+    ]},
+    {num:6, titre:"Trouve l'heure de fin", etoiles:2, consigne:"", items:[
+      {id:'f6e6a', t:tmpl("a) Un match commence à 10 h 30 et dure 1 h 45. Il se termine à {0}"), parts:[dur(12,15)]},
+      {id:'f6e6b', t:tmpl("b) Un film commence à 20 h 50 et dure 2 h 10. Il se termine à {0}"), parts:[dur(23,0)]}
+    ]},
+    {num:7, titre:"Additionne des sommes en euros", etoiles:2, consigne:"", items:[
+      {id:'f6e7a', t:tmpl("a) 3,50 € + 2,40 € = {0}"), parts:[money(5.90)]},
+      {id:'f6e7b', t:tmpl("b) 7,25 € + 4,80 € = {0}"), parts:[money(12.05)]}
+    ]},
+    {num:8, titre:"Problème de monnaie", etoiles:3, consigne:"Madeline a 15 €. Elle achète un carnet à 4,90 € et un crayon à 1,60 €.", items:[
+      {id:'f6e8a', t:tmpl("Combien lui reste-t-il ? {0}"), parts:[money(8.50)]}
+    ]},
+    {num:9, titre:"Calcule un périmètre", etoiles:3, consigne:"", items:[
+      {id:'f6e9a', t:tmpl("a) Un rectangle mesure 7 cm sur 4 cm. Son périmètre : {0}"), parts:[fill(22,{unit:'cm'})]},
+      {id:'f6e9b', t:tmpl("b) Un carré a des côtés de 6 cm. Son périmètre : {0}"), parts:[fill(24,{unit:'cm'})]}
+    ]},
+    {num:10, titre:"Défi : problème de synthèse", etoiles:3, consigne:"Un jardin rectangulaire mesure 12 m de longueur et 8 m de largeur.", items:[
+      {id:'f6e10a', t:tmpl("Périmètre en mètres : {0}  Converti en centimètres : {1}"), parts:[fill(40,{unit:'m'}),fill(4000,{unit:'cm'})]}
+    ]}
+  ],
+  corrige:[
+    "Exercice 1 : a) 400 cm — b) 3 000 g — c) 200 cL.",
+    "Exercice 2 : a) 5 m — b) 4 kg — c) 3 L.",
+    "Exercice 3 : a) 2 000 m — b) 6 km.",
+    "Exercice 4 : a) 3 h 25 — b) 5 h 50.",
+    "Exercice 5 : a) 4 h 15 (45 + 30 = 75 min = 1 h 15) — b) 2 h 30 (50 + 40 = 90 min = 1 h 30).",
+    "Exercice 6 : a) 12 h 15 — b) 23 h 00.",
+    "Exercice 7 : a) 5,90 € — b) 12,05 €.",
+    "Exercice 8 : 4,90 € + 1,60 € = 6,50 € dépensés ; 15 € − 6,50 € = 8,50 € restants.",
+    "Exercice 9 : a) (7 + 4) × 2 = 22 cm — b) 6 × 4 = 24 cm.",
+    "Exercice 10 : périmètre = (12 + 8) × 2 = 40 m, soit 4 000 cm."
+  ]
+}
+];
+
+/* ============ STATE ============ */
+const LS_KEY = 'madeline_carnet_etoiles_v1';
+let state = { items:{}, ficheMeta:{} };
+function loadState(){
+  try{
+    const raw = localStorage.getItem(LS_KEY);
+    if(raw) state = JSON.parse(raw);
+  }catch(e){}
+  if(!state.items) state.items={};
+  if(!state.ficheMeta) state.ficheMeta={};
+}
+function saveState(){
+  try{ localStorage.setItem(LS_KEY, JSON.stringify(state)); }catch(e){}
+}
+function getItemState(id, partCount){
+  if(!state.items[id]){
+    state.items[id] = { parts: Array.from({length:partCount||1}, ()=>({status:'pending', triesWrong:0, firstTry:false})) };
+  }
+  return state.items[id];
+}
+function markPart(itemId, idx, correct){
+  const st = state.items[itemId];
+  const p = st.parts[idx];
+  if(p.status==='resolved-correct') return;
+  if(correct){
+    p.status='resolved-correct';
+    p.firstTry = (p.triesWrong===0);
+  } else {
+    p.triesWrong = (p.triesWrong||0)+1;
+  }
+  saveState();
+}
+
+function ficheStats(fiche){
+  let total=0, resolved=0, firstTry=0;
+  fiche.exercises.forEach(ex=>ex.items.forEach(it=>{
+    if(it.custom){
+      total+=1;
+      const st = state.items[it.id];
+      if(st && st.resolved){ resolved+=1; if(st.firstTry) firstTry+=1; }
+      return;
+    }
+    total += it.parts.length;
+    const st = state.items[it.id];
+    if(!st) return;
+    st.parts.forEach(p=>{
+      if(p.status && p.status!=='pending'){
+        resolved+=1;
+        if(p.status==='resolved-correct' && p.firstTry) firstTry+=1;
+      }
+    });
+  }));
+  const complete = total>0 && resolved>=total;
+  let stars=0;
+  if(complete){
+    const ratio = total? firstTry/total : 0;
+    stars = ratio>=0.85 ? 3 : (ratio>=0.5 ? 2 : 1);
+  }
+  return {total,resolved,firstTry,complete,stars};
+}
+function totalStars(){
+  let s=0; FICHES.forEach(f=>{ s+=ficheStats(f).stars; });
+  return s;
+}
+
+/* ============ MASCOT SPEECH ============ */
+const POOLS = {
+  correctFirst:["Bravo Madeline, du premier coup ! ✨","Wahou, tu assures !","Pile la bonne réponse !","Hop, une étoile de plus !","Tu es en pleine forme !"],
+  correctRetry:["Voilà, tu l'as trouvée !","Bien joué, tu as persévéré !","C'est ça ! Bravo.","Et voilà le travail !"],
+  wrong:["Presque ! Essaie encore.","Pas tout à fait... regarde bien et retente.","Hop, on y retourne !","Relis la phrase et retente, tu vas trouver.","Petit indice : relis « Je retiens » un peu plus haut."],
+  exerciseDone:["Exercice terminé, tu avances bien !","Un exercice de plus dans la poche !","Super, on continue ?"],
+  ficheWelcome:["On y va ? Relis d'abord « Je retiens » à voix haute !","Prête, Madeline ? Cette fiche va être un jeu d'enfant... ou presque !","Je suis là si tu as besoin d'un indice, relis la leçon en haut !"],
+  ficheDone:["INCROYABLE ! Fiche terminée !","Tu as fini cette fiche comme une championne !","Une île de plus sur la carte du ciel !"]
+};
+const lastPick = {};
+function pool(name){ if(!lastPick[name]) lastPick[name]={v:-1}; return pickVaried(POOLS[name], lastPick[name]); }
+let bubbleTimer=null;
+function say(text, mood){
+  const bubble = document.getElementById('owlBubble');
+  bubble.textContent = text;
+  bubble.classList.add('show');
+  owlReact(mood);
+  clearTimeout(bubbleTimer);
+  bubbleTimer = setTimeout(()=>bubble.classList.remove('show'), 4200);
+  const heroSpeech = document.getElementById('heroSpeech');
+  if(heroSpeech && document.getElementById('view-map').classList.contains('active')){
+    heroSpeech.textContent = '“'+text+'”';
+  }
+}
+function reactMascot(itemId, correct, retry){
+  if(correct){ playCorrect(); say(pool(retry?'correctRetry':'correctFirst'),'cheer'); }
+  else { playRetry(); say(pool('wrong'),'oops'); }
+}
+
+/* ============ RENDER: STAR ICON ============ */
+function starSvg(filled){
+  return '<svg viewBox="0 0 24 24" fill="currentColor" class="'+(filled?'filled':'')+'"><path d="M12 2.5l2.9 6.4 6.9.7-5.2 4.7 1.5 6.9L12 17.6 5.9 21.2l1.5-6.9-5.2-4.7 6.9-.7z"/></svg>';
+}
+function starsRowHtml(n){
+  let h='';
+  for(let i=0;i<3;i++) h+=starSvg(i<n);
+  return h;
+}
+
+/* ============ RENDER: MAP ============ */
+function renderMap(){
+  const grid = document.getElementById('mapGrid');
+  grid.innerHTML='';
+  FICHES.forEach((f,idx)=>{
+    const stats = ficheStats(f);
+    const card = el('button','fiche-card');
+    card.style.setProperty('--accent','var(--'+f.color+')');
+    card.style.setProperty('--accent-soft','var(--'+f.color+'-soft)');
+    card.type='button';
+    card.setAttribute('data-fiche', f.id);
+    let statusLabel = 'Commencer';
+    let pillClass='todo';
+    if(stats.complete){ statusLabel='Revoir ✓'; pillClass=''; }
+    else if(stats.resolved>0){ statusLabel='Continuer'; pillClass=''; }
+    card.innerHTML =
+      '<div class="fiche-card-top">'+
+        '<div class="badge-icon">'+badgeSvg(f.badge)+'</div>'+
+        '<div><span class="fiche-eyebrow">Fiche '+f.id+' • '+f.eyebrow+'</span><h2>'+f.title+'</h2></div>'+
+      '</div>'+
+      '<p class="desc">'+f.desc+'</p>'+
+      '<div class="fiche-card-bottom">'+
+        '<div class="stars-row" aria-label="'+stats.stars+' étoile(s) sur 3">'+starsRowHtml(stats.stars)+'</div>'+
+        '<span class="status-pill '+pillClass+'">'+statusLabel+'</span>'+
+      '</div>';
+    card.addEventListener('click', ()=>openFiche(f.id));
+    grid.appendChild(card);
+  });
+  updateStarCount();
+  drawConstellation();
+  checkFinale(false);
+}
+function drawConstellation(){
+  const svg = document.getElementById('constellationSvg');
+  const wrap = document.querySelector('.map-wrap');
+  const cards = Array.from(document.querySelectorAll('.fiche-card'));
+  if(!wrap || cards.length<2){ svg.innerHTML=''; return; }
+  const wrapRect = wrap.getBoundingClientRect();
+  svg.setAttribute('width', wrapRect.width);
+  svg.setAttribute('height', wrapRect.height);
+  svg.setAttribute('viewBox','0 0 '+wrapRect.width+' '+wrapRect.height);
+  let lines='';
+  for(let i=0;i<cards.length-1;i++){
+    const a = cards[i].getBoundingClientRect(); const b = cards[i+1].getBoundingClientRect();
+    const x1=a.left+a.width/2-wrapRect.left, y1=a.top+a.height/2-wrapRect.top;
+    const x2=b.left+b.width/2-wrapRect.left, y2=b.top+b.height/2-wrapRect.top;
+    const litA = ficheStats(FICHES[i]).complete, litB = ficheStats(FICHES[i+1]).complete;
+    lines += '<line x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'" class="'+((litA&&litB)?'lit':'')+'"></line>';
+  }
+  svg.innerHTML = lines;
+}
+window.addEventListener('resize', ()=>{ if(document.getElementById('view-map').classList.contains('active')) drawConstellation(); });
+
+function updateStarCount(){
+  document.getElementById('starCountText').textContent = totalStars()+' / '+(FICHES.length*3);
+}
+
+/* ============ RENDER: FICHE PAGE ============ */
+let currentFicheId = null;
+function openFiche(id){
+  currentFicheId = id;
+  const fiche = FICHES.find(f=>f.id===id);
+  document.getElementById('view-map').classList.remove('active');
+  document.getElementById('view-fiche').classList.add('active');
+  document.getElementById('backBtn').hidden = false;
+  renderFiche(fiche);
+  window.scrollTo({top:0,behavior:'instant' in window ? 'instant':'auto'});
+  say(pool('ficheWelcome'), null);
+}
+function goToMap(){
+  currentFicheId = null;
+  document.getElementById('view-fiche').classList.remove('active');
+  document.getElementById('view-map').classList.add('active');
+  document.getElementById('backBtn').hidden = true;
+  renderMap();
+  window.scrollTo({top:0,behavior:'instant' in window ? 'instant':'auto'});
+}
+document.getElementById('backBtn').addEventListener('click', goToMap);
+
+function lessonBlockHtml(fiche, block){
+  if(block.k==='rule'){
+    return '<div class="lesson-card">'+(block.tag?'<span class="tagline">'+block.tag+'</span><br>':'')+
+      '<h3 class="rule-title">'+block.title+'</h3><p class="rule-desc">'+block.desc+'</p>'+
+      (block.ex?'<span class="rule-example">'+block.ex+'</span>':'')+'</div>';
+  }
+  if(block.k==='note'){
+    return '<div class="lesson-card"><p class="lesson-note" style="margin:0">'+block.text+'</p></div>';
+  }
+  if(block.k==='tip'){
+    return '<div class="lesson-card"><span class="tagline">Méthode</span><p style="margin:0">'+block.text+'</p></div>';
+  }
+  if(block.k==='tag'){
+    return '<h3 style="color:var(--accent);margin-top:1.4rem">'+block.text+'</h3>';
+  }
+  if(block.k==='steps'){
+    let items = block.steps.map((s,i)=>'<li><span class="step-num">'+(i+1)+'</span><span>'+s+'</span></li>').join('');
+    return '<div class="lesson-card"><span class="tagline">Exemple</span><h3 class="rule-title" style="font-size:1.05rem">'+block.title+'</h3><ul class="lesson-steps">'+items+'</ul></div>';
+  }
+  if(block.k==='table'){
+    let head = '<tr>'+block.headers.map(h=>'<th>'+h+'</th>').join('')+'</tr>';
+    let rows = block.rows.map(r=>'<tr>'+r.map(c=>'<td>'+c+'</td>').join('')+'</tr>').join('');
+    return '<div class="lesson-card"><div class="lesson-table-wrap"><table class="lesson-table">'+head+rows+'</table></div></div>';
+  }
+  return '';
+}
+
+function renderFiche(fiche){
+  const page = document.getElementById('fichePage');
+  page.style.setProperty('--accent','var(--'+fiche.color+')');
+  page.style.setProperty('--accent-soft','var(--'+fiche.color+'-soft)');
+  const stats = ficheStats(fiche);
+  let html = '';
+  html += '<div class="fiche-head"><div class="badge-icon">'+badgeSvg(fiche.badge)+'</div><div>'+
+    '<span class="fiche-eyebrow">Fiche '+fiche.id+' • '+fiche.eyebrow+'</span>'+
+    '<h1>'+fiche.title+'</h1>'+
+    '<div class="stars-row" id="ficheStarsRow">'+starsRowHtml(stats.stars)+'</div>'+
+    '</div></div>';
+  html += '<div class="completion-banner" id="completionBanner"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#fff9ef" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg><div><h3>Fiche terminée !</h3><div class="stars-row">'+starsRowHtml(stats.stars)+'</div></div></div>';
+  html += '<div class="section-label">Je retiens</div>';
+  fiche.lesson.forEach(b=>{ html += lessonBlockHtml(fiche,b); });
+  html += '<button class="mini-scroll-btn" id="scrollTopLessonBtn" type="button"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M12 19V5M5 12l7-7 7 7"/></svg>Revoir la leçon si besoin, à tout moment</button>';
+  html += '<div class="section-label">Les exercices</div>';
+  fiche.exercises.forEach(ex=>{
+    html += '<div class="exercise-card" data-exnum="'+ex.num+'">'+
+      '<div class="exercise-head"><h3>Exercice '+ex.num+' — '+ex.titre+'</h3><div class="stars-row">'+starsRowHtml(ex.etoiles)+'</div></div>'+
+      (ex.consigne?'<p class="exercise-instr">'+ex.consigne+'</p>':'')+
+      '<div class="exercise-items"></div>'+
+    '</div>';
+  });
+  html += '<div class="reset-row"><button class="reset-btn" id="resetFicheBtn" type="button">🔄 Recommencer cette fiche</button></div>';
+  html += renderParentsFolder(fiche);
+  page.innerHTML = html;
+
+  // populate items
+  const cards = page.querySelectorAll('.exercise-card');
+  fiche.exercises.forEach((ex,i)=>{
+    const container = cards[i].querySelector('.exercise-items');
+    ex.items.forEach(item=>{ container.appendChild(renderItem(item)); });
+  });
+  document.getElementById('scrollTopLessonBtn').addEventListener('click', ()=>{
+    page.querySelector('.section-label').scrollIntoView({behavior:'smooth', block:'start'});
+  });
+  const resetBtn = document.getElementById('resetFicheBtn');
+  let resetArmed = false, resetTimer = null;
+  resetBtn.addEventListener('click', ()=>{
+    if(!resetArmed){
+      resetArmed = true;
+      resetBtn.textContent = 'Sûr ? Clique encore pour confirmer';
+      resetBtn.classList.add('armed');
+      clearTimeout(resetTimer);
+      resetTimer = setTimeout(()=>{ resetArmed=false; resetBtn.textContent='🔄 Recommencer cette fiche'; resetBtn.classList.remove('armed'); }, 4000);
+      return;
+    }
+    clearTimeout(resetTimer);
+    fiche.exercises.forEach(ex=>ex.items.forEach(it=>{ delete state.items[it.id]; }));
+    delete state.ficheMeta[fiche.id];
+    saveState();
+    renderFiche(fiche);
+  });
+  refreshFicheProgress(fiche.id, true);
+}
+
+function renderParentsFolder(fiche){
+  let body = fiche.corrige.map(l=>'<p class="corrige-line">'+l+'</p>').join('');
+  return '<div class="folder" style="margin-top:2rem">'+
+    '<button class="folder-tab" data-parentsfiche="'+fiche.id+'" aria-expanded="false" type="button">'+
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="7" width="18" height="12" rx="1.5"/><path d="M3 8l9 6 9-6"/></svg>'+
+    'Coin des parents — corrigé de la fiche '+fiche.id+
+    '<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" style="margin-left:auto"><path d="M9 6l6 6-6 6"/></svg></button>'+
+    '<div class="folder-body" hidden>'+body+'</div></div>';
+}
+
+/* ============ RENDER: ITEMS ============ */
+function renderItem(item){
+  const wrap = el('div','item-card');
+  wrap.dataset.item = item.id;
+  if(item.custom==='order'){ wrap.appendChild(renderOrderItem(item)); wrap.appendChild(el('div','item-feedback')); return wrap; }
+  if(item.custom==='colorbar'){ wrap.appendChild(renderColorbarItem(item)); wrap.appendChild(el('div','item-feedback')); return wrap; }
+
+  getItemState(item.id, item.parts.length);
+  const p = el('p','item-prompt');
+  item.t.forEach(seg=>{
+    if(typeof seg==='string'){ p.appendChild(document.createTextNode(seg)); }
+    else { p.appendChild(renderPartControl(item, seg.b, item.parts[seg.b])); }
+  });
+  wrap.appendChild(p);
+
+  const hasFillLike = item.parts.some(pt=>pt.kind!=='mcq' && pt.kind!=='write');
+  if(hasFillLike){
+    const btn = el('button','verify-btn','Vérifier ✓');
+    btn.type='button'; btn.dataset.item=item.id;
+    wrap.appendChild(btn);
+  }
+  if(item.parts.some(pt=>pt.kind==='write')){
+    wrap.appendChild(renderWriteExtras(item));
+  }
+  wrap.appendChild(el('div','item-feedback'));
+  applyStoredState(item, wrap);
+  return wrap;
+}
+
+function renderPartControl(item, idx, part){
+  if(part.kind==='mcq'){
+    const span = el('span','mcq-group');
+    part.options.forEach(o=>{
+      const b = el('button','opt-btn', o.l);
+      b.type='button'; b.dataset.item=item.id; b.dataset.part=idx; b.dataset.val=o.v;
+      span.appendChild(b);
+    });
+    return span;
+  }
+  if(part.kind==='write'){ return document.createTextNode(''); }
+  const inp = document.createElement('input');
+  inp.type='text';
+  inp.className = 'fillinput'+(part.wide?' wide':'');
+  inp.dataset.item = item.id; inp.dataset.part = idx;
+  inp.setAttribute('aria-label', part.label || 'réponse');
+  if(part.placeholder) inp.placeholder = '(mot)';
+  inp.autocomplete='off'; inp.autocapitalize='off'; inp.spellcheck=false;
+  return inp;
+}
+
+function renderWriteExtras(item){
+  const holder = el('div','write-extra');
+  const writeIdxs = [];
+  item.parts.forEach((p,i)=>{ if(p.kind==='write') writeIdxs.push(i); });
+  writeIdxs.forEach(i=>{
+    const ta = document.createElement('textarea');
+    ta.className='writearea'; ta.rows=2; ta.dataset.item=item.id; ta.dataset.part=i;
+    ta.placeholder='Écris ta réponse ici…';
+    holder.appendChild(ta);
+  });
+  const revealBtn = el('button','reveal-btn',"Je compare ma réponse 🔎");
+  revealBtn.type='button'; revealBtn.dataset.item=item.id;
+  holder.appendChild(revealBtn);
+  const model = el('div','model-answer');
+  model.hidden = true;
+  model.innerHTML = writeIdxs.map(i=>{
+    const p = item.parts[i];
+    return p.model ? ('<strong>Exemple : </strong>'+p.model) : ('<strong>Vérifie : </strong>'+p.criteria);
+  }).join('<br>');
+  holder.appendChild(model);
+  const sr = el('div','selfreport-row');
+  sr.hidden = true;
+  sr.innerHTML = '<span>Alors ?</span>'+
+    '<button type="button" class="selfreport-btn" data-item="'+item.id+'" data-val="yes">J\'avais trouvé 🎉</button>'+
+    '<button type="button" class="selfreport-btn" data-item="'+item.id+'" data-val="no">Je note la correction 📝</button>';
+  holder.appendChild(sr);
+  return holder;
+}
+
+function renderOrderItem(item){
+  const holder = el('div','');
+  const st = state.items[item.id] = state.items[item.id] || {seq:[], resolved:false, firstTry:false, tries:0};
+  const p = el('p','item-prompt','Range ces fractions dans l’ordre croissant :');
+  holder.appendChild(p);
+  const chipRow = el('div','chip-row');
+  item.chips.forEach(c=>{
+    const b = el('button','chip-btn', c);
+    b.type='button'; b.dataset.item=item.id; b.dataset.val=c;
+    chipRow.appendChild(b);
+  });
+  holder.appendChild(chipRow);
+  const slots = el('div','order-slots');
+  for(let i=0;i<item.order.length;i++){ slots.appendChild(el('div','order-slot','?')); }
+  holder.appendChild(slots);
+  const resetBtn = el('button','order-reset','↺ recommencer l’ordre');
+  resetBtn.type='button'; resetBtn.dataset.item=item.id; resetBtn.dataset.role='order-reset';
+  holder.appendChild(resetBtn);
+  renderOrderState(item, holder);
+  return holder;
+}
+function renderOrderState(item, holder){
+  holder = holder || document.querySelector('[data-item="'+item.id+'"]');
+  const st = state.items[item.id];
+  const chips = holder.querySelectorAll('.chip-btn');
+  const slots = holder.querySelectorAll('.order-slot');
+  chips.forEach(c=>{ c.disabled = st.seq.indexOf(c.dataset.val)!==-1; });
+  slots.forEach((s,i)=>{
+    if(st.seq[i]!==undefined){ s.textContent = st.seq[i]; s.classList.add('filled'); }
+    else { s.textContent='?'; s.classList.remove('filled'); }
+  });
+}
+function renderColorbarItem(item){
+  const holder = el('div','');
+  const st = state.items[item.id] = state.items[item.id] || {filled:item.bars.map(()=>new Set()), resolved:false, firstTry:false, tries:0, cmpDone:false};
+  item.bars.forEach((bar,bi)=>{
+    const block = el('div','colorbar-block');
+    block.appendChild(el('div','colorbar-label', bar.label));
+    const grid = el('div','seg-grid');
+    for(let i=0;i<bar.segs;i++){
+      const b = el('button','seg-btn');
+      b.type='button'; b.dataset.item=item.id; b.dataset.bar=bi; b.dataset.idx=i;
+      if(st.filled[bi].has(i)) b.classList.add('filled');
+      grid.appendChild(b);
+    }
+    block.appendChild(grid);
+    holder.appendChild(block);
+  });
+  const btn = el('button','verify-btn','Vérifier ✓');
+  btn.type='button'; btn.dataset.item=item.id; btn.dataset.role='colorbar-verify';
+  holder.appendChild(btn);
+  const cmpWrap = el('div','', '');
+  cmpWrap.style.marginTop='.6rem';
+  cmpWrap.hidden = !st.colorOk;
+  cmpWrap.className = 'cmp-wrap';
+  const cmpP = el('p','item-prompt', item.cmpQuestion);
+  cmpWrap.appendChild(cmpP);
+  const cmpGroup = el('span','mcq-group');
+  item.cmpOptions.forEach(o=>{
+    const b = el('button','opt-btn', o.l);
+    b.type='button'; b.dataset.item=item.id; b.dataset.val=o.v; b.dataset.role='colorbar-cmp';
+    cmpGroup.appendChild(b);
+  });
+  cmpWrap.appendChild(cmpGroup);
+  holder.appendChild(cmpWrap);
+  return holder;
+}
+
+function applyStoredState(item, wrap){
+  const st = state.items[item.id];
+  if(!st) return;
+  item.parts.forEach((part, idx)=>{
+    const ps = st.parts[idx];
+    if(!ps || ps.status!=='resolved-correct') return;
+    if(part.kind==='mcq'){
+      const group = wrap.querySelectorAll('.mcq-group')[Array.from(item.parts.keys()).filter(k=>item.parts[k].kind==='mcq').indexOf(idx)];
+    }
+  });
+  // simpler: iterate all controls directly
+  item.parts.forEach((part, idx)=>{
+    const ps = st.parts[idx];
+    if(!ps) return;
+    if(part.kind==='mcq'){
+      const btns = wrap.querySelectorAll('.opt-btn[data-part="'+idx+'"]');
+      if(ps.status==='resolved-correct'){
+        btns.forEach(b=>{ if(b.dataset.val===part.answer){ b.classList.add('correct'); } b.disabled=true; if(b.dataset.val!==part.answer) b.classList.add('dim'); });
+      }
+    } else if(part.kind==='write'){
+      // leave as-is; if previously reported, show reveal state
+      if(ps.status && ps.status!=='pending'){
+        const extra = wrap.querySelector('.write-extra');
+        if(extra){
+          extra.querySelector('.reveal-btn').hidden = true;
+          extra.querySelector('.model-answer').hidden = false;
+          const sr = extra.querySelector('.selfreport-row');
+          sr.hidden = false;
+          sr.querySelectorAll('.selfreport-btn').forEach(b=>{
+            b.disabled = true;
+            if((b.dataset.val==='yes') === (ps.status==='resolved-correct')) b.classList.add('selected');
+          });
+        }
+      }
+    } else {
+      const inp = wrap.querySelector('.fillinput[data-part="'+idx+'"]');
+      if(inp && ps.status==='resolved-correct'){
+        inp.value = displayExpected(part);
+        inp.classList.add('correct');
+        inp.disabled = true;
+      }
+    }
+  });
+}
+function displayExpected(part){
+  if(part.kind==='fraction') return part.num+'/'+part.den;
+  if(part.kind==='duration') return part.h+'h'+(part.m<10?'0':'')+part.m;
+  if(part.kind==='money') return part.v.toFixed(2).replace('.',',')+' €';
+  if(part.kind==='fill') return String(part.expected)+(part.unit?(' '+part.unit):'');
+  if(part.kind==='text') return part.expected;
+  return '';
+}
+
+/* ============ ITEM LOOKUP ============ */
+const ITEMS_BY_ID = {};
+FICHES.forEach(f=>f.exercises.forEach(ex=>ex.items.forEach(it=>{ ITEMS_BY_ID[it.id] = {ficheId:f.id, def:it}; })));
+
+function checkPartValue(part, val){
+  switch(part.kind){
+    case 'fill': return checkNumber(val, part.expected, part);
+    case 'fraction': return checkFraction(val, part.num, part.den);
+    case 'duration': return checkDuration(val, part.h, part.m);
+    case 'money': return checkMoney(val, part.v);
+    case 'text': return checkContainsWord(val, part.expected);
+    default: return false;
+  }
+}
+
+/* ============ PROGRESS REFRESH ============ */
+function refreshFicheProgress(ficheId, silent){
+  const fiche = FICHES.find(f=>f.id===ficheId);
+  const stats = ficheStats(fiche);
+  const starsRow = document.getElementById('ficheStarsRow');
+  if(starsRow) starsRow.innerHTML = starsRowHtml(stats.stars);
+  updateStarCount();
+  const banner = document.getElementById('completionBanner');
+  const already = state.ficheMeta[ficheId] && state.ficheMeta[ficheId].celebrated;
+  if(stats.complete){
+    if(banner){ banner.classList.add('show'); banner.querySelector('.stars-row').innerHTML = starsRowHtml(stats.stars); }
+    if(!already && !silent){
+      state.ficheMeta[ficheId] = {celebrated:true};
+      saveState();
+      say(pool('ficheDone'),'cheer');
+      playFiche();
+      burstBig('good');
+    } else if(!already){
+      state.ficheMeta[ficheId] = {celebrated:true};
+      saveState();
+    }
+  }
+  checkFinale(!silent);
+}
+function checkFinale(announce){
+  const allDone = FICHES.every(f=>ficheStats(f).complete);
+  if(allDone && !state.finaleShown){
+    state.finaleShown = true; saveState();
+    if(announce){
+      setTimeout(()=>{
+        document.getElementById('finaleModal').classList.add('show');
+        playFinale(); burstBig('good');
+      }, 900);
+    }
+  }
+}
+
+/* ============ EVENT DELEGATION ============ */
+document.addEventListener('click', function(e){
+  const optBtn = e.target.closest('.opt-btn');
+  if(optBtn && !optBtn.disabled && !optBtn.dataset.role){
+    handleOptClick(optBtn); return;
+  }
+  const colorCmp = e.target.closest('.opt-btn[data-role="colorbar-cmp"]');
+  if(colorCmp && !colorCmp.disabled){ handleColorbarCmp(colorCmp); return; }
+
+  const verifyBtn = e.target.closest('.verify-btn');
+  if(verifyBtn && verifyBtn.dataset.role==='colorbar-verify'){ handleColorbarVerify(verifyBtn); return; }
+  if(verifyBtn && !verifyBtn.dataset.role){ handleVerifyClick(verifyBtn); return; }
+
+  const revealBtn = e.target.closest('.reveal-btn');
+  if(revealBtn){ handleRevealClick(revealBtn); return; }
+
+  const srBtn = e.target.closest('.selfreport-btn');
+  if(srBtn && !srBtn.disabled){ handleSelfReport(srBtn); return; }
+
+  const chipBtn = e.target.closest('.chip-btn');
+  if(chipBtn && !chipBtn.disabled){ handleChipClick(chipBtn); return; }
+
+  const orderReset = e.target.closest('[data-role="order-reset"]');
+  if(orderReset){ handleOrderReset(orderReset); return; }
+
+  const segBtn = e.target.closest('.seg-btn');
+  if(segBtn){ handleSegClick(segBtn); return; }
+
+  const folderTab = e.target.closest('.folder-tab');
+  if(folderTab){ toggleFolder(folderTab); return; }
+
+  const ficheCard = e.target.closest('.fiche-card');
+  if(ficheCard){ /* handled via own listener */ }
+});
+document.addEventListener('keydown', function(e){
+  if(e.key==='Enter' && (e.target.classList.contains('fillinput'))){
+    const card = e.target.closest('.item-card');
+    const btn = card && card.querySelector('.verify-btn');
+    if(btn){ e.preventDefault(); handleVerifyClick(btn); }
+  }
+});
+
+function toggleFolder(tab){
+  const expanded = tab.getAttribute('aria-expanded')==='true';
+  tab.setAttribute('aria-expanded', String(!expanded));
+  const body = tab.nextElementSibling;
+  body.hidden = expanded;
+}
+
+function handleOptClick(btn){
+  const itemId = btn.dataset.item;
+  const idx = parseInt(btn.dataset.part,10);
+  const ref = ITEMS_BY_ID[itemId];
+  const part = ref.def.parts[idx];
+  const correct = (btn.dataset.val === part.answer);
+  const st = getItemState(itemId, ref.def.parts.length);
+  const wasRetry = (st.parts[idx].triesWrong||0) > 0;
+  markPart(itemId, idx, correct);
+  const group = btn.closest('.mcq-group');
+  if(correct){
+    group.querySelectorAll('.opt-btn').forEach(b=>{ b.disabled=true; if(b!==btn) b.classList.add('dim'); });
+    btn.classList.add('correct');
+    burstNear(btn,'good',10);
+  } else {
+    btn.classList.add('flash-wrong');
+    setTimeout(()=>btn.classList.remove('flash-wrong'), 450);
+  }
+  reactMascot(itemId, correct, wasRetry);
+  refreshFicheProgress(ref.ficheId);
+}
+
+function handleVerifyClick(btn){
+  const itemId = btn.dataset.item;
+  const ref = ITEMS_BY_ID[itemId];
+  const wrap = btn.closest('.item-card');
+  const st = getItemState(itemId, ref.def.parts.length);
+  let allOk = true, anyChecked=false, anyRetry=false;
+  ref.def.parts.forEach((part, idx)=>{
+    if(part.kind==='mcq' || part.kind==='write') return;
+    const input = wrap.querySelector('.fillinput[data-part="'+idx+'"]');
+    if(!input || input.disabled) return;
+    anyChecked = true;
+    const ok = checkPartValue(part, input.value);
+    const wasRetry = (st.parts[idx].triesWrong||0) > 0;
+    if(wasRetry) anyRetry = true;
+    input.classList.remove('correct','wrong');
+    if(ok){
+      input.classList.add('correct'); input.disabled = true;
+      markPart(itemId, idx, true);
+    } else {
+      input.classList.add('wrong'); allOk = false;
+      markPart(itemId, idx, false);
+    }
+  });
+  if(!anyChecked) return;
+  if(allOk) burstNear(btn,'good',14);
+  reactMascot(itemId, allOk, anyRetry);
+  refreshFicheProgress(ref.ficheId);
+}
+
+function handleRevealClick(btn){
+  const wrap = btn.closest('.write-extra');
+  wrap.querySelector('.model-answer').hidden = false;
+  btn.hidden = true;
+  wrap.querySelector('.selfreport-row').hidden = false;
+}
+function handleSelfReport(btn){
+  const itemId = btn.dataset.item;
+  const val = btn.dataset.val;
+  const ref = ITEMS_BY_ID[itemId];
+  getItemState(itemId, ref.def.parts.length);
+  markPart(itemId, 0, val==='yes');
+  const row = btn.closest('.selfreport-row');
+  row.querySelectorAll('.selfreport-btn').forEach(b=>{ b.disabled=true; });
+  btn.classList.add('selected');
+  reactMascot(itemId, val==='yes', false);
+  if(val==='yes') burstNear(btn,'good',10);
+  refreshFicheProgress(ref.ficheId);
+}
+
+function handleChipClick(btn){
+  const itemId = btn.dataset.item;
+  const ref = ITEMS_BY_ID[itemId];
+  const st = state.items[itemId];
+  if(st.resolved) return;
+  st.seq.push(btn.dataset.val);
+  renderOrderState(ref.def, btn.closest('.item-card'));
+  if(st.seq.length === ref.def.order.length){
+    const correct = st.seq.every((v,i)=>v===ref.def.order[i]);
+    st.tries = (st.tries||0)+1;
+    if(correct){
+      st.resolved = true; st.firstTry = (st.tries===1);
+      saveState();
+      reactMascot(itemId, true, st.tries>1);
+      burstNear(btn,'good',14);
+    } else {
+      reactMascot(itemId, false);
+      setTimeout(()=>{ st.seq=[]; renderOrderState(ref.def, btn.closest('.item-card')); }, 700);
+    }
+  }
+  saveState();
+  refreshFicheProgress(ref.ficheId);
+}
+function handleOrderReset(btn){
+  const itemId = btn.dataset.item;
+  const st = state.items[itemId];
+  if(st.resolved) return;
+  st.seq = [];
+  renderOrderState(ITEMS_BY_ID[itemId].def, btn.closest('.item-card'));
+}
+
+function handleSegClick(btn){
+  const itemId = btn.dataset.item;
+  const barIdx = parseInt(btn.dataset.bar,10);
+  const idx = parseInt(btn.dataset.idx,10);
+  const st = state.items[itemId];
+  if(st.resolved) return;
+  const set = st.filled[barIdx];
+  if(set.has(idx)){ set.delete(idx); btn.classList.remove('filled'); }
+  else { set.add(idx); btn.classList.add('filled'); }
+  saveState();
+}
+function handleColorbarVerify(btn){
+  const itemId = btn.dataset.item;
+  const ref = ITEMS_BY_ID[itemId];
+  const st = state.items[itemId];
+  const ok = ref.def.bars.every((bar,bi)=> st.filled[bi].size === bar.target);
+  st.tries = (st.tries||0)+1;
+  if(ok){
+    st.colorOk = true;
+    const wrap = btn.closest('.item-card');
+    wrap.querySelector('.cmp-wrap').hidden = false;
+    reactMascot(itemId, true, st.tries>1);
+    burstNear(btn,'good',10);
+  } else {
+    reactMascot(itemId, false);
+  }
+  saveState();
+}
+function handleColorbarCmp(btn){
+  const itemId = btn.dataset.item;
+  const ref = ITEMS_BY_ID[itemId];
+  const st = state.items[itemId];
+  if(st.resolved) return;
+  const correct = btn.dataset.val === ref.def.cmpAnswer;
+  st.tries2 = (st.tries2||0)+1;
+  if(correct){
+    st.resolved = true; st.firstTry = (st.tries===1 && st.tries2===1);
+    const group = btn.closest('.mcq-group');
+    group.querySelectorAll('.opt-btn').forEach(b=>{ b.disabled=true; if(b!==btn) b.classList.add('dim'); });
+    btn.classList.add('correct');
+    reactMascot(itemId, true, !(st.tries===1 && st.tries2===1));
+    burstNear(btn,'good',14);
+  } else {
+    btn.classList.add('flash-wrong');
+    setTimeout(()=>btn.classList.remove('flash-wrong'),450);
+    reactMascot(itemId, false);
+  }
+  saveState();
+  refreshFicheProgress(ref.ficheId);
+}
+
+/* ============ PARENTS ABOUT (HOME) ============ */
+function renderParentsHome(){
+  const body = document.getElementById('parentsBodyHome');
+  body.innerHTML =
+    '<p>Ces six fiches reprennent chacune une difficulté repérée dans l’évaluation diagnostique de Madeline : une leçon courte (« Je retiens »), puis des exercices du plus facile (★☆☆) au plus difficile (★★★).</p>'+
+    '<p><strong>Conseils :</strong> une fiche par jour suffit (15 minutes) ; laissez Madeline chercher seule après avoir relu « Je retiens » à voix haute ; si les deux derniers exercices d’une fiche restent difficiles, ce n’est pas grave — ils sont volontairement au-dessus du niveau strict du CE2.</p>'+
+    '<p><strong>Dans cette version interactive</strong>, les exercices fermés (types de phrases, homophones, nombres, fractions, mesures) sont corrigés automatiquement pour encourager Madeline en temps réel. Les phrases à inventer restent en autocorrection : elle compare sa réponse à un exemple, comme avec le corrigé papier. Le corrigé complet de chaque fiche reste disponible dans l’encadré grisé, en bas de chaque fiche.</p>'+
+    '<p><strong>Programme de référence :</strong> cycle 2, arrêté du 22 octobre 2024 (JO du 25/10/2024, BO n°41 du 31/10/2024, NOR MENE2415135A), applicable depuis la rentrée 2025.</p>'+
+    '<p style="margin-bottom:0">Fiches construites le 23 août 2026 à partir de l’évaluation diagnostique de Madeline.</p>';
+}
+
+/* ============ STARFIELD ============ */
+function initStarfield(){
+  const field = document.getElementById('starfield');
+  const n = 46;
+  let h='';
+  for(let i=0;i<n;i++){
+    const size = (Math.random()*2.2+1).toFixed(1);
+    const top = (Math.random()*100).toFixed(1);
+    const left = (Math.random()*100).toFixed(1);
+    const delay = (Math.random()*3.2).toFixed(2);
+    h += '<span class="bgstar" style="width:'+size+'px;height:'+size+'px;top:'+top+'%;left:'+left+'%;animation-delay:'+delay+'s"></span>';
+  }
+  field.innerHTML = h;
+}
+
+/* ============ INIT ============ */
+function init(){
+  loadState();
+  initOwls();
+  updateMuteBtn();
+  renderParentsHome();
+  initStarfield();
+  renderMap();
+
+  document.getElementById('muteBtn').addEventListener('click', function(){
+    muted = !muted;
+    localStorage.setItem('madeline_muted', muted?'1':'0');
+    updateMuteBtn();
+  });
+  document.getElementById('owlWidgetBtn').addEventListener('click', function(){
+    const pools = ['ficheWelcome','exerciseDone'];
+    say(pool(pools[Math.floor(Math.random()*pools.length)]), 'cheer');
+  });
+  document.getElementById('finaleCloseBtn').addEventListener('click', function(){
+    document.getElementById('finaleModal').classList.remove('show');
+  });
+  say("Bonjour Madeline ! Choisis une île du ciel pour commencer.", null);
+}
+if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', init); } else { init(); }
+
+})();
+</script>
