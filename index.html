@@ -29,7 +29,7 @@
   --f4:#824B93; --f4-soft:#EADDF0;
   --f5:#59519B; --f5-soft:#E0DEF0;
   --f6:#33508A; --f6-soft:#DBE2F1;
-  --owl-body:#B98A5E; --owl-belly:#F6E9D2; --owl-beak:#E8933D; --owl-outline:#332640;
+  --cat-outline:#332640;
   --card-ink:#332640; --card-ink-soft:#5B4B68; --card-chip-bg:#F6EEDF;
   --font-display:'Delius','Segoe Print','Bradley Hand',cursive;
   --font-body:'Atkinson Hyperlegible','Segoe UI',system-ui,sans-serif;
@@ -98,7 +98,7 @@ img,svg{ display:block; max-width:100%; }
 }
 .topbar-title{ font-family:var(--font-display); font-size:1.3rem; display:flex; align-items:center; gap:.5rem; flex:1; min-width:0; }
 .topbar-title small{ font-family:var(--font-body); font-size:.62rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-faint); display:block; }
-.topbar-owl{ width:34px; height:34px; flex:none; }
+.topbar-cat{ width:34px; height:34px; flex:none; }
 .starcount{
   display:flex; align-items:center; gap:.3rem; font-weight:700;
   font-variant-numeric:tabular-nums; background:var(--paper-card-2);
@@ -136,9 +136,13 @@ img,svg{ display:block; max-width:100%; }
 @keyframes twinkle{ 0%,100%{ opacity:.15; transform:scale(.7);} 50%{ opacity:.9; transform:scale(1);} }
 
 .hero{ position:relative; z-index:2; max-width:760px; margin:0 auto 2rem; text-align:center; color:#FFF7EC; }
-.hero-owl-wrap{ width:120px; height:120px; margin:0 auto .6rem; }
+.hero-cats{ position:relative; width:220px; height:132px; margin:0 auto .6rem; }
+.hero-cats .cat-slot{ position:absolute; bottom:0; }
+.hero-cats .cat-slot.hc-center{ width:106px; height:126px; left:50%; transform:translateX(-50%); z-index:2; }
+.hero-cats .cat-slot.hc-left{ width:78px; height:94px; left:6px; z-index:1; transform:rotate(-7deg); }
+.hero-cats .cat-slot.hc-right{ width:78px; height:94px; right:6px; z-index:1; transform:rotate(7deg); }
 .hero h1{ font-size:clamp(2.1rem,5vw + 1rem,3.2rem); margin-bottom:.25rem; text-shadow:0 3px 12px rgba(0,0,0,.25); }
-.hero p{ font-size:1.1rem; opacity:.95; max-width:46ch; margin:0 auto; }
+.hero p{ font-size:1.1rem; opacity:.95; max-width:50ch; margin:0 auto; }
 .hero .speech{ margin-top:1rem; }
 
 .map-wrap{ position:relative; z-index:2; max-width:920px; margin:0 auto; }
@@ -203,44 +207,64 @@ img,svg{ display:block; max-width:100%; }
 .folder table{ border-collapse:collapse; width:100%; }
 .folder th,.folder td{ border:1px solid var(--folder-line); padding:.35rem .5rem; text-align:left; font-size:.85rem; }
 
-/* ============ OWL MASCOT ============ */
-.owl-svg{ width:100%; height:100%; overflow:visible; }
-.owl-shadow{ fill:rgba(0,0,0,.18); }
-.owl-body-group{ transform-origin:80px 140px; animation:owlFloat 3.6s ease-in-out infinite; }
-@keyframes owlFloat{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-4px);} }
-.owl-body{ fill:var(--owl-body); }
-.owl-belly{ fill:var(--owl-belly); }
-.owl-ear{ fill:var(--owl-body); }
-.owl-wing{ fill:color-mix(in srgb, var(--owl-body) 78%, #000); transform-box:fill-box; transform-origin:center; transition:transform .4s cubic-bezier(.34,1.56,.64,1); }
-.owl-beak,.owl-foot{ fill:var(--owl-beak); }
-.owl-eye-white{ fill:#FFFDF7; stroke:var(--owl-outline); stroke-width:1.4; }
-.owl-pupil{ fill:#332640; }
-.owl-spark{ fill:#FFFDF7; }
-.owl-eye{ transform-box:fill-box; transform-origin:center; }
-.owl-cheek{ fill:#EE9E93; opacity:0; transition:opacity .3s; }
-.owl.blink .owl-eye{ animation:owlBlink .26s ease; }
-@keyframes owlBlink{ 0%,100%{ transform:scaleY(1);} 50%{ transform:scaleY(.12);} }
-.owl.cheer .owl-wing-l{ transform:rotate(-56deg) translate(-3px,-8px); }
-.owl.cheer .owl-wing-r{ transform:rotate(56deg) translate(3px,-8px); }
-.owl.cheer .owl-cheek{ opacity:1; }
-.owl.cheer .owl-body-group{ animation:owlHop .55s ease; }
-@keyframes owlHop{ 0%{transform:translateY(0) rotate(0);} 30%{transform:translateY(-15px) rotate(-4deg);} 60%{transform:translateY(0) rotate(3deg);} 100%{transform:translateY(0) rotate(0);} }
-.owl.oops .owl-body-group{ animation:owlTilt .5s ease; }
-@keyframes owlTilt{ 0%,100%{transform:rotate(0);} 30%{transform:rotate(-6deg);} 60%{transform:rotate(4deg);} }
+/* ============ CAT MASCOTS ============ */
+.cat-svg{ width:100%; height:100%; overflow:visible; }
+.cat-shadow{ fill:rgba(0,0,0,.18); }
+.cat-body-group{ transform-origin:80px 146px; animation:catFloat 3.6s ease-in-out infinite; }
+@keyframes catFloat{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-4px);} }
+.cat-body{ fill:var(--cat-body,#B98A5E); }
+.cat-belly{ fill:var(--cat-belly,#F6E9D2); }
+.cat-ear{ fill:var(--cat-body,#B98A5E); }
+.cat-ear-inner{ fill:#F0A9A5; }
+.cat-paw{ fill:var(--cat-body,#B98A5E); }
+.cat-nose{ fill:#E8837D; }
+.cat-mouth{ fill:none; stroke:var(--cat-outline); stroke-width:1.6; stroke-linecap:round; }
+.cat-eye-white{ fill:#FFFDF7; stroke:var(--cat-outline); stroke-width:1.4; }
+.cat-pupil{ fill:#2A2036; }
+.cat-spark{ fill:#FFFDF7; }
+.cat-eye{ transform-box:fill-box; transform-origin:center; }
+.cat-cheek{ fill:#EE9E93; opacity:0; transition:opacity .3s; }
+.cat-whiskers line{ stroke:var(--cat-outline); stroke-width:1.3; stroke-linecap:round; opacity:.5; }
+.cat-tail{ fill:none; stroke:var(--cat-body,#B98A5E); stroke-width:13; stroke-linecap:round; transform-box:fill-box; transform-origin:85% 88%; transition:transform .4s cubic-bezier(.34,1.56,.64,1); }
+.cat.blink .cat-eye{ animation:catBlink .26s ease; }
+@keyframes catBlink{ 0%,100%{ transform:scaleY(1);} 50%{ transform:scaleY(.12);} }
+.cat.cheer .cat-tail{ transform:rotate(-22deg); }
+.cat.cheer .cat-cheek{ opacity:1; }
+.cat.cheer .cat-body-group{ animation:catHop .55s ease; }
+@keyframes catHop{ 0%{transform:translateY(0) rotate(0);} 30%{transform:translateY(-15px) rotate(-4deg);} 60%{transform:translateY(0) rotate(3deg);} 100%{transform:translateY(0) rotate(0);} }
+.cat.oops .cat-body-group{ animation:catTilt .5s ease; }
+.cat.oops .cat-tail{ transform:rotate(12deg) translateY(5px); }
+@keyframes catTilt{ 0%,100%{transform:rotate(0);} 30%{transform:rotate(-6deg);} 60%{transform:rotate(4deg);} }
 
-.owl-widget{
+.cat-widget{
   position:fixed; right:14px; bottom:14px; z-index:50; display:flex; flex-direction:column;
   align-items:flex-end; gap:.4rem; pointer-events:none;
 }
-.owl-widget .bubble{
-  pointer-events:none; max-width:min(72vw,260px); background:var(--paper-card); color:var(--ink);
+.cat-widget .bubble{
+  pointer-events:none; max-width:min(72vw,270px); background:var(--paper-card); color:var(--ink);
   border:2px solid var(--line); border-radius:16px 16px 4px 16px; padding:.55rem .8rem;
   font-family:var(--font-display); font-size:1.05rem; line-height:1.3; box-shadow:var(--shadow-sm);
   opacity:0; transform:translateY(6px) scale(.96); transition:opacity .25s, transform .25s;
 }
-.owl-widget .bubble.show{ opacity:1; transform:none; }
-.owl-widget-icon{ width:74px; height:74px; pointer-events:auto; cursor:pointer; background:none; border:none; padding:0; }
-@media (max-width:640px){ .owl-widget-icon{ width:60px; height:60px;} .owl-widget{ right:10px; bottom:10px;} }
+.cat-widget .bubble.show{ opacity:1; transform:none; }
+.cat-widget-icon{ width:74px; height:74px; pointer-events:auto; cursor:pointer; background:none; border:none; padding:0; }
+@media (max-width:640px){ .cat-widget-icon{ width:60px; height:60px;} .cat-widget{ right:10px; bottom:10px;} }
+
+/* ============ CAT INTRO CARD ============ */
+.cat-intro{
+  display:flex; gap:1rem; align-items:flex-start; background:var(--paper-card); border:2px solid var(--accent);
+  border-radius:var(--r-lg); padding:1.1rem 1.2rem; margin-bottom:1.4rem; box-shadow:var(--shadow-sm);
+}
+.cat-intro-portrait{ width:82px; height:96px; flex:none; }
+.cat-intro-name{ font-family:var(--font-display); color:var(--accent); font-size:1.35rem; margin:0 0 .3rem; }
+.cat-intro-blurb{ margin:0 0 .55rem; font-size:.95rem; }
+.cat-intro-tip{ margin:0 0 .7rem; font-size:.92rem; background:var(--accent-soft); padding:.5rem .7rem; border-radius:var(--r-sm); }
+.cat-reflect-btn{
+  background:var(--accent); color:#fff9ef; border:none; border-radius:999px; padding:.42rem .95rem;
+  font-weight:700; font-size:.85rem; cursor:pointer;
+}
+.cat-reflect-btn:hover{ filter:brightness(1.08); }
+@media (max-width:520px){ .cat-intro{ flex-direction:column; align-items:center; text-align:center; } }
 
 /* ============ FICHE PAGE ============ */
 .fiche-page{ max-width:760px; margin:0 auto; padding:1.4rem 1.1rem 6rem; }
@@ -430,7 +454,7 @@ img,svg{ display:block; max-width:100%; }
 
 @media (max-width:640px){
   .fiche-head{ flex-wrap:wrap; }
-  .hero-owl-wrap{ width:96px; height:96px; }
+  .hero-cats{ transform:scale(.82); }
 }
 </style>
 
@@ -441,7 +465,7 @@ img,svg{ display:block; max-width:100%; }
       <span>La carte du ciel</span>
     </button>
     <div class="topbar-title">
-      <svg class="topbar-owl" viewBox="0 0 160 160" id="topbarOwl"></svg>
+      <svg class="topbar-cat" viewBox="0 0 160 160" id="topbarCatSvg"></svg>
       <span>Carnet d'Étoiles <small>de Madeline</small></span>
     </div>
     <div class="starcount" id="starCount" aria-live="polite">
@@ -455,9 +479,13 @@ img,svg{ display:block; max-width:100%; }
     <div id="sky">
       <div id="starfield"></div>
       <div class="hero">
-        <div class="hero-owl-wrap"><svg class="owl-svg" id="heroOwl" viewBox="0 0 160 160"></svg></div>
+        <div class="hero-cats" id="heroCats">
+          <div class="cat-slot hc-left"><svg class="cat-svg" id="heroCatLeft" viewBox="0 0 160 160"></svg></div>
+          <div class="cat-slot hc-center"><svg class="cat-svg" id="heroCatCenter" viewBox="0 0 160 160"></svg></div>
+          <div class="cat-slot hc-right"><svg class="cat-svg" id="heroCatRight" viewBox="0 0 160 160"></svg></div>
+        </div>
         <h1>Le carnet d'étoiles</h1>
-        <p>Plume le hibou t'attend pour allumer six étoiles avant la rentrée en CM1&nbsp;! Choisis une île de ciel pour commencer.</p>
+        <p>Mistigri, Croquette, Nougat et toute leur bande de chats t'attendent pour allumer six étoiles avant la rentrée en CM1&nbsp;! Chaque île a son propre chat, avec ses conseils et ses petites manies. Choisis une île de ciel pour commencer.</p>
         <div class="speech" id="heroSpeech" aria-live="polite"></div>
       </div>
       <div class="map-wrap">
@@ -482,10 +510,10 @@ img,svg{ display:block; max-width:100%; }
   </div>
 
   <div id="fxLayer"></div>
-  <div class="owl-widget" id="owlWidget">
-    <div class="bubble" id="owlBubble"></div>
-    <button class="owl-widget-icon" id="owlWidgetBtn" type="button" aria-label="Parler à Plume">
-      <svg class="owl-svg" id="widgetOwl" viewBox="0 0 160 160"></svg>
+  <div class="cat-widget" id="catWidget">
+    <div class="bubble" id="catBubble"></div>
+    <button class="cat-widget-icon" id="catWidgetBtn" type="button" aria-label="Parler au chat">
+      <svg class="cat-svg" id="widgetCatSvg" viewBox="0 0 160 160"></svg>
     </button>
   </div>
 
@@ -498,7 +526,7 @@ img,svg{ display:block; max-width:100%; }
         <path d="M50 22l6.5 14.3 15.5 1.6-11.7 10.6 3.4 15.5L50 55.9 36.3 64l3.4-15.5-11.7-10.6 15.5-1.6z" fill="var(--paper-card)"/>
       </svg>
       <h2>Six étoiles allumées !</h2>
-      <p>Bravo Madeline, tu as terminé les six fiches. Le CM1 n'a qu'à bien se tenir !</p>
+      <p>Bravo Madeline, tu as terminé les six fiches. Toute la bande de chats est fière de toi — le CM1 n'a qu'à bien se tenir !</p>
       <button class="modal-close" id="finaleCloseBtn" type="button">Retourner voir le ciel</button>
     </div>
   </div>
@@ -594,46 +622,179 @@ null,
 ];
 function badgeSvg(n){ return '<svg viewBox="0 0 48 48">'+BADGES[n]+'</svg>'; }
 
-/* ============ OWL MASCOT TEMPLATE ============ */
-function owlMarkup(){
-  return '<ellipse class="owl-shadow" cx="80" cy="150" rx="32" ry="6"/>'+
-  '<g class="owl-body-group">'+
-    '<path class="owl-wing owl-wing-l" d="M40 90 Q18 100 26 130 Q40 128 46 108 Z"/>'+
-    '<path class="owl-wing owl-wing-r" d="M120 90 Q142 100 134 130 Q120 128 114 108 Z"/>'+
-    '<ellipse class="owl-foot" cx="66" cy="142" rx="8" ry="4"/>'+
-    '<ellipse class="owl-foot" cx="94" cy="142" rx="8" ry="4"/>'+
-    '<ellipse class="owl-body" cx="80" cy="92" rx="46" ry="52"/>'+
-    '<ellipse class="owl-belly" cx="80" cy="106" rx="27" ry="33"/>'+
-    '<path class="owl-ear" d="M52 46 L60 62 L44 60 Z"/>'+
-    '<path class="owl-ear" d="M108 46 L100 62 L116 60 Z"/>'+
-    '<circle class="owl-cheek" cx="50" cy="88" r="7"/>'+
-    '<circle class="owl-cheek" cx="110" cy="88" r="7"/>'+
-    '<g class="owl-eye owl-eye-l"><circle class="owl-eye-white" cx="62" cy="76" r="15"/><circle class="owl-pupil" cx="64" cy="77" r="7"/><circle class="owl-spark" cx="60" cy="72" r="2.2"/></g>'+
-    '<g class="owl-eye owl-eye-r"><circle class="owl-eye-white" cx="98" cy="76" r="15"/><circle class="owl-pupil" cx="100" cy="77" r="7"/><circle class="owl-spark" cx="96" cy="72" r="2.2"/></g>'+
-    '<path class="owl-beak" d="M76 90 L84 90 L80 100 Z"/>'+
+/* ============ CAT MASCOTS: DATA ============ */
+const CATS = {
+  ronron:{
+    name:'Prof Ronron', fur:'#8C93A8', belly:'#EFEAE0', accent:'var(--f1)', accessory:'glasses',
+    blurb:"Miaou ! Moi c'est Ronron, le chat qui a fait de l'école sa matière préférée — oui, c'est rare chez les chats. Une phrase bien construite, pour moi, c'est aussi satisfaisant qu'une pelote de laine bien enroulée.",
+    tip:"Lis chaque phrase à voix haute avant de répondre : la musique de la phrase te dit souvent tout de suite si elle pose une question ou donne un ordre.",
+    pools:{
+      correctFirst:["Miaou, parfait du premier coup !","Excellente réponse, tu mérites un A+ !","Tu ferais une très bonne petite professeure.","Voilà exactement ce que j'attendais.","Dix sur dix, Madeline !"],
+      correctRetry:["Voilà la bonne réponse, tu as bien cherché.","C'est ça ! La persévérance, ça paie toujours.","Bien rattrapé.","Et voilà, on progresse."],
+      wrong:["Presque ! Relis la phrase à voix haute, tu vas entendre la réponse.","Pas tout à fait — quel est le ton de la phrase, à ton avis ?","Hop, on retourne réviser la règle une seconde.","Un chat ne se trompe jamais deux fois de suite. À toi de jouer !"],
+      exerciseDone:["Exercice noté et validé !","Encore une leçon bien apprise.","Tu avances comme une bonne élève."],
+      ficheWelcome:["Bienvenue dans ma salle de classe ! Relis d'abord « Je retiens » à voix haute.","Installe-toi bien, on va faire parler les phrases.","Prête pour l'interrogation surprise ? Je plaisante, prends ton temps."],
+      ficheDone:["Fiche terminée avec les honneurs !","Tu mérites une pause récré bien méritée.","Bravo, future spécialiste de la grammaire !"],
+      reflections:["Un petit conseil de vieux chat d'école : le point d'exclamation, c'est comme un miaulement fort — on le sent tout de suite.","Entre nous, même moi je confonds parfois type et forme. L'astuce : type = ce QUE fait la phrase, forme = a-t-elle une négation.","Je collectionne les jolies phrases comme d'autres collectionnent les jouets. Ta prochaine phrase pourrait rejoindre ma collection !"]
+    }
+  },
+  mistigri:{
+    name:'Mistigri', fur:'#DB8A45', belly:'#F7E7CE', accent:'var(--f2)', accessory:'patch',
+    blurb:"Psst, viens voir ! Moi c'est Mistigri, et j'adore piéger les gens avec des mots qui se ressemblent — un peu comme « son » et « sont ». Mais je te promets de t'aider plus que de t'embêter... juré, patte sur le cœur.",
+    tip:"Remplace le mot par un autre dans ta tête. Si la phrase devient bizarre, c'est que tu as le mauvais mot !",
+    pools:{
+      correctFirst:["Ha, tu m'as eu, bravo !","Pile poil, comme dirait mon poil roux.","Tu m'as démasqué, bien joué !","Miaou-mazing !","Tu commences à connaître mes pièges par cœur."],
+      correctRetry:["Ah, tu l'as trouvé, petite maligne !","Voilà, tu as déjoué le piège.","Pas mal du tout, pour une deuxième tentative !"],
+      wrong:["Ha ha, pas cette fois ! Essaie le truc du remplacement.","Presque, mais je t'ai bien eue, non ?","Retente : relis le tableau plus haut, il ne ment jamais.","Un homophone de plus qui essaie de te piéger. Regarde bien !"],
+      exerciseDone:["Un piège de déjoué, bravo !","Mes pièges ne te résistent plus.","Tu deviens une vraie chasseuse d'homophones."],
+      ficheWelcome:["Attention, cette fiche est pleine de pièges à mots... enfin, façon de parler !","Prête à jouer au chat et à la souris avec les homophones ?","Je vais essayer de t'embrouiller, mais je sais que tu vas gagner."],
+      ficheDone:["Bravo, plus aucun homophone ne peut te surprendre !","Tu as déjoué tous mes tours, championne.","Fiche terminée, mes pièges sont épuisés !"],
+      reflections:["Un jour j'ai confondu « a » et « à » dans une lettre à mon meilleur ami chat. Il a cru que je lui offrais un chapeau. Depuis, je vérifie toujours !","Les homophones sonnent pareil mais ne veulent jamais dire la même chose — un peu comme deux miaulements qui peuvent vouloir dire des choses très différentes.","Petit conseil sérieux (oui, ça m'arrive) : quand deux mots se ressemblent, demande-toi toujours « est-ce que je peux le remplacer ? »"]
+    }
+  },
+  croquette:{
+    name:'Croquette', fur:'#423C48', belly:'#FAF6EC', accent:'var(--f3)', accessory:'bandana',
+    blurb:"Salut, moi c'est Croquette, championne (autoproclamée) de vélo du quartier. Sur ma piste, il y a toujours une borne juste avant et une borne juste après — exactement comme les nombres qu'on encadre ici !",
+    tip:"Avance jusqu'à la borne juste avant ton nombre, puis regarde la suivante. Ne saute jamais une borne !",
+    pools:{
+      correctFirst:["Pile dans le mille, en danseuse !","Tu roules plus vite que moi sur cet exercice !","Encadrement parfait, comme mes bornes préférées.","Tu passes la ligne d'arrivée en tête !","Belle vitesse de calcul !"],
+      correctRetry:["Voilà, tu as retrouvé la bonne route.","Un petit détour, mais tu es arrivée à bon port.","Bien rattrapé, championne."],
+      wrong:["Attention, tu as raté un virage ! Regarde les derniers chiffres du nombre.","Presque, mais ta borne n'est pas la bonne. Retente.","Stop, on redescend d'une borne et on recompte.","Pas encore la bonne piste, mais tu vas y arriver."],
+      exerciseDone:["Étape terminée, on enchaîne !","Une borne de plus franchie !","Bon rythme, continue comme ça."],
+      ficheWelcome:["En selle ! Cette fiche parle de bornes, mon terrain préféré.","Prête pour un petit tour d'encadrement ?","Accroche-toi, on roule vers les nombres ronds !"],
+      ficheDone:["Fiche terminée, ligne d'arrivée franchie !","Championne de l'encadrement, bravo !","Une étoile de plus dans mon panier à vélo !"],
+      reflections:["Avant chaque sortie à vélo, je vérifie toujours mes pneus deux fois. Toi aussi, relis ta réponse deux fois avant de valider !","Sur ma piste cyclable, les bornes changent tous les 100 mètres. Pour les nombres, ça marche pareil : centaine par centaine !","Le jour où j'ai mal lu une borne, je suis passée tout droit. Depuis, je regarde bien quels chiffres changent avant de répondre."]
+    }
+  },
+  bidouille:{
+    name:'Bidouille', fur:'#C99257', belly:'#F3E6D0', accent:'var(--f4)', accessory:'yarn',
+    blurb:"Coucou, moi c'est Bidouille ! Je passe mes journées à bricoler — couper, coller, découper en morceaux bien égaux. Les fractions, c'est exactement mon métier : partager un tout en parts qui se ressemblent toutes.",
+    tip:"Si tu n'es pas sûre, dessine ! Une bande coupée en parts égales, ça ne ment jamais.",
+    pools:{
+      correctFirst:["Découpage parfait, bravo !","Une pièce qui s'emboîte à merveille !","Tu bricoles ça les yeux fermés !","Précision de couturière, chapeau !","Exactement la bonne mesure !"],
+      correctRetry:["Ajusté et réussi, bien joué.","Un petit coup de ciseaux de plus et voilà !","Tu as retrouvé la bonne part."],
+      wrong:["Attention, cette part n'est pas égale aux autres. Recompte.","Presque, mais ton découpage est un peu de travers. Retente.","Hop, on reprend les ciseaux et on y retourne.","Regarde bien lequel des deux nombres ne change pas."],
+      exerciseDone:["Une pièce de plus terminée dans l'atelier !","Beau travail de précision.","L'atelier avance bien !"],
+      ficheWelcome:["Bienvenue dans mon atelier ! Aujourd'hui, on partage des parts égales.","Enfile ton tablier (imaginaire), on bricole des fractions.","Prête à couper, coller, comparer ?"],
+      ficheDone:["Fiche terminée, l'atelier est fier de toi !","Toutes les parts sont à leur place, bravo !","Une nouvelle création réussie !"],
+      reflections:["Une fois j'ai voulu partager un carton en 8 parts égales pour une cabane. Résultat : 8 triangles bancals. Depuis, je mesure avant de couper — comme pour les fractions !","Le dénominateur, c'est comme le nombre de morceaux de tissu que j'ai découpés. Plus il y a de morceaux, plus chacun est petit — logique, non ?","Petit secret d'atelier : pour additionner deux fractions avec le même dénominateur, je ne touche jamais à ce chiffre-là, seulement aux numérateurs."]
+    }
+  },
+  nougat:{
+    name:'Nougat', fur:'#EDE2D0', belly:'#FAF4E8', accent:'var(--f5)', accessory:'bib',
+    blurb:"Miam, bonjour ! Moi c'est Nougat, et s'il y a bien une chose que j'adore, c'est partager mes croquettes entre copains — même si j'en garde toujours un petit peu pour moi. C'est ça, le reste !",
+    tip:"Partage d'abord équitablement, et ce qu'il reste à la fin, c'est le reste — normal, non ?",
+    pools:{
+      correctFirst:["Miam, partage parfait !","Chacun a sa part, et toi tu as tout juste !","Distribution parfaitement équitable !","Même moi je n'aurais pas mieux partagé mes croquettes !","Un vrai festin de bonnes réponses !"],
+      correctRetry:["Voilà, le partage est maintenant équitable.","Bien recompté, tout le monde est content.","Et voilà, plus de jaloux dans la distribution !"],
+      wrong:["Attention, quelqu'un a trop de croquettes ! Recompte.","Presque, mais le reste ne peut pas être aussi grand. Retente.","Hop, on repartage depuis le début.","Le reste doit toujours être plus petit que ce qu'on partage à chacun. Vérifie !"],
+      exerciseDone:["Un partage de plus réussi, miam !","Tout le monde a eu sa part.","Bien distribué, bravo !"],
+      ficheWelcome:["Aujourd'hui, on partage ! J'espère qu'il restera des croquettes pour moi...","Prête à distribuer équitablement ?","Attention à ne rien laisser de côté, sauf le reste bien sûr !"],
+      ficheDone:["Fiche terminée, festin bien mérité !","Partage parfait sur toute la fiche !","Bravo, tu ne laisses jamais rien au hasard !"],
+      reflections:["Un jour j'ai voulu partager 29 croquettes entre 4 amis chats. J'ai donné 7 à chacun, et il m'en restait 1... que j'ai mangée, bien sûr.","Le reste, c'est ce qui ne suffit plus pour faire une part de plus. Comme la dernière croquette qu'on n'ose pas couper en quatre !","Astuce de gourmand : après avoir partagé, je vérifie toujours en multipliant. (part × nombre d'amis) + reste = total. Ça marche à chaque fois !"]
+    }
+  },
+  nouille:{
+    name:'Nouille', fur:'#9CA8B8', belly:'#EDEEF0', accent:'var(--f6)', accessory:'goggles',
+    blurb:"Splash ! Moi c'est Nouille, et oui, un chat qui adore nager, ça ne court pas les rues. Chronomètre à la patte, je mesure toujours mes longueurs de bassin — parfait pour une fiche sur les mesures !",
+    tip:"Pour les conversions, je compte toujours sur mes coussinets combien de zéros il faut ajouter ou enlever.",
+    pools:{
+      correctFirst:["Splash, en plein dans le mille !","Nouveau record personnel !","Tu mesures ça sans même mouiller tes moustaches !","Longueur parfaite, comme mon meilleur temps au 50 mètres !","Chronométrée et validée, bravo !"],
+      correctRetry:["Voilà, tu as rattrapé ton retard, comme au dernier virage !","Bien nagé jusqu'à la bonne réponse.","Et hop, dans les temps finalement !"],
+      wrong:["Attention, tu as raté un virage de conversion. Retente.","Presque, mais vérifie combien de zéros il faut.","Splash raté, on replonge et on recompte.","Pas encore la bonne longueur, mais tu approches du bord."],
+      exerciseDone:["Une longueur de bassin de plus, bravo !","Bon rythme de nage sur cet exercice !","Encore une mesure dans la poche."],
+      ficheWelcome:["Enfile tes lunettes de piscine, on plonge dans les mesures !","Prête à chronométrer tes réponses ?","Cette fiche est pleine de longueurs, durées et euros — mon terrain de jeu !"],
+      ficheDone:["Fiche terminée, sortie de l'eau en beauté !","Meilleur temps de la journée, bravo !","Toutes les longueurs sont mesurées, championne !"],
+      reflections:["Entre deux longueurs de piscine, je compte toujours les secondes. 60 minutes dans une heure, comme 60 secondes dans une minute — j'adore ce chiffre !","Un jour j'ai converti mon bassin de 25 mètres en centimètres pour frimer : 2 500 cm ! Ça impressionne toujours moins que prévu.","Astuce de nageuse : grande unité vers petite, on multiplie, on ajoute des zéros — petite vers grande, on divise, on les enlève. Comme entrer ou sortir de l'eau !"]
+    }
+  }
+};
+
+/* ============ CAT MASCOTS: SVG TEMPLATE ============ */
+function catAccessorySvg(type, accentExpr){
+  switch(type){
+    case 'glasses':
+      return '<g class="cat-accessory"><circle cx="62" cy="80" r="14" fill="none" stroke="'+accentExpr+'" stroke-width="3"/><circle cx="98" cy="80" r="14" fill="none" stroke="'+accentExpr+'" stroke-width="3"/><line x1="76" y1="80" x2="84" y2="80" stroke="'+accentExpr+'" stroke-width="3"/></g>';
+    case 'bandana':
+      return '<g class="cat-accessory"><path d="M55 112 Q80 128 105 112 L100 130 Q80 140 60 130 Z" fill="'+accentExpr+'"/></g>';
+    case 'goggles':
+      return '<g class="cat-accessory"><circle cx="62" cy="53" r="11" fill="none" stroke="'+accentExpr+'" stroke-width="3"/><circle cx="98" cy="53" r="11" fill="none" stroke="'+accentExpr+'" stroke-width="3"/><line x1="73" y1="53" x2="87" y2="53" stroke="'+accentExpr+'" stroke-width="3"/><path d="M51 53 Q40 58 44 68" fill="none" stroke="'+accentExpr+'" stroke-width="2.5"/><path d="M109 53 Q120 58 116 68" fill="none" stroke="'+accentExpr+'" stroke-width="2.5"/></g>';
+    case 'yarn':
+      return '<g class="cat-accessory"><circle cx="127" cy="130" r="11" fill="'+accentExpr+'"/><path d="M119 124 Q127 130 135 124 M118 130 Q127 136 136 130 M120 136 Q127 130 134 136" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="1.4"/></g>';
+    case 'bib':
+      return '<g class="cat-accessory"><path d="M62 122 Q80 132 98 122 L94 148 Q80 154 66 148 Z" fill="'+accentExpr+'"/><circle cx="80" cy="118" r="4" fill="'+accentExpr+'"/></g>';
+    case 'patch':
+      return '<g class="cat-accessory"><ellipse cx="46" cy="70" rx="10" ry="13" fill="'+accentExpr+'" opacity=".55"/></g>';
+    default: return '';
+  }
+}
+function catMarkup(catId){
+  const cat = CATS[catId];
+  const acc = cat.accessory, ax = cat.accent;
+  return '<ellipse class="cat-shadow" cx="80" cy="150" rx="32" ry="6"/>'+
+  '<g class="cat-body-group">'+
+    '<path class="cat-tail" d="M116 118 Q146 108 140 76 Q136 54 116 58"/>'+
+    '<ellipse class="cat-paw" cx="66" cy="142" rx="9" ry="5"/>'+
+    '<ellipse class="cat-paw" cx="94" cy="142" rx="9" ry="5"/>'+
+    '<ellipse class="cat-body" cx="80" cy="100" rx="42" ry="46"/>'+
+    '<ellipse class="cat-belly" cx="80" cy="114" rx="24" ry="29"/>'+
+    '<path class="cat-ear" d="M46 58 L36 22 L68 46 Z"/>'+
+    '<path class="cat-ear-inner" d="M47 51 L41 30 L60 45 Z"/>'+
+    '<path class="cat-ear" d="M114 58 L124 22 L92 46 Z"/>'+
+    '<path class="cat-ear-inner" d="M113 51 L119 30 L100 45 Z"/>'+
+    (acc==='goggles' ? catAccessorySvg('goggles', ax) : '')+
+    '<circle class="cat-cheek" cx="47" cy="90" r="7"/>'+
+    '<circle class="cat-cheek" cx="113" cy="90" r="7"/>'+
+    '<g class="cat-whiskers">'+
+      '<line x1="38" y1="88" x2="10" y2="84"/><line x1="38" y1="94" x2="10" y2="94"/>'+
+      '<line x1="122" y1="88" x2="150" y2="84"/><line x1="122" y1="94" x2="150" y2="94"/>'+
+    '</g>'+
+    '<g class="cat-eye cat-eye-l"><circle class="cat-eye-white" cx="62" cy="80" r="13"/><circle class="cat-pupil" cx="64" cy="81" r="6.3"/><circle class="cat-spark" cx="60" cy="76" r="2"/></g>'+
+    '<g class="cat-eye cat-eye-r"><circle class="cat-eye-white" cx="98" cy="80" r="13"/><circle class="cat-pupil" cx="100" cy="81" r="6.3"/><circle class="cat-spark" cx="96" cy="76" r="2"/></g>'+
+    (acc==='glasses' ? catAccessorySvg('glasses', ax) : '')+
+    (acc==='patch' ? catAccessorySvg('patch', ax) : '')+
+    '<path class="cat-nose" d="M77 93 L83 93 L80 98 Z"/>'+
+    '<path class="cat-mouth" d="M80 98 Q75 103 70 99 M80 98 Q85 103 90 99"/>'+
+    (acc==='bandana' ? catAccessorySvg('bandana', ax) : '')+
+    (acc==='bib' ? catAccessorySvg('bib', ax) : '')+
+    (acc==='yarn' ? catAccessorySvg('yarn', ax) : '')+
   '</g>';
 }
-const owlEls = [];
-function initOwls(){
-  ['topbarOwl','heroOwl','widgetOwl'].forEach(id=>{
-    const svg = document.getElementById(id);
-    if(!svg) return;
-    svg.classList.add('owl');
-    svg.innerHTML = owlMarkup();
-    owlEls.push(svg);
-  });
+function renderCatInto(elId, catId){
+  const svg = document.getElementById(elId);
+  if(!svg) return;
+  const cat = CATS[catId];
+  svg.classList.add('cat');
+  svg.style.setProperty('--cat-body', cat.fur);
+  svg.style.setProperty('--cat-belly', cat.belly);
+  svg.innerHTML = catMarkup(catId);
 }
-function owlReact(mood){
-  owlEls.forEach(o=>{
-    o.classList.remove('cheer','oops');
-    void o.offsetWidth;
-    if(mood) o.classList.add(mood);
-    if(mood){ setTimeout(()=>o.classList.remove(mood), 900); }
+let activeCatId = 'mistigri';
+function setActiveCat(catId){
+  activeCatId = catId;
+  renderCatInto('topbarCatSvg', catId);
+  renderCatInto('widgetCatSvg', catId);
+  if(document.getElementById('ficheIntroCatSvg')) renderCatInto('ficheIntroCatSvg', catId);
+  const btn = document.getElementById('catWidgetBtn');
+  if(btn) btn.setAttribute('aria-label','Parler à '+CATS[catId].name);
+}
+function renderHeroCats(){
+  renderCatInto('heroCatLeft','croquette');
+  renderCatInto('heroCatCenter','mistigri');
+  renderCatInto('heroCatRight','nougat');
+}
+function catEls(){ return Array.from(document.querySelectorAll('.cat')); }
+function catReact(mood){
+  catEls().forEach(c=>{
+    c.classList.remove('cheer','oops');
+    void c.offsetWidth;
+    if(mood) c.classList.add(mood);
+    if(mood){ setTimeout(()=>c.classList.remove(mood), 900); }
   });
 }
 setInterval(function(){
   if(reducedMotion()) return;
-  owlEls.forEach(o=>{ o.classList.add('blink'); setTimeout(()=>o.classList.remove('blink'), 300); });
+  catEls().forEach(c=>{ c.classList.add('blink'); setTimeout(()=>c.classList.remove('blink'), 300); });
 }, 4200);
 
 /* ============ SOUND ============ */
@@ -697,7 +858,7 @@ function burstBig(mood){
 /* ============ FICHES DATA ============ */
 const FICHES = [
 {
-  id:1, color:'f1', badge:1, title:"Les types de phrases et la négation",
+  id:1, color:'f1', badge:1, cat:'ronron', title:"Les types de phrases et la négation",
   eyebrow:"Grammaire", desc:"Déclarative, interrogative, impérative, exclamative… et la négation.",
   lesson:[
     {k:'rule', tag:'Type', title:'Déclarative', desc:"Elle raconte ou explique quelque chose. Elle se termine par un point.", ex:"Le chat dort."},
@@ -765,7 +926,7 @@ const FICHES = [
   ]
 },
 {
-  id:2, color:'f2', badge:2, title:"Les homophones et/est, on/ont, son/sont, a/à, ou/où",
+  id:2, color:'f2', badge:2, cat:'mistigri', title:"Les homophones et/est, on/ont, son/sont, a/à, ou/où",
   eyebrow:"Orthographe", desc:"La méthode du mot de remplacement pour ne plus les confondre.",
   lesson:[
     {k:'note', text:"La méthode est toujours la même : je remplace le mot par un autre, et je regarde si la phrase reste correcte."},
@@ -845,7 +1006,7 @@ const FICHES = [
   ]
 },
 {
-  id:3, color:'f3', badge:3, title:"Encadrer un nombre entre deux centaines",
+  id:3, color:'f3', badge:3, cat:'croquette', title:"Encadrer un nombre entre deux centaines",
   eyebrow:"Numération", desc:"Trouver le nombre rond juste en dessous et juste au-dessus.",
   lesson:[
     {k:'note', text:"Encadrer un nombre dans une unité donnée, c'est trouver le nombre rond juste en dessous et celui juste au-dessus."},
@@ -908,7 +1069,7 @@ const FICHES = [
   ]
 },
 {
-  id:4, color:'f4', badge:4, title:"Comparer et calculer avec des fractions",
+  id:4, color:'f4', badge:4, cat:'bidouille', title:"Comparer et calculer avec des fractions",
   eyebrow:"Fractions", desc:"Numérateur, dénominateur, comparaisons, additions et soustractions.",
   lesson:[
     {k:'note', text:"Dans une fraction a/b : b est le nombre de parts égales du tout (le dénominateur), a est le nombre de parts prises (le numérateur)."},
@@ -974,7 +1135,7 @@ const FICHES = [
   ]
 },
 {
-  id:5, color:'f5', badge:5, title:"Problèmes de partage avec reste",
+  id:5, color:'f5', badge:5, cat:'nougat', title:"Problèmes de partage avec reste",
   eyebrow:"Problèmes", desc:"Le quotient, le reste, et la vérification qui ne trompe jamais.",
   lesson:[
     {k:'note', text:"Partager équitablement, c'est diviser : je cherche combien de fois le nombre de parts « rentre » dans le total. Il y a deux résultats à distinguer : le QUOTIENT (ce que reçoit chaque part) et le RESTE (ce qu'il reste, trop petit pour faire une part de plus)."},
@@ -1026,7 +1187,7 @@ const FICHES = [
   ]
 },
 {
-  id:6, color:'f6', badge:6, title:"Grandeurs et mesures",
+  id:6, color:'f6', badge:6, cat:'nouille', title:"Grandeurs et mesures",
   eyebrow:"Mesures", desc:"Conversions, durées, monnaie et périmètre.",
   lesson:[
     {k:'tag', text:'A. Les conversions'},
@@ -1167,32 +1328,28 @@ function totalStars(){
 }
 
 /* ============ MASCOT SPEECH ============ */
-const POOLS = {
-  correctFirst:["Bravo Madeline, du premier coup ! ✨","Wahou, tu assures !","Pile la bonne réponse !","Hop, une étoile de plus !","Tu es en pleine forme !"],
-  correctRetry:["Voilà, tu l'as trouvée !","Bien joué, tu as persévéré !","C'est ça ! Bravo.","Et voilà le travail !"],
-  wrong:["Presque ! Essaie encore.","Pas tout à fait... regarde bien et retente.","Hop, on y retourne !","Relis la phrase et retente, tu vas trouver.","Petit indice : relis « Je retiens » un peu plus haut."],
-  exerciseDone:["Exercice terminé, tu avances bien !","Un exercice de plus dans la poche !","Super, on continue ?"],
-  ficheWelcome:["On y va ? Relis d'abord « Je retiens » à voix haute !","Prête, Madeline ? Cette fiche va être un jeu d'enfant... ou presque !","Je suis là si tu as besoin d'un indice, relis la leçon en haut !"],
-  ficheDone:["INCROYABLE ! Fiche terminée !","Tu as fini cette fiche comme une championne !","Une île de plus sur la carte du ciel !"]
-};
 const lastPick = {};
-function pool(name){ if(!lastPick[name]) lastPick[name]={v:-1}; return pickVaried(POOLS[name], lastPick[name]); }
+function catPool(catId, name){
+  const key = catId+'|'+name;
+  if(!lastPick[key]) lastPick[key]={v:-1};
+  return pickVaried(CATS[catId].pools[name], lastPick[key]);
+}
 let bubbleTimer=null;
 function say(text, mood){
-  const bubble = document.getElementById('owlBubble');
+  const bubble = document.getElementById('catBubble');
   bubble.textContent = text;
   bubble.classList.add('show');
-  owlReact(mood);
+  catReact(mood);
   clearTimeout(bubbleTimer);
-  bubbleTimer = setTimeout(()=>bubble.classList.remove('show'), 4200);
+  bubbleTimer = setTimeout(()=>bubble.classList.remove('show'), 4600);
   const heroSpeech = document.getElementById('heroSpeech');
   if(heroSpeech && document.getElementById('view-map').classList.contains('active')){
     heroSpeech.textContent = '“'+text+'”';
   }
 }
 function reactMascot(itemId, correct, retry){
-  if(correct){ playCorrect(); say(pool(retry?'correctRetry':'correctFirst'),'cheer'); }
-  else { playRetry(); say(pool('wrong'),'oops'); }
+  if(correct){ playCorrect(); say(catPool(activeCatId, retry?'correctRetry':'correctFirst'),'cheer'); }
+  else { playRetry(); say(catPool(activeCatId,'wrong'),'oops'); }
 }
 
 /* ============ RENDER: STAR ICON ============ */
@@ -1272,7 +1429,7 @@ function openFiche(id){
   document.getElementById('backBtn').hidden = false;
   renderFiche(fiche);
   window.scrollTo({top:0,behavior:'instant' in window ? 'instant':'auto'});
-  say(pool('ficheWelcome'), null);
+  say(catPool(fiche.cat,'ficheWelcome'), null);
 }
 function goToMap(){
   currentFicheId = null;
@@ -1280,6 +1437,7 @@ function goToMap(){
   document.getElementById('view-map').classList.add('active');
   document.getElementById('backBtn').hidden = true;
   renderMap();
+  setActiveCat('mistigri');
   window.scrollTo({top:0,behavior:'instant' in window ? 'instant':'auto'});
 }
 document.getElementById('backBtn').addEventListener('click', goToMap);
@@ -1311,6 +1469,18 @@ function lessonBlockHtml(fiche, block){
   return '';
 }
 
+function catIntroHtml(fiche){
+  const cat = CATS[fiche.cat];
+  return '<div class="cat-intro">'+
+    '<div class="cat-intro-portrait"><svg class="cat-svg" id="ficheIntroCatSvg" viewBox="0 0 160 160"></svg></div>'+
+    '<div class="cat-intro-text">'+
+      '<h3 class="cat-intro-name">'+cat.name+'</h3>'+
+      '<p class="cat-intro-blurb">'+cat.blurb+'</p>'+
+      '<p class="cat-intro-tip"><strong>Son conseil : </strong>'+cat.tip+'</p>'+
+      '<button class="cat-reflect-btn" type="button" id="catReflectBtn">💭 Un autre conseil de '+cat.name+' ?</button>'+
+    '</div>'+
+  '</div>';
+}
 function renderFiche(fiche){
   const page = document.getElementById('fichePage');
   page.style.setProperty('--accent','var(--'+fiche.color+')');
@@ -1322,6 +1492,7 @@ function renderFiche(fiche){
     '<h1>'+fiche.title+'</h1>'+
     '<div class="stars-row" id="ficheStarsRow">'+starsRowHtml(stats.stars)+'</div>'+
     '</div></div>';
+  html += catIntroHtml(fiche);
   html += '<div class="completion-banner" id="completionBanner"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#fff9ef" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg><div><h3>Fiche terminée !</h3><div class="stars-row">'+starsRowHtml(stats.stars)+'</div></div></div>';
   html += '<div class="section-label">Je retiens</div>';
   fiche.lesson.forEach(b=>{ html += lessonBlockHtml(fiche,b); });
@@ -1337,6 +1508,7 @@ function renderFiche(fiche){
   html += '<div class="reset-row"><button class="reset-btn" id="resetFicheBtn" type="button">🔄 Recommencer cette fiche</button></div>';
   html += renderParentsFolder(fiche);
   page.innerHTML = html;
+  setActiveCat(fiche.cat);
 
   // populate items
   const cards = page.querySelectorAll('.exercise-card');
@@ -1606,7 +1778,7 @@ function refreshFicheProgress(ficheId, silent){
     if(!already && !silent){
       state.ficheMeta[ficheId] = {celebrated:true};
       saveState();
-      say(pool('ficheDone'),'cheer');
+      say(catPool(activeCatId,'ficheDone'),'cheer');
       playFiche();
       burstBig('good');
     } else if(!already){
@@ -1659,6 +1831,9 @@ document.addEventListener('click', function(e){
 
   const folderTab = e.target.closest('.folder-tab');
   if(folderTab){ toggleFolder(folderTab); return; }
+
+  const reflectBtn = e.target.closest('#catReflectBtn');
+  if(reflectBtn){ say(catPool(activeCatId,'reflections'), 'cheer'); return; }
 
   const ficheCard = e.target.closest('.fiche-card');
   if(ficheCard){ /* handled via own listener */ }
@@ -1860,7 +2035,8 @@ function initStarfield(){
 /* ============ INIT ============ */
 function init(){
   loadState();
-  initOwls();
+  renderHeroCats();
+  setActiveCat('mistigri');
   updateMuteBtn();
   renderParentsHome();
   initStarfield();
@@ -1871,9 +2047,9 @@ function init(){
     localStorage.setItem('madeline_muted', muted?'1':'0');
     updateMuteBtn();
   });
-  document.getElementById('owlWidgetBtn').addEventListener('click', function(){
-    const pools = ['ficheWelcome','exerciseDone'];
-    say(pool(pools[Math.floor(Math.random()*pools.length)]), 'cheer');
+  document.getElementById('catWidgetBtn').addEventListener('click', function(){
+    const poolNames = ['ficheWelcome','exerciseDone','reflections'];
+    say(catPool(activeCatId, poolNames[Math.floor(Math.random()*poolNames.length)]), 'cheer');
   });
   document.getElementById('finaleCloseBtn').addEventListener('click', function(){
     document.getElementById('finaleModal').classList.remove('show');
