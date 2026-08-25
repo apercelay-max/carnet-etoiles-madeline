@@ -225,31 +225,48 @@ img,svg{ display:block; max-width:100%; }
 @keyframes catFloat{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-4px);} }
 .cat-body{ fill:var(--cat-body,#B98A5E); }
 .cat-belly{ fill:var(--cat-belly,#F6E9D2); }
-.cat-ear{ fill:var(--cat-body,#B98A5E); }
+.cat-ear{ fill:var(--cat-body,#B98A5E); transform-box:fill-box; transform-origin:bottom center; animation:catEarTwitch 5.5s ease-in-out infinite; }
+.cat-ear-r{ animation-delay:.4s; }
+@keyframes catEarTwitch{ 0%,88%,100%{ transform:rotate(0);} 91%{ transform:rotate(-6deg);} 94%{ transform:rotate(4deg);} }
 .cat-ear-inner{ fill:#F0A9A5; }
 .cat-paw{ fill:var(--cat-body,#B98A5E); }
+.cat-paw-l,.cat-paw-r{ transform-box:fill-box; transform-origin:center; transition:transform .35s cubic-bezier(.34,1.56,.64,1); }
 .cat-nose{ fill:#E8837D; }
-.cat-mouth{ fill:none; stroke:var(--cat-outline); stroke-width:1.6; stroke-linecap:round; }
+.cat-mouth{ fill:none; stroke:var(--cat-outline); stroke-width:1.6; stroke-linecap:round; transform-box:fill-box; transform-origin:center; transition:transform .3s; }
 .cat-eye-white{ fill:#FFFDF7; stroke:var(--cat-outline); stroke-width:1.4; }
 .cat-pupil{ fill:#2A2036; }
 .cat-spark{ fill:#FFFDF7; }
 .cat-eye{ transform-box:fill-box; transform-origin:center; }
 .cat-cheek{ fill:#EE9E93; opacity:0; transition:opacity .3s; }
+.cat-whiskers{ transform-box:fill-box; transform-origin:center; }
 .cat-whiskers line{ stroke:var(--cat-outline); stroke-width:1.3; stroke-linecap:round; opacity:.5; }
-.cat-tail{ fill:none; stroke:var(--cat-body,#B98A5E); stroke-width:13; stroke-linecap:round; transform-box:fill-box; transform-origin:85% 88%; transition:transform .4s cubic-bezier(.34,1.56,.64,1); }
+.cat-tail{ fill:none; stroke:var(--cat-body,#B98A5E); stroke-width:13; stroke-linecap:round; transform-box:fill-box; transform-origin:85% 88%; animation:catTailSway 2.8s ease-in-out infinite; }
 .cat.blink .cat-eye{ animation:catBlink .26s ease; }
 @keyframes catBlink{ 0%,100%{ transform:scaleY(1);} 50%{ transform:scaleY(.12);} }
-.cat.cheer .cat-tail{ transform:rotate(-22deg); }
+.cat.blink .cat-whiskers{ animation:catWhiskerTwitch .3s ease; }
+@keyframes catWhiskerTwitch{ 0%,100%{ transform:scaleX(1) rotate(0);} 50%{ transform:scaleX(1.06) rotate(1.5deg);} }
+@keyframes catTailSway{ 0%,100%{ transform:rotate(-6deg);} 50%{ transform:rotate(9deg);} }
+.cat.cheer .cat-tail{ animation:catTailCheer .55s ease; }
+@keyframes catTailCheer{ 0%{transform:rotate(0);} 40%{transform:rotate(-30deg);} 100%{transform:rotate(-6deg);} }
 .cat.cheer .cat-cheek{ opacity:1; }
+.cat.cheer .cat-paw-l{ transform:translate(-5px,-11px) rotate(-18deg); }
+.cat.cheer .cat-paw-r{ transform:translate(5px,-11px) rotate(18deg); }
 .cat.cheer .cat-body-group{ animation:catHop .55s ease; }
 @keyframes catHop{ 0%{transform:translateY(0) rotate(0);} 30%{transform:translateY(-15px) rotate(-4deg);} 60%{transform:translateY(0) rotate(3deg);} 100%{transform:translateY(0) rotate(0);} }
 .cat.oops .cat-body-group{ animation:catTilt .5s ease; }
-.cat.oops .cat-tail{ transform:rotate(12deg) translateY(5px); }
+.cat.oops .cat-tail{ animation:catTailOops .5s ease; }
+@keyframes catTailOops{ 0%,100%{transform:rotate(-6deg) translateY(0);} 50%{transform:rotate(16deg) translateY(6px);} }
 @keyframes catTilt{ 0%,100%{transform:rotate(0);} 30%{transform:rotate(-6deg);} 60%{transform:rotate(4deg);} }
+.cat.wink .cat-eye-l{ animation:catWink .6s ease; }
+@keyframes catWink{ 0%,100%{transform:scaleY(1);} 35%,65%{transform:scaleY(.1);} }
+.cat.wink .cat-mouth{ transform:scaleX(1.15) translateY(1px); }
+.cat.purr .cat-body-group{ animation:catPurr .32s ease-in-out 3; }
+@keyframes catPurr{ 0%,100%{transform:translate(0,0) rotate(0);} 25%{transform:translate(1px,-1px) rotate(-1deg);} 75%{transform:translate(-1px,1px) rotate(1deg);} }
+.cat.purr .cat-cheek{ opacity:1; }
 
 .cat-widget{
   position:fixed; right:14px; bottom:14px; z-index:50; display:flex; flex-direction:column;
-  align-items:flex-end; gap:.4rem; pointer-events:none;
+  align-items:flex-end; gap:.5rem; pointer-events:none;
 }
 .cat-widget .bubble{
   pointer-events:none; max-width:min(72vw,270px); background:var(--paper-card); color:var(--ink);
@@ -258,8 +275,13 @@ img,svg{ display:block; max-width:100%; }
   opacity:0; transform:translateY(6px) scale(.96); transition:opacity .25s, transform .25s;
 }
 .cat-widget .bubble.show{ opacity:1; transform:none; }
-.cat-widget-icon{ width:74px; height:74px; pointer-events:auto; cursor:pointer; background:none; border:none; padding:0; }
-@media (max-width:640px){ .cat-widget-icon{ width:60px; height:60px;} .cat-widget{ right:10px; bottom:10px;} }
+.cat-widget .bubble.conseil{
+  max-width:min(88vw,360px); font-size:1.3rem; line-height:1.35; padding:.9rem 1.15rem;
+  border-width:3px; border-color:var(--star-color);
+  box-shadow:0 0 0 5px color-mix(in srgb, var(--star-color) 25%, transparent), var(--shadow);
+}
+.cat-widget-icon{ width:148px; height:148px; pointer-events:auto; cursor:pointer; background:none; border:none; padding:0; }
+@media (max-width:640px){ .cat-widget-icon{ width:112px; height:112px;} .cat-widget{ right:10px; bottom:10px;} }
 
 /* ============ CAT INTRO CARD ============ */
 .cat-intro{
@@ -652,13 +674,12 @@ const CATS = {
     blurb:"Miaou ! Moi c'est Ronron, le chat qui a fait de l'école sa matière préférée — oui, c'est rare chez les chats. Un mot bien conjugué ou une phrase bien construite, pour moi, c'est aussi satisfaisant qu'une pelote de laine bien enroulée.",
     tip:"Mon secret : je relis toujours la phrase entière à voix haute avant de répondre. Elle me dit souvent tout de suite ce qu'il faut trouver.",
     pools:{
-      correctFirst:["Miaou, parfait du premier coup !","Excellente réponse, tu mérites un A+ !","Tu ferais une très bonne petite professeure.","Voilà exactement ce que j'attendais.","Dix sur dix, Madeline !"],
-      correctRetry:["Voilà la bonne réponse, tu as bien cherché.","C'est ça ! La persévérance, ça paie toujours.","Bien rattrapé.","Et voilà, on progresse."],
-      wrong:["Pas tout à fait — tu verras la bonne réponse avec Papa ou Maman.","Ce n'est pas grave du tout, on la corrigera ensemble avec un adulte.","Une petite erreur, rien de dramatique : Papa ou Maman t'expliquera ça.","Pas cette fois, mais chaque erreur aide à progresser — à revoir avec un adulte."],
-      exerciseDone:["Exercice noté et validé !","Encore une leçon bien apprise.","Tu avances comme une bonne élève."],
-      ficheWelcome:["Bienvenue dans ma salle de classe ! Relis d'abord « Je retiens » à voix haute.","Installe-toi bien, on va faire parler les mots.","Prête pour l'interrogation surprise ? Je plaisante, prends ton temps."],
-      ficheDone:["Fiche terminée avec les honneurs !","Tu mérites une pause récré bien méritée.","Bravo, future spécialiste de la grammaire !"],
-      reflections:["Un petit conseil de vieux chat d'école : le point d'exclamation, c'est comme un miaulement fort — on le sent tout de suite.","Entre nous, même moi je confonds parfois type et forme. L'astuce : type = ce QUE fait la phrase, forme = a-t-elle une négation.","Je collectionne les jolies phrases comme d'autres collectionnent les jouets. Ta prochaine phrase pourrait rejoindre ma collection !"]
+      correctFirst:["Miaou, parfait du premier coup !","Excellente réponse, tu mérites un A+ !","Tu ferais une très bonne petite professeure.","Voilà exactement ce que j'attendais.","Dix sur dix, Madeline !","Bravo, tu as la meilleure note de la classe !","Parfait, je note ça dans mon cahier des réussites.","Tu m'impressionnes, petite érudite !","Miaou-gnifique réponse !","Une réponse digne d'un tableau d'honneur.","Tu as tout compris du premier coup, chapeau !","Je suis fier de toi, comme un vieux chat d'école."],
+      wrong:["Oh là là, même les meilleurs élèves se trompent parfois — tu verras ça avec Papa ou Maman.","Pas tout à fait, mais tu as bien cherché ! Papa ou Maman t'expliquera la suite.","Miaou, raté ! Ce n'est pas grave du tout, on note ça pour Papa ou Maman.","Bien essayé, petite chercheuse ! On corrigera ça ensemble avec un adulte.","Ha, celle-là était piégeuse même pour moi. À revoir avec Papa ou Maman.","Presque bon élève ! Cette question ira dans le panier « à corriger » avec un adulte.","Pas grave du tout, même moi je me trompe en ronronnant. Papa ou Maman t'aidera.","Une petite erreur de rien du tout — tu as bien essayé, c'est le principal !","Oups, celle-ci t'a échappé ! On la reverra avec Papa ou Maman, promis ce n'est pas dramatique.","Miaou raté, mais quel bel effort ! Un adulte t'expliquera ça tout à l'heure.","Ce n'est pas la bonne réponse, mais tu as vraiment bien réfléchi. À corriger avec Papa ou Maman.","Zut, celle-là m'a eu aussi la première fois ! On verra ça avec un adulte.","Pas de panique, une erreur ça arrive à tout le monde, même aux chats professeurs. Papa ou Maman corrigera.","Ce n'était pas ça, mais bravo d'avoir essayé sans hésiter ! À revoir avec un adulte.","Hmm, pas tout à fait — mais j'aime ton audace ! Papa ou Maman t'aidera à comprendre.","Raté, mais avec panache ! On note ça pour la correction avec un adulte.","Ce n'est pas grave, les meilleures histoires ont des chapitres à corriger. Papa ou Maman s'en occupera.","Miaou, pas cette fois-ci ! Tu as bien tenté ta chance, c'est ce qui compte.","Une erreur toute mignonne, rien de grave — à revoir avec Papa ou Maman ce soir.","Pas gagné, mais joliment tenté ! Cette question attendra Papa ou Maman.","Ho, celle-ci était coriace ! Tu as bien essayé, on corrigera ensemble avec un adulte.","Pas la bonne réponse, mais je vois que tu as vraiment réfléchi. Bravo pour l'effort !"],
+      exerciseDone:["Exercice noté et validé !","Encore une leçon bien apprise.","Tu avances comme une bonne élève.","Un exercice de plus dans ton carnet de réussites.","Belle application, on continue !","Tu progresses à vue d'œil, bravo.","Un exercice terminé, quel sérieux !","Miaou, encore un de fait !","Tu tiens le rythme d'une vraie championne d'école.","Ça avance bien, je suis content de toi."],
+      ficheWelcome:["Bienvenue dans ma salle de classe ! Relis d'abord « Je retiens » à voix haute.","Installe-toi bien, on va faire parler les mots.","Prête pour l'interrogation surprise ? Je plaisante, prends ton temps.","Sors ton meilleur stylo imaginaire, on commence !","J'ai préparé cette leçon spécialement pour toi, miaou.","Assieds-toi bien droite, professeur Ronron va t'accompagner.","Prête à devenir encore plus savante ?","On y va doucement, une question à la fois.","J'adore cette fiche, j'espère que toi aussi.","Concentre-toi bien, je crois en toi."],
+      ficheDone:["Fiche terminée avec les honneurs !","Tu mérites une pause récré bien méritée.","Bravo, future spécialiste de la grammaire !","Miaou, quelle réussite ! Je suis fier de toi.","Tableau d'honneur pour Madeline aujourd'hui !","Tu as fini cette fiche comme une vraie cheffe de classe.","Une fiche de plus dans ton beau parcours scolaire.","J'inscris ton nom dans mon cahier des champions.","Bravo, tu as tenu jusqu'au bout avec sérieux.","Fiche bouclée, quel bel élan de savoir !"],
+      reflections:["Un petit conseil de vieux chat d'école : le point d'exclamation, c'est comme un miaulement fort — on le sent tout de suite.","Entre nous, même moi je confonds parfois type et forme. L'astuce : type = ce QUE fait la phrase, forme = a-t-elle une négation.","Je collectionne les jolies phrases comme d'autres collectionnent les jouets. Ta prochaine phrase pourrait rejoindre ma collection !","Sais-tu que je fais la sieste sur mon dictionnaire ? Je dis que ça fait entrer les mots par la tête.","Un jour, j'ai essayé d'apprendre à lire à mon reflet dans le miroir. Ça n'a pas très bien marché.","Mon astuce du jour : si tu hésites entre deux réponses, relis la question une deuxième fois, tout doucement.","Je porte mes petites lunettes même pour dormir, on ne sait jamais si un mot difficile apparaît en rêve.","Les verbes, c'est comme les croquettes : il y en a des faciles à avaler et des costaudes à mâcher longtemps.","Petit secret : plus tu lis à voix haute, plus tes oreilles t'aident à trouver la bonne réponse.","Je rêve parfois en conjugaison. Cette nuit, j'ai rêvé que je conjuguais « ronronner » à tous les temps."]
     }
   },
   mistigri:{
@@ -666,13 +687,12 @@ const CATS = {
     blurb:"Psst, viens voir ! Moi c'est Mistigri, et j'adore piéger les gens avec des mots qui se ressemblent — un peu comme « son » et « sont ». Mais je te promets de t'aider plus que de t'embêter... juré, patte sur le cœur.",
     tip:"Remplace le mot par un autre dans ta tête. Si la phrase devient bizarre, c'est que tu as le mauvais mot !",
     pools:{
-      correctFirst:["Ha, tu m'as eu, bravo !","Pile poil, comme dirait mon poil roux.","Tu m'as démasqué, bien joué !","Miaou-mazing !","Tu commences à connaître mes pièges par cœur."],
-      correctRetry:["Ah, tu l'as trouvé, petite maligne !","Voilà, tu as déjoué le piège.","Pas mal du tout, pour une deuxième tentative !"],
-      wrong:["Ha ha, cette fois c'est moi qui gagne ! Tu verras la bonne réponse avec Papa ou Maman.","Pas cette fois — demande à Papa ou Maman de te montrer le piège.","Raté, mais pas grave du tout : Papa ou Maman corrigera ça avec toi.","Un homophone qui t'a bien eue — à revoir ensemble avec un adulte."],
-      exerciseDone:["Un piège de déjoué, bravo !","Mes pièges ne te résistent plus.","Tu deviens une vraie chasseuse d'homophones."],
-      ficheWelcome:["Attention, cette fiche est pleine de pièges à mots... enfin, façon de parler !","Prête à jouer au chat et à la souris avec les homophones ?","Je vais essayer de t'embrouiller, mais je sais que tu vas gagner."],
-      ficheDone:["Bravo, plus aucun homophone ne peut te surprendre !","Tu as déjoué tous mes tours, championne.","Fiche terminée, mes pièges sont épuisés !"],
-      reflections:["Un jour j'ai confondu « a » et « à » dans une lettre à mon meilleur ami chat. Il a cru que je lui offrais un chapeau. Depuis, je vérifie toujours !","Les homophones sonnent pareil mais ne veulent jamais dire la même chose — un peu comme deux miaulements qui peuvent vouloir dire des choses très différentes.","Petit conseil sérieux (oui, ça m'arrive) : quand deux mots se ressemblent, demande-toi toujours « est-ce que je peux le remplacer ? »"]
+      correctFirst:["Ha, tu m'as eu, bravo !","Pile poil, comme dirait mon poil roux.","Tu m'as démasqué, bien joué !","Miaou-mazing !","Tu commences à connaître mes pièges par cœur.","Zut, tu es plus maligne que moi aujourd'hui !","Coup de patte magistral, bravo !","Tu as flairé le piège à des kilomètres !","Chapeau, farceuse, tu m'as bien eu.","Impossible de t'embrouiller, bravo championne !","Tu ris de mes blagues et tu trouves les réponses, quel talent !","Miaou, tu deviens redoutable à ce petit jeu."],
+      wrong:["Ha ha, cette fois c'est moi qui gagne ! Mais joli essai — Papa ou Maman t'aidera.","Pas cette fois, farceuse ! Tu as bien tenté ton coup, on verra ça avec un adulte.","Raté, mais avec le sourire ! Papa ou Maman corrigera ça avec toi.","Un homophone qui t'a bien eue — à revoir ensemble avec un adulte, rien de grave.","Miaou, je t'ai piégée ! Ce n'est pas grave, tu as vraiment essayé.","Presque, presque... mais pas tout à fait ! On note ça pour Papa ou Maman.","Coup de théâtre, ce n'était pas la bonne ! Pas de souci, on corrige avec un adulte.","Tu es tombée dans mon piège préféré, comme beaucoup ! Papa ou Maman t'expliquera.","Ha ha, celle-là était vicieuse même pour un chat farceur. À revoir avec un adulte.","Pas gagné, mais je salue le courage ! On corrigera ça avec Papa ou Maman.","Zut alors, mon piège a fonctionné ! Ce n'est pas grave du tout, tu as bien essayé.","Raté de peu, petite maligne ! Papa ou Maman t'aidera à voir où ça coince.","Miaou, cette question était pleine de fourberie. Rien de grave, à corriger avec un adulte.","Pas la bonne cette fois, mais tu ne t'es pas laissée démonter, bravo pour ça !","Ho, je t'ai bien eue sur ce coup ! On règle ça avec Papa ou Maman tranquillement.","Ce tour de magie des mots t'a surprise — normal, il est retors. À revoir avec un adulte.","Pas cette fois, mais quelle jolie tentative ! Papa ou Maman t'expliquera le piège.","Mes farces sont increvables, même toi tu t'y es laissée prendre. Pas grave, on corrige ensemble.","Presque parfait, mais pas totalement ! Ce sera à revoir avec un adulte, sans souci.","Ha, cette fois le chat farceur l'emporte ! Tu as bien essayé, c'est ce qui compte.","Manqué de peu, petite chercheuse de pièges ! Papa ou Maman clarifiera ça avec toi.","Coup raté, mais tenté avec panache ! On verra la bonne réponse avec un adulte."],
+      exerciseDone:["Un piège de déjoué, bravo !","Mes pièges ne te résistent plus.","Tu deviens une vraie chasseuse d'homophones.","Un exercice de plus dans ta besace de farceuse.","Bien joué, on continue le jeu ?","Tu avances plus vite que mes blagues !","Miaou, un tour de plus réussi.","Tu commences à connaître tous mes secrets.","Exercice bouclé avec malice.","Encore un piège évité avec brio."],
+      ficheWelcome:["Attention, cette fiche est pleine de pièges à mots... enfin, façon de parler !","Prête à jouer au chat et à la souris avec les homophones ?","Je vais essayer de t'embrouiller, mais je sais que tu vas gagner.","Miaou, sors tes lunettes de détective des mots !","J'ai caché plein de farces dans cette fiche, à toi de les trouver.","Prête à déjouer mes tours préférés ?","Cette fiche est mon terrain de jeu favori, régale-toi.","Ouvre grand tes oreilles, les mots vont te jouer des tours.","Je parie que tu vas déjouer tous mes pièges aujourd'hui.","Accroche-toi, farceuse en herbe, ça va être malicieux."],
+      ficheDone:["Bravo, plus aucun homophone ne peut te surprendre !","Tu as déjoué tous mes tours, championne.","Fiche terminée, mes pièges sont épuisés !","Miaou, tu es devenue la reine des homophones.","Je n'ai plus aucune farce à te faire, bravo !","Tu m'as tout démasqué, quelle enquêtrice !","Fiche finie, mes moustaches en tremblent d'admiration.","Championne toutes catégories des mots qui se ressemblent !","Plus un seul piège ne te résiste, bravo farceuse en chef.","Fiche bouclée avec brio, je m'incline (façon de parler, je suis un chat)."],
+      reflections:["Un jour j'ai confondu « a » et « à » dans une lettre à mon meilleur ami chat. Il a cru que je lui offrais un chapeau. Depuis, je vérifie toujours !","Les homophones sonnent pareil mais ne veulent jamais dire la même chose — un peu comme deux miaulements qui peuvent vouloir dire des choses très différentes.","Petit conseil sérieux (oui, ça m'arrive) : quand deux mots se ressemblent, demande-toi toujours « est-ce que je peux le remplacer ? »","Je fais collection de blagues sur les mots. Ma dernière : pourquoi le mot « ou » ne se dispute jamais ? Il fait toujours un choix !","Mon astuce préférée : dire la phrase à voix très basse, comme un secret, ça aide à mieux l'entendre.","Un jour j'ai essayé d'apprendre le morse aux souris. Elles ont préféré courir.","Les mots pièges adorent se cacher dans les phrases les plus simples, méfie-toi des évidences !","Je porte toujours une loupe invisible pour repérer les fautes d'homophones, tu devrais essayer aussi.","Entre nous, je mélange encore parfois deux mots qui se ressemblent. On a le droit de vérifier deux fois !","Ma technique de farceur : je remplace toujours le mot mentalement avant de répondre, ça marche à tous les coups."]
     }
   },
   croquette:{
@@ -680,13 +700,12 @@ const CATS = {
     blurb:"Salut, moi c'est Croquette, championne (autoproclamée) de vélo du quartier. Sur ma piste, je compte toujours les bornes, les tours de roue, les kilomètres — les nombres, c'est mon terrain de jeu préféré !",
     tip:"Mon secret de cycliste : je vérifie toujours mon calcul une fois avant de répondre, comme je vérifie mes pneus avant de partir.",
     pools:{
-      correctFirst:["Pile dans le mille, en danseuse !","Tu roules plus vite que moi sur cet exercice !","Encadrement parfait, comme mes bornes préférées.","Tu passes la ligne d'arrivée en tête !","Belle vitesse de calcul !"],
-      correctRetry:["Voilà, tu as retrouvé la bonne route.","Un petit détour, mais tu es arrivée à bon port.","Bien rattrapé, championne."],
-      wrong:["Petit faux départ, ce n'est pas grave — tu reverras ça avec Papa ou Maman.","Pas la bonne borne cette fois. Papa ou Maman t'aidera à comprendre.","On note l'erreur pour la revoir ensemble avec un adulte, aucun souci.","Pas grave du tout, ça se corrige facilement avec Papa ou Maman."],
-      exerciseDone:["Étape terminée, on enchaîne !","Une borne de plus franchie !","Bon rythme, continue comme ça."],
-      ficheWelcome:["En selle ! Cette fiche est pleine de nombres, mon terrain préféré.","Prête pour un petit tour de calcul ?","Accroche-toi, on roule vers les bonnes réponses !"],
-      ficheDone:["Fiche terminée, ligne d'arrivée franchie !","Championne du calcul, bravo !","Une étoile de plus dans mon panier à vélo !"],
-      reflections:["Avant chaque sortie à vélo, je vérifie toujours mes pneus deux fois. Toi aussi, relis ta réponse deux fois avant de valider !","Sur ma piste cyclable, les bornes changent tous les 100 mètres. Pour les nombres, ça marche pareil : centaine par centaine !","Le jour où j'ai mal lu une borne, je suis passée tout droit. Depuis, je regarde bien quels chiffres changent avant de répondre."]
+      correctFirst:["Pile dans le mille, en danseuse !","Tu roules plus vite que moi sur cet exercice !","Encadrement parfait, comme mes bornes préférées.","Tu passes la ligne d'arrivée en tête !","Belle vitesse de calcul !","Champion du monde de la réponse rapide !","Tu pédales à toute allure vers la bonne réponse !","Parcours sans faute, bravo championne !","Tu grimpes cette question comme une côte facile !","Miaou, quelle accélération vers la bonne réponse !","Podium assuré avec une réponse pareille !","Tu roules sur du velours aujourd'hui !"],
+      wrong:["Petit faux départ, ce n'est pas grave — tu as bien pédalé quand même ! Papa ou Maman t'aidera.","Pas la bonne borne cette fois, mais bel effort ! On corrige avec un adulte.","Crevaison sur ce coup-là, rien de grave ! Papa ou Maman t'expliquera.","Petit dérapage, mais tu as vraiment essayé fort. On revoit ça avec un adulte.","Pas grave du tout, même les champions tombent parfois de vélo. Papa ou Maman t'aidera à te relever.","Raté de peu, comme un dixième de seconde au chrono ! On corrige avec un adulte.","Petit virage manqué, mais quelle énergie dans ta réponse ! À revoir avec Papa ou Maman.","Pas la bonne route, mais tu roulais avec conviction ! Un adulte t'expliquera ça.","Chute sans gravité, on se relève et on note ça pour Papa ou Maman.","Pas cette fois, championne, mais quel bel essai ! Ça se corrige facilement avec un adulte.","Petit trou dans la route, rien de cassé ! Papa ou Maman t'aidera à comprendre.","Raté, mais tu as foncé sans hésiter, bravo pour l'audace ! À revoir avec un adulte.","Pas la bonne vitesse cette fois, mais quel enthousiasme ! On corrige ensemble avec Papa ou Maman.","Petit hors-piste, ce n'est pas grave. Un adulte te remettra sur la bonne route.","Manqué de peu, comme au sprint final ! Papa ou Maman t'expliquera la suite.","Pas cette réponse-là, mais tu as bien essayé, promis on corrige ensemble.","Roue voilée sur ce coup, rien de dramatique ! À revoir avec un adulte.","Pas gagné, mais quelle détermination dans le mollet ! Papa ou Maman t'aidera.","Petit faux plat qui t'a ralentie, rien de grave. On voit ça avec un adulte.","Raté ce tour-ci, mais le suivant sera le bon, foi de cycliste ! Papa ou Maman corrigera celui-là.","Pas la bonne direction, mais tu as pédalé fort ! On note ça pour la correction.","Petit accroc dans le parcours, ce n'est pas grave du tout. Un adulte t'aidera à repartir."],
+      exerciseDone:["Étape terminée, on enchaîne !","Une borne de plus franchie !","Bon rythme, continue comme ça.","Un exercice de plus dans les jambes !","Tu roules à un bon rythme aujourd'hui.","Miaou, encore une étape avalée !","Belle cadence, championne.","Un tour de plus dans le compteur !","Tu avances comme une vraie sportive.","Exercice bouclé sans crevaison !"],
+      ficheWelcome:["En selle ! Cette fiche est pleine de nombres, mon terrain préféré.","Prête pour un petit tour de calcul ?","Accroche-toi, on roule vers les bonnes réponses !","Enfile ton casque (imaginaire), c'est parti !","J'ai prévu un joli parcours de calcul pour toi aujourd'hui.","Prête à pédaler jusqu'à la bonne réponse ?","Cette fiche, c'est ma piste cyclable favorite.","On chauffe les mollets, cette fiche va être sportive !","Prête pour une belle sortie de calcul entre amies ?","Vérifie tes pneus (mentalement), et allons-y !"],
+      ficheDone:["Fiche terminée, ligne d'arrivée franchie !","Championne du calcul, bravo !","Une étoile de plus dans mon panier à vélo !","Tu as bouclé le parcours sans une seule crevaison !","Miaou, quelle performance aujourd'hui !","Podium mérité pour cette fiche !","Tu descends de vélo en pleine forme, bravo !","Record personnel battu sur cette fiche !","Belle sortie, championne, on est arrivées ensemble !","Fiche bouclée à toute vitesse, chapeau !"],
+      reflections:["Avant chaque sortie à vélo, je vérifie toujours mes pneus deux fois. Toi aussi, relis ta réponse deux fois avant de valider !","Sur ma piste cyclable, les bornes changent tous les 100 mètres. Pour les nombres, ça marche pareil : centaine par centaine !","Le jour où j'ai mal lu une borne, je suis passée tout droit. Depuis, je regarde bien quels chiffres changent avant de répondre.","Un jour j'ai essayé de faire du vélo avec des patins à roulettes greffés dessus. Ne me demande pas pourquoi, ça n'a pas marché.","Mon secret pour ne jamais me perdre : je compte toujours les repères, un par un, sans en sauter aucun.","Je rêve parfois que je fais le tour du monde à vélo en comptant tous les nombres jusqu'à un million.","Astuce de sportive : avant de répondre, je respire un grand coup, comme avant une côte difficile.","Une fois j'ai calculé la distance jusqu'à la lune en tours de roue. Résultat : beaucoup, beaucoup de tours.","Mes moustaches vibrent quand je vais vite en vélo, un peu comme quand je trouve la bonne réponse.","Le secret des grands champions, c'est de ne jamais se décourager après une chute, à vélo comme en calcul."]
     }
   },
   bidouille:{
@@ -694,13 +713,12 @@ const CATS = {
     blurb:"Coucou, moi c'est Bidouille ! Je passe mes journées à bricoler — couper, coller, découper en morceaux bien égaux. Les fractions, c'est exactement mon métier : partager un tout en parts qui se ressemblent toutes.",
     tip:"Si tu n'es pas sûre, dessine ! Une bande coupée en parts égales, ça ne ment jamais.",
     pools:{
-      correctFirst:["Découpage parfait, bravo !","Une pièce qui s'emboîte à merveille !","Tu bricoles ça les yeux fermés !","Précision de couturière, chapeau !","Exactement la bonne mesure !"],
-      correctRetry:["Ajusté et réussi, bien joué.","Un petit coup de ciseaux de plus et voilà !","Tu as retrouvé la bonne part."],
-      wrong:["Pas tout à fait la bonne part — Papa ou Maman t'aidera à ajuster ça.","Petite erreur de découpage, rien de grave : à revoir avec un adulte.","On garde ça de côté pour le corriger ensemble avec Papa ou Maman.","Pas grave, ces parts se recomptent facilement avec un adulte."],
-      exerciseDone:["Une pièce de plus terminée dans l'atelier !","Beau travail de précision.","L'atelier avance bien !"],
-      ficheWelcome:["Bienvenue dans mon atelier ! Aujourd'hui, on partage des parts égales.","Enfile ton tablier (imaginaire), on bricole des fractions.","Prête à couper, coller, comparer ?"],
-      ficheDone:["Fiche terminée, l'atelier est fier de toi !","Toutes les parts sont à leur place, bravo !","Une nouvelle création réussie !"],
-      reflections:["Une fois j'ai voulu partager un carton en 8 parts égales pour une cabane. Résultat : 8 triangles bancals. Depuis, je mesure avant de couper — comme pour les fractions !","Le dénominateur, c'est comme le nombre de morceaux de tissu que j'ai découpés. Plus il y a de morceaux, plus chacun est petit — logique, non ?","Petit secret d'atelier : pour additionner deux fractions avec le même dénominateur, je ne touche jamais à ce chiffre-là, seulement aux numérateurs."]
+      correctFirst:["Découpage parfait, bravo !","Une pièce qui s'emboîte à merveille !","Tu bricoles ça les yeux fermés !","Précision de couturière, chapeau !","Exactement la bonne mesure !","Miaou, quelle habileté de bricoleuse !","Assemblage parfait du premier coup !","Tu mesures deux fois et coupes juste une fois, bravo !","Une création magnifique, comme toujours !","Chef-d'œuvre de précision !","Tu as l'œil d'une vraie artisane !","Collé, découpé, réussi à la perfection !"],
+      wrong:["Pas tout à fait la bonne part, mais joli essai de bricolage ! Papa ou Maman t'aidera.","Petite erreur de découpage, rien de grave : tu as vraiment essayé. À revoir avec un adulte.","Oups, un morceau un peu de travers ! On corrige ça ensemble avec Papa ou Maman.","Pas grave du tout, même mes meilleures cabanes ont eu des ratés. Un adulte t'expliquera.","Raté de peu, mais quel bel effort de bricoleuse ! Papa ou Maman corrigera ça.","Petit trou dans le plan, rien de cassé ! On revoit ça avec un adulte.","Pas la bonne pièce cette fois, mais tu as bien cherché. À corriger avec Papa ou Maman.","Découpage un peu bancal, mais quelle bonne tentative ! Un adulte t'aidera à ajuster.","Petit accident d'atelier, ce n'est pas grave. Papa ou Maman t'expliquera où ça coince.","Pas gagné, mais l'intention était parfaite ! On corrige avec un adulte, tranquillement.","Raté, mais avec beaucoup d'application, bravo pour ça ! À revoir avec Papa ou Maman.","Petit raté de mesure, rien de grave du tout. Un adulte t'aidera à recompter.","Pas la bonne forme cette fois, mais joli travail d'essai ! Papa ou Maman corrigera ça.","Oups, ça penche un peu ! Ce n'est pas grave, on ajuste avec un adulte.","Pas tout à fait juste, mais tu as bien réfléchi avant de couper. À corriger avec Papa ou Maman.","Petite maladresse d'atelier, ça arrive même aux pros ! Un adulte t'expliquera.","Raté ce coup-ci, mais quelle belle énergie créative ! On revoit ça avec Papa ou Maman.","Pas la bonne pièce, mais l'atelier est fier de ton essai. À corriger avec un adulte.","Petit décalage dans le montage, rien de grave. Papa ou Maman t'aidera à tout aligner.","Pas gagné cette fois, mais tu as mis du cœur à l'ouvrage ! On corrige avec un adulte.","Oups, les ciseaux ont dévié ! Ce n'est pas grave, à revoir avec Papa ou Maman.","Petite pièce manquante dans le raisonnement, rien de dramatique. Un adulte t'aidera à la retrouver."],
+      exerciseDone:["Une pièce de plus terminée dans l'atelier !","Beau travail de précision.","L'atelier avance bien !","Un exercice de plus dans ta collection de créations.","Miaou, quel savoir-faire !","Belle avancée sur l'établi aujourd'hui.","Un morceau de plus bien ajusté.","Tu deviens une vraie experte de l'atelier.","Exercice terminé avec soin.","L'atelier applaudit ce beau travail !"],
+      ficheWelcome:["Bienvenue dans mon atelier ! Aujourd'hui, on partage des parts égales.","Enfile ton tablier (imaginaire), on bricole des fractions.","Prête à couper, coller, comparer ?","J'ai sorti mes meilleurs outils pour cette fiche.","Prête pour une nouvelle création bien précise ?","Cette fiche, c'est mon établi préféré.","On enfile les gants, ça va être minutieux aujourd'hui.","J'ai plein d'idées de bricolage-fractions pour toi.","Prête à assembler les bonnes réponses pièce par pièce ?","Sors ta règle imaginaire, on mesure tout bien."],
+      ficheDone:["Fiche terminée, l'atelier est fier de toi !","Toutes les parts sont à leur place, bravo !","Une nouvelle création réussie !","Miaou, quel bel ouvrage terminé !","Chef-d'œuvre complet, bravo l'artisane !","Tu ranges tes outils avec fierté aujourd'hui.","Fiche bouclée avec une précision d'orfèvre.","L'atelier ferme ses portes sur une belle réussite.","Toutes les pièces s'emboîtent parfaitement, bravo !","Une fiche de plus dans ton livre de créations réussies."],
+      reflections:["Une fois j'ai voulu partager un carton en 8 parts égales pour une cabane. Résultat : 8 triangles bancals. Depuis, je mesure avant de couper — comme pour les fractions !","Le dénominateur, c'est comme le nombre de morceaux de tissu que j'ai découpés. Plus il y a de morceaux, plus chacun est petit — logique, non ?","Petit secret d'atelier : pour additionner deux fractions avec le même dénominateur, je ne touche jamais à ce chiffre-là, seulement aux numérateurs.","Une fois j'ai essayé de recoller une pelote de laine avec de la colle. Ne fais jamais ça, crois-moi.","Mon astuce de bricoleuse : si un problème te semble compliqué, découpe-le en petits morceaux, comme une planche.","Je garde tous mes bouts de ficelle dans une boîte, on ne sait jamais quand une fraction de ficelle sera utile.","Une fraction, c'est comme partager de la pâte à modeler : chaque morceau doit être pareil pour que ce soit juste.","J'ai une fois construit une étagère avec des mesures approximatives. Elle penche encore un peu aujourd'hui.","Astuce d'atelier : avant de répondre, je vérifie toujours mon travail une deuxième fois, comme avant de coller définitivement.","Les parts égales, c'est ma spécialité — sauf pour les croquettes, là j'en garde toujours un peu plus pour moi."]
     }
   },
   nougat:{
@@ -708,13 +726,12 @@ const CATS = {
     blurb:"Miam, bonjour ! Moi c'est Nougat, et s'il y a bien une chose que j'adore, c'est partager mes croquettes entre copains — même si j'en garde toujours un petit peu pour moi. C'est ça, le reste !",
     tip:"Partage d'abord équitablement, et ce qu'il reste à la fin, c'est le reste — normal, non ?",
     pools:{
-      correctFirst:["Miam, partage parfait !","Chacun a sa part, et toi tu as tout juste !","Distribution parfaitement équitable !","Même moi je n'aurais pas mieux partagé mes croquettes !","Un vrai festin de bonnes réponses !"],
-      correctRetry:["Voilà, le partage est maintenant équitable.","Bien recompté, tout le monde est content.","Et voilà, plus de jaloux dans la distribution !"],
-      wrong:["Pas tout à fait le bon partage — Papa ou Maman t'expliquera ça.","Petite erreur, on la corrigera ensemble avec un adulte tout à l'heure.","Ce n'est pas grave : à revoir avec Papa ou Maman.","Pas grave, ce partage se recompte facilement avec un adulte."],
-      exerciseDone:["Un partage de plus réussi, miam !","Tout le monde a eu sa part.","Bien distribué, bravo !"],
-      ficheWelcome:["Aujourd'hui, on partage ! J'espère qu'il restera des croquettes pour moi...","Prête à distribuer équitablement ?","Attention à ne rien laisser de côté, sauf le reste bien sûr !"],
-      ficheDone:["Fiche terminée, festin bien mérité !","Partage parfait sur toute la fiche !","Bravo, tu ne laisses jamais rien au hasard !"],
-      reflections:["Un jour j'ai voulu partager 29 croquettes entre 4 amis chats. J'ai donné 7 à chacun, et il m'en restait 1... que j'ai mangée, bien sûr.","Le reste, c'est ce qui ne suffit plus pour faire une part de plus. Comme la dernière croquette qu'on n'ose pas couper en quatre !","Astuce de gourmand : après avoir partagé, je vérifie toujours en multipliant. (part × nombre d'amis) + reste = total. Ça marche à chaque fois !"]
+      correctFirst:["Miam, partage parfait !","Chacun a sa part, et toi tu as tout juste !","Distribution parfaitement équitable !","Même moi je n'aurais pas mieux partagé mes croquettes !","Un vrai festin de bonnes réponses !","Miaou-licieux, quelle bonne réponse !","Partage impeccable, bravo gourmande !","Tu comptes aussi bien que je mange, bravo !","Recette parfaite pour une bonne réponse !","Aucune miette d'erreur dans ce calcul !","Tu mérites une double portion de bravos !","Calcul aussi savoureux qu'un bon repas !"],
+      wrong:["Pas tout à fait le bon partage, mais bel effort gourmand ! Papa ou Maman t'expliquera ça.","Petite erreur, on la corrigera ensemble avec un adulte, rien de grave.","Ce n'est pas grave : à revoir avec Papa ou Maman, tu as bien essayé.","Miam, pas tout à fait la bonne quantité ! Un adulte t'aidera à recompter.","Pas gagné, mais quel bel appétit de chercheuse ! On corrige avec Papa ou Maman.","Petit partage de travers, rien de dramatique. À revoir avec un adulte.","Pas la bonne portion cette fois, mais tu as vraiment essayé fort. Papa ou Maman t'expliquera.","Oups, il manque une croquette dans le calcul ! Ce n'est pas grave, un adulte t'aidera.","Raté de peu, comme une recette pas tout à fait dosée. On corrige avec Papa ou Maman.","Pas cette fois, gourmande, mais bel appétit de réponse ! À revoir avec un adulte.","Petit reste mal compté, rien de grave du tout. Papa ou Maman t'aidera à ajuster.","Pas la bonne réponse, mais tu as mis toute ton énergie dedans, bravo pour ça !","Miam raté, mais quelle jolie tentative ! On corrige ensemble avec un adulte.","Pas gagné, mais tu as goûté à toutes les possibilités, bravo pour l'audace ! À revoir avec Papa ou Maman.","Petite gourmandise de trop dans le calcul, rien de grave ! Un adulte t'expliquera.","Pas cette portion-là, mais bel effort ! Papa ou Maman corrigera ça avec toi.","Oups, le partage penche un peu, mais ce n'est pas grave. On revoit ça avec un adulte.","Pas la bonne quantité, mais tu as compté avec cœur ! À corriger avec Papa ou Maman.","Petit calcul qui a de la miette, rien de dramatique ! Un adulte t'aidera.","Raté ce tour-ci, mais quel appétit pour chercher la bonne réponse ! On corrige avec un adulte.","Pas gagné, mais bravo d'avoir essayé sans hésiter ! Papa ou Maman t'expliquera la suite.","Petite part de travers, rien de grave du tout. À revoir tranquillement avec un adulte."],
+      exerciseDone:["Un partage de plus réussi, miam !","Tout le monde a eu sa part.","Bien distribué, bravo !","Un exercice de plus dans le plat du jour.","Miam, encore une réussite savoureuse !","Belle distribution, championne du partage.","Un festin de bonnes réponses continue.","Tu deviens une pro du partage équitable.","Exercice terminé, tout le monde est content.","Encore une portion de réussite servie !"],
+      ficheWelcome:["Aujourd'hui, on partage ! J'espère qu'il restera des croquettes pour moi...","Prête à distribuer équitablement ?","Attention à ne rien laisser de côté, sauf le reste bien sûr !","J'ai préparé un festin de problèmes de partage pour toi.","Prête à devenir une championne de la distribution équitable ?","Cette fiche sent bon le partage bien fait.","On sort les assiettes, il va falloir partager pile-poil.","J'ai hâte de voir comment tu vas tout partager aujourd'hui.","Prête à calculer sans laisser une miette de côté ?","Aujourd'hui, chacun doit avoir sa juste part, à toi de jouer !"],
+      ficheDone:["Fiche terminée, festin bien mérité !","Partage parfait sur toute la fiche !","Bravo, tu ne laisses jamais rien au hasard !","Miam, quelle fiche savoureuse et bien terminée !","Tout le monde a eu sa part, mission accomplie !","Une fiche entièrement partagée avec brio !","Championne toutes catégories du partage équitable !","Fiche bouclée, il ne reste que des félicitations !","Belle distribution jusqu'au bout, bravo gourmande !","Tu termines cette fiche avec un bel appétit de réussite !"],
+      reflections:["Un jour j'ai voulu partager 29 croquettes entre 4 amis chats. J'ai donné 7 à chacun, et il m'en restait 1... que j'ai mangée, bien sûr.","Le reste, c'est ce qui ne suffit plus pour faire une part de plus. Comme la dernière croquette qu'on n'ose pas couper en quatre !","Astuce de gourmand : après avoir partagé, je vérifie toujours en multipliant. (part × nombre d'amis) + reste = total. Ça marche à chaque fois !","Une fois j'ai essayé de partager une seule croquette entre dix amis. Ça a fait dix miettes et beaucoup de déception.","Mon secret de partage : je compte toujours lentement, un par un, pour ne vexer personne.","Je rêve parfois d'un monde où les divisions tombent toujours juste, sans aucun reste. Quel beau rêve gourmand.","La table de multiplication du diviseur, c'est ma meilleure amie pour trouver le quotient rapidement.","Un jour, j'ai partagé équitablement mes jouets entre mes amis chats. J'ai gardé le reste, forcément.","Le reste doit toujours être plus petit que ce qu'on partage — sinon, ce n'est pas fini de partager !","Astuce : je cherche toujours le nombre juste en dessous dans la table, jamais au-dessus, sinon ça déborde de l'assiette."]
     }
   },
   nouille:{
@@ -722,13 +739,12 @@ const CATS = {
     blurb:"Splash ! Moi c'est Nouille, et oui, un chat qui adore nager, ça ne court pas les rues. Chronomètre à la patte, je mesure toujours mes longueurs de bassin — parfait pour une fiche sur les mesures !",
     tip:"Pour les conversions, je compte toujours sur mes coussinets combien de zéros il faut ajouter ou enlever.",
     pools:{
-      correctFirst:["Splash, en plein dans le mille !","Nouveau record personnel !","Tu mesures ça sans même mouiller tes moustaches !","Longueur parfaite, comme mon meilleur temps au 50 mètres !","Chronométrée et validée, bravo !"],
-      correctRetry:["Voilà, tu as rattrapé ton retard, comme au dernier virage !","Bien nagé jusqu'à la bonne réponse.","Et hop, dans les temps finalement !"],
-      wrong:["Pas la bonne longueur cette fois — Papa ou Maman t'aidera à corriger.","Petit raté, rien de grave : tu reverras ça avec un adulte.","On note l'erreur pour la revoir ensemble avec Papa ou Maman.","Splash raté, mais pas grave — à corriger avec un adulte."],
-      exerciseDone:["Une longueur de bassin de plus, bravo !","Bon rythme de nage sur cet exercice !","Encore une mesure dans la poche."],
-      ficheWelcome:["Enfile tes lunettes de piscine, on plonge dans les mesures !","Prête à chronométrer tes réponses ?","Cette fiche est pleine de longueurs, durées et euros — mon terrain de jeu !"],
-      ficheDone:["Fiche terminée, sortie de l'eau en beauté !","Meilleur temps de la journée, bravo !","Toutes les longueurs sont mesurées, championne !"],
-      reflections:["Entre deux longueurs de piscine, je compte toujours les secondes. 60 minutes dans une heure, comme 60 secondes dans une minute — j'adore ce chiffre !","Un jour j'ai converti mon bassin de 25 mètres en centimètres pour frimer : 2 500 cm ! Ça impressionne toujours moins que prévu.","Astuce de nageuse : grande unité vers petite, on multiplie, on ajoute des zéros — petite vers grande, on divise, on les enlève. Comme entrer ou sortir de l'eau !"]
+      correctFirst:["Splash, en plein dans le mille !","Nouveau record personnel !","Tu mesures ça sans même mouiller tes moustaches !","Longueur parfaite, comme mon meilleur temps au 50 mètres !","Chronométrée et validée, bravo !","Plongeon parfait dans la bonne réponse !","Tu nages plus vite que le courant aujourd'hui !","Record du monde de la bonne mesure !","Miaou-splash, quelle précision aquatique !","Tu sors de l'eau avec la médaille d'or !","Longueur de bassin calculée à la perfection !","Tu glisses vers la bonne réponse sans effort !"],
+      wrong:["Pas la bonne longueur cette fois, mais joli plongeon d'essai ! Papa ou Maman t'aidera.","Petit raté, rien de grave : tu as vraiment essayé fort. On revoit ça avec un adulte.","Splash raté, mais pas grave du tout — à corriger avec Papa ou Maman.","Pas gagné, mais quelle belle énergie de nageuse ! Un adulte t'expliquera.","Petit virage manqué dans le calcul, rien de dramatique. Papa ou Maman corrigera ça.","Pas cette fois, mais tu as nagé avec courage ! On corrige avec un adulte.","Raté de peu, comme au dixième de seconde en compétition ! À revoir avec Papa ou Maman.","Petite éclaboussure d'erreur, rien de grave. Un adulte t'aidera à voir clair.","Pas la bonne mesure, mais bel effort de sportive ! Papa ou Maman t'expliquera.","Oups, j'ai bu la tasse sur ce coup, toi aussi peut-être ! On corrige ensemble avec un adulte.","Pas gagné, mais quelle belle tentative de plongeon ! À revoir avec Papa ou Maman.","Petit courant qui t'a déviée, rien de grave du tout. Un adulte t'aidera à te recentrer.","Raté ce tour-ci, mais tu as vraiment essayé. On corrige avec Papa ou Maman, tranquillement.","Pas la bonne longueur, mais bel élan de nageuse ! Un adulte t'expliquera où ça coince.","Petit faux départ dans le bassin, rien de dramatique. Papa ou Maman corrigera ça.","Pas cette réponse-là, mais quelle belle énergie aquatique ! On revoit ça avec un adulte.","Splash manqué, mais joliment tenté ! À corriger avec Papa ou Maman.","Pas gagné, mais tu as plongé sans hésiter, bravo pour le courage ! Un adulte t'aidera.","Petite vague qui a tout emporté, rien de grave. On corrige avec Papa ou Maman.","Raté de justesse, comme à l'arrivée d'une course serrée ! À revoir avec un adulte.","Pas la bonne conversion, mais bel effort de calcul aquatique ! Papa ou Maman t'expliquera.","Petit ralenti dans le calcul, rien de dramatique du tout. On corrige ensemble avec un adulte."],
+      exerciseDone:["Une longueur de bassin de plus, bravo !","Bon rythme de nage sur cet exercice !","Encore une mesure dans la poche.","Un exercice de plus, bien nagé !","Miaou-splash, encore une réussite !","Belle brasse vers la bonne réponse.","Tu enchaînes les longueurs sans fatigue.","Un exercice de plus au compteur de la piscine.","Bon rythme, continue à nager vers la victoire.","Encore une longueur bien mesurée !"],
+      ficheWelcome:["Enfile tes lunettes de piscine, on plonge dans les mesures !","Prête à chronométrer tes réponses ?","Cette fiche est pleine de longueurs, durées et euros — mon terrain de jeu !","J'ai préparé un bassin plein de bonnes questions pour toi.","Prête à nager vers les bonnes réponses aujourd'hui ?","On plonge dans le grand bain des mesures, prête ?","Cette fiche va faire des vagues, dans le bon sens !","Enfile ton bonnet de bain imaginaire, c'est parti !","Prête pour une belle séance de calcul aquatique ?","J'ai chronométré mon record, à toi de battre le tien !"],
+      ficheDone:["Fiche terminée, sortie de l'eau en beauté !","Meilleur temps de la journée, bravo !","Toutes les longueurs sont mesurées, championne !","Miaou-splash, quelle performance aujourd'hui !","Tu sors du bassin avec toutes les médailles !","Fiche bouclée, record battu haut la patte !","Belle nage jusqu'au bout de la fiche, bravo !","Toutes les mesures sont dans le bassin, mission réussie !","Championne de la piscine des mesures, bravo !","Fiche terminée en un temps record, chapeau !"],
+      reflections:["Entre deux longueurs de piscine, je compte toujours les secondes. 60 minutes dans une heure, comme 60 secondes dans une minute — j'adore ce chiffre !","Un jour j'ai converti mon bassin de 25 mètres en centimètres pour frimer : 2 500 cm ! Ça impressionne toujours moins que prévu.","Astuce de nageuse : grande unité vers petite, on multiplie, on ajoute des zéros — petite vers grande, on divise, on les enlève. Comme entrer ou sortir de l'eau !","Un jour j'ai essayé de nager le crawl avec des moustaches mouillées collées sur les yeux. Je ne recommande pas.","Mon secret de sportive : je révise toujours mes conversions avant de plonger dans un exercice.","Je rêve parfois que je nage dans une piscine remplie de croquettes au lait. Le rêve ultime, miaou.","Pour les durées, j'imagine toujours une horloge de piscine géante avec 60 minutes qui tournent.","Un jour j'ai chronométré une limace dans le jardin. Résultat : très, très longtemps.","Astuce : pour ne pas confondre les euros et les centimes, j'imagine toujours la virgule comme le bord du bassin.","Les chats détestent l'eau, en général — moi je ne comprends pas pourquoi, c'est tellement rafraîchissant pour calculer !"]
     }
   }
 };
@@ -757,8 +773,8 @@ function catMarkup(catId){
   return '<ellipse class="cat-shadow" cx="80" cy="150" rx="32" ry="6"/>'+
   '<g class="cat-body-group">'+
     '<path class="cat-tail" d="M116 118 Q146 108 140 76 Q136 54 116 58"/>'+
-    '<ellipse class="cat-paw" cx="66" cy="142" rx="9" ry="5"/>'+
-    '<ellipse class="cat-paw" cx="94" cy="142" rx="9" ry="5"/>'+
+    '<ellipse class="cat-paw cat-paw-l" cx="66" cy="142" rx="9" ry="5"/>'+
+    '<ellipse class="cat-paw cat-paw-r" cx="94" cy="142" rx="9" ry="5"/>'+
     '<ellipse class="cat-body" cx="80" cy="100" rx="42" ry="46"/>'+
     '<ellipse class="cat-belly" cx="80" cy="114" rx="24" ry="29"/>'+
     '<path class="cat-ear" d="M46 58 L36 22 L68 46 Z"/>'+
@@ -840,6 +856,22 @@ function playCorrect(){ tone(880,0,0.14); tone(1320,0.08,0.18); }
 function playRetry(){ tone(210,0,0.16,'sine',0.09); }
 function playFiche(){ [523,659,784,1047].forEach((f,i)=>tone(f,i*0.11,0.24)); }
 function playFinale(){ [523,659,784,1047,1319].forEach((f,i)=>tone(f,i*0.1,0.4)); }
+function playPurr(){
+  if(muted) return;
+  const ctx = ensureAudio(); if(!ctx) return;
+  const osc = ctx.createOscillator(); const gain = ctx.createGain();
+  const lfo = ctx.createOscillator(); const lfoGain = ctx.createGain();
+  osc.type='sine'; osc.frequency.value=70;
+  lfo.type='sine'; lfo.frequency.value=22; lfoGain.gain.value=8;
+  lfo.connect(lfoGain); lfoGain.connect(osc.frequency);
+  osc.connect(gain); gain.connect(ctx.destination);
+  const t0 = ctx.currentTime;
+  gain.gain.setValueAtTime(0.0001,t0);
+  gain.gain.linearRampToValueAtTime(0.09,t0+0.05);
+  gain.gain.setValueAtTime(0.09,t0+0.55);
+  gain.gain.exponentialRampToValueAtTime(0.0001,t0+0.75);
+  lfo.start(t0); osc.start(t0); lfo.stop(t0+0.8); osc.stop(t0+0.8);
+}
 function updateMuteBtn(){
   const b = document.getElementById('muteBtn');
   b.innerHTML = muted
@@ -1645,6 +1677,24 @@ function say(text, mood){
     heroSpeech.textContent = '“'+text+'”';
   }
 }
+function sayConseil(text){
+  const bubble = document.getElementById('catBubble');
+  bubble.textContent = text;
+  bubble.classList.add('show','conseil');
+  clearTimeout(bubbleTimer);
+  bubbleTimer = setTimeout(()=>bubble.classList.remove('show','conseil'), 5400);
+  catEls().forEach(c=>{
+    c.classList.remove('cheer','oops','wink','purr');
+    void c.offsetWidth;
+    c.classList.add('wink','purr');
+    setTimeout(()=>c.classList.remove('wink','purr'), 950);
+  });
+  playPurr();
+  const heroSpeech = document.getElementById('heroSpeech');
+  if(heroSpeech && document.getElementById('view-map').classList.contains('active')){
+    heroSpeech.textContent = '“'+text+'”';
+  }
+}
 function reactMascot(itemId, correct){
   if(correct){ playCorrect(); say(catPool(activeCatId,'correctFirst'),'cheer'); }
   else { playRetry(); say(catPool(activeCatId,'wrong'),'oops'); }
@@ -2177,7 +2227,7 @@ document.addEventListener('click', function(e){
   if(folderTab){ toggleFolder(folderTab); return; }
 
   const reflectBtn = e.target.closest('#catReflectBtn');
-  if(reflectBtn){ say(catPool(activeCatId,'reflections'), 'cheer'); return; }
+  if(reflectBtn){ sayConseil(catPool(activeCatId,'reflections')); return; }
 
   const ficheCard = e.target.closest('.fiche-card');
   if(ficheCard){ /* handled via own listener */ }
@@ -2391,7 +2441,9 @@ function init(){
   });
   document.getElementById('catWidgetBtn').addEventListener('click', function(){
     const poolNames = ['ficheWelcome','exerciseDone','reflections'];
-    say(catPool(activeCatId, poolNames[Math.floor(Math.random()*poolNames.length)]), 'cheer');
+    const chosen = poolNames[Math.floor(Math.random()*poolNames.length)];
+    if(chosen==='reflections') sayConseil(catPool(activeCatId, chosen));
+    else say(catPool(activeCatId, chosen), 'cheer');
   });
   document.getElementById('finaleCloseBtn').addEventListener('click', function(){
     document.getElementById('finaleModal').classList.remove('show');
