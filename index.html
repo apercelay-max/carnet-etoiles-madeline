@@ -1024,7 +1024,8 @@ setInterval(function(){
 
 /* ============ SOUND ============ */
 let audioCtx = null;
-let muted = (localStorage.getItem('madeline_muted')==='1');
+let muted = false;
+try{ muted = (localStorage.getItem('madeline_muted')==='1'); }catch(e){}
 function ensureAudio(){ if(!audioCtx){ try{ audioCtx = new (window.AudioContext||window.webkitAudioContext)(); }catch(e){} } return audioCtx; }
 function tone(freq, start, dur2, type, gainPeak){
   if(muted) return;
@@ -2694,7 +2695,7 @@ function init(){
 
   document.getElementById('muteBtn').addEventListener('click', function(){
     muted = !muted;
-    localStorage.setItem('madeline_muted', muted?'1':'0');
+    try{ localStorage.setItem('madeline_muted', muted?'1':'0'); }catch(e){}
     updateMuteBtn();
   });
   document.getElementById('catWidgetBtn').addEventListener('click', function(){
