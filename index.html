@@ -209,12 +209,52 @@ img,svg{ display:block; max-width:100%; }
 .folder table{ border-collapse:collapse; width:100%; }
 .folder th,.folder td{ border:1px solid var(--folder-line); padding:.35rem .5rem; text-align:left; font-size:.85rem; }
 .mistakes-recap{ margin-bottom:1.1rem; padding-bottom:1rem; border-bottom:1px solid var(--folder-line); }
-.mistakes-empty{ margin:0; font-weight:700; }
+.mistakes-empty{ margin:0; font-weight:700; color:var(--good); }
+.mistakes-alert{
+  display:flex; align-items:center; gap:.55rem; background:var(--bad-soft); border:1.5px solid var(--bad);
+  color:var(--bad); border-radius:var(--r-sm); padding:.6rem .8rem; font-weight:700; margin:0 0 .7rem;
+}
+.mistakes-alert .alert-icon{ font-size:1.15rem; flex:none; }
+.mistakes-priority-label{ font-weight:700; margin:0 0 .25rem; font-size:.88rem; }
+.mistakes-priority{ margin:0 0 .9rem; padding-left:1.3rem; font-size:.88rem; }
+.mistakes-priority li{ margin-bottom:.2rem; }
 .mistakes-title{ font-weight:700; margin:0 0 .5rem; }
 .mistakes-fiche{ font-weight:700; margin:.8rem 0 .3rem; }
+.mistakes-advice{
+  font-style:italic; color:var(--folder-ink); font-size:.85rem; margin:0 0 .5rem;
+  background:var(--paper-card); border-left:3px solid var(--accent); padding:.35rem .6rem; border-radius:0 var(--r-sm) var(--r-sm) 0;
+}
 .mistakes-list{ margin:0; padding-left:1.3rem; }
 .mistakes-list li{ margin-bottom:.35rem; }
-.mistakes-list strong{ color:var(--folder-ink); }
+.mistakes-list strong{ color:var(--bad); }
+
+/* ---- Coin des parents : demande de nouveaux exercices ---- */
+.request-box{ margin-top:1.2rem; padding-top:1rem; border-top:1px solid var(--folder-line); }
+.request-title{ font-weight:700; margin:0 0 .5rem; font-size:.98rem; }
+.request-fiches{ display:flex; flex-wrap:wrap; gap:.4rem .5rem; margin:.6rem 0 .7rem; }
+.request-fiche-chip{
+  display:inline-flex; align-items:center; gap:.35rem; background:var(--paper-card); border:1px solid var(--folder-line);
+  border-radius:999px; padding:.28rem .65rem; font-size:.8rem; cursor:pointer;
+}
+.request-fiche-chip input{ margin:0; }
+.request-textarea{
+  display:block; width:100%; box-sizing:border-box; border:1.5px solid var(--folder-line); border-radius:var(--r-sm);
+  padding:.55rem .7rem; font:inherit; font-size:.9rem; background:var(--paper-card); color:var(--ink); resize:vertical;
+}
+.request-hint{ color:var(--bad); font-size:.85rem; margin:.45rem 0 0; font-weight:700; }
+.request-submit-btn{
+  margin-top:.65rem; display:inline-flex; align-items:center; gap:.4rem; background:var(--accent); color:#fff9ef;
+  border:none; border-radius:999px; padding:.5rem 1.05rem; font-weight:700; font-size:.88rem; cursor:pointer;
+}
+.request-submit-btn:hover{ filter:brightness(1.08); }
+.request-log{ margin-top:1rem; }
+.request-log-title{ font-weight:700; font-size:.85rem; margin:0 0 .35rem; }
+.request-log-list{ list-style:none; margin:0; padding:0; font-size:.82rem; }
+.request-log-list li{
+  display:flex; align-items:flex-start; justify-content:space-between; gap:.6rem; padding:.35rem 0;
+  border-bottom:1px dashed var(--folder-line);
+}
+.request-log-del{ background:none; border:none; cursor:pointer; font-size:.9rem; flex:none; color:var(--bad); padding:0 .2rem; }
 
 /* ============ CAT MASCOTS ============ */
 .cat-svg{ width:100%; height:100%; overflow:visible; }
@@ -1153,6 +1193,11 @@ const FICHES = [
     ]},
     {num:7, titre:"Défi : deux étapes", etoiles:3, consigne:"Madeline a 15 €. Elle achète un livre à 8,50 €.", items:[
       {id:'f1e7a', t:tmpl("Combien lui rend-on après le livre ? {0}  Elle dépense ensuite la moitié de cette monnaie pour un magazine. Combien lui reste-t-il à la fin ? {1}"), parts:[money(6.50),money(3.25)]}
+    ]},
+    {num:8, titre:"🔁 Entraînement supplémentaire", etoiles:2, consigne:"Encore un peu de monnaie à rendre.", items:[
+      {id:'f1e8a', t:tmpl("a) Un goûter coûte 2,75 €. Tu payes avec un billet de 5 €. On te rend : {0}"), parts:[money(2.25)]},
+      {id:'f1e8b', t:tmpl("b) Une peluche coûte 7,40 €. Tu payes avec un billet de 10 €. On te rend : {0}"), parts:[money(2.60)]},
+      {id:'f1e8c', t:tmpl("c) Madeline achète un stylo à 1,15 € et une gomme à 0,65 €. Elle paie avec une pièce de 2 €. Combien lui rend-on ? {0}"), parts:[money(0.20)]}
     ]}
   ],
   corrige:[
@@ -1162,7 +1207,8 @@ const FICHES = [
     "Exercice 4 : a) 2,65 € — b) 0,80 € — c) 1,35 €.",
     "Exercice 5 : a) 50 c + 20 c = 0,70 € — b) 1 € + 50 c = 1,50 € — c) 2 € + 20 c = 2,20 €.",
     "Exercice 6 : a) 2,30 + 1,45 = 3,75 € dépensés ; 10 − 3,75 = 6,25 € rendus. b) 4,90 + 1,60 = 6,50 € dépensés ; 10 − 6,50 = 3,50 € rendus.",
-    "Exercice 7 : 15 − 8,50 = 6,50 € rendus. La moitié de 6,50 €, c'est 3,25 € dépensés pour le magazine ; il reste 6,50 − 3,25 = 3,25 €."
+    "Exercice 7 : 15 − 8,50 = 6,50 € rendus. La moitié de 6,50 €, c'est 3,25 € dépensés pour le magazine ; il reste 6,50 − 3,25 = 3,25 €.",
+    "Exercice 8 : a) 2,25 € — b) 2,60 € — c) 1,15 + 0,65 = 1,80 € dépensés ; 2 − 1,80 = 0,20 € rendus."
   ]
 },
 {
@@ -1236,6 +1282,17 @@ const FICHES = [
         {v:'a',l:"Trois heures moins le quart de l'après-midi"},{v:'b',l:'Deux heures et quart'},
         {v:'c',l:'Trois heures et quart'},{v:'d',l:'Deux heures moins le quart'}
       ],'a')]}
+    ]},
+    {num:9, titre:"🔁 Entraînement supplémentaire", etoiles:2, consigne:"Encore un peu de lecture de l'heure, surtout autour du « moins le quart ».", items:[
+      {id:'f2e9a', figure:clockFace(5,15), t:tmpl("a) {0}"), parts:[mcq([
+        {v:'a',l:'Cinq heures et quart'},{v:'b',l:'Cinq heures et demie'},
+        {v:'c',l:'Cinq heures moins le quart'},{v:'d',l:'Six heures et quart'}
+      ],'a')]},
+      {id:'f2e9b', figure:clockFace(8,45), t:tmpl("b) {0}"), parts:[mcq([
+        {v:'a',l:'Huit heures et quart'},{v:'b',l:'Huit heures moins le quart'},
+        {v:'c',l:'Neuf heures moins le quart'},{v:'d',l:'Neuf heures et quart'}
+      ],'c')]},
+      {id:'f2e9c', t:tmpl("c) Six heures moins le quart du soir, ça s'écrit : {0}"), parts:[dur(17,45)]}
     ]}
   ],
   corrige:[
@@ -1246,7 +1303,8 @@ const FICHES = [
     "Exercice 5 : a) 14h45 — b) 9h15 — c) 19h45.",
     "Exercice 6 : a) 4 heures — b) 9 heures — c) une heure et demie de l'après-midi.",
     "Exercice 7 : a) 23h00 (50+10=60 min, donc +1h) — b) 12h15 (30+45=75 min, donc 1h15).",
-    "Exercice 8 : 14h45, soit trois heures moins le quart de l'après-midi."
+    "Exercice 8 : 14h45, soit trois heures moins le quart de l'après-midi.",
+    "Exercice 9 : a) cinq heures et quart — b) neuf heures moins le quart (8h45, c'est 15 min avant 9h) — c) 17h45."
   ]
 },
 {
@@ -1305,6 +1363,11 @@ const FICHES = [
       {id:'f3e8a', t:tmpl("a) {0} × 7 = 56"), parts:[mcq([{v:'6',l:'6'},{v:'7',l:'7'},{v:'8',l:'8'},{v:'9',l:'9'}],'8')]},
       {id:'f3e8b', t:tmpl("b) 9 × {0} = 72"), parts:[mcq([{v:'6',l:'6'},{v:'7',l:'7'},{v:'8',l:'8'},{v:'9',l:'9'}],'8')]},
       {id:'f3e8c', custom:'order', orderPrompt:"Jeu : calcule chaque produit dans ta tête, puis range-les du plus petit au plus grand.", orderSep:' < ', chips:['4×7','2×5','5×5','3×6'], order:['2×5','3×6','5×5','4×7']}
+    ]},
+    {num:9, titre:"🔁 Entraînement supplémentaire", etoiles:2, consigne:"Encore un peu des tables les plus corsées (6, 7, 8, 9).", items:[
+      {id:'f3e9a', t:tmpl("a) 8 × 8 = {0}"), parts:[mcq([{v:'a',l:'56'},{v:'b',l:'64'},{v:'c',l:'72'},{v:'d',l:'48'}],'b')]},
+      {id:'f3e9b', t:tmpl("b) 7 × 7 = {0}"), parts:[mcq([{v:'a',l:'42'},{v:'b',l:'49'},{v:'c',l:'56'},{v:'d',l:'63'}],'b')]},
+      {id:'f3e9c', t:tmpl("c) Une salle de classe range 6 rangées de 9 tables. Combien de tables en tout ? {0}"), parts:[fill(54)]}
     ]}
   ],
   corrige:[
@@ -1315,7 +1378,8 @@ const FICHES = [
     "Exercice 5 : a) vrai — b) faux (8×9=72) — c) faux (7×6=42) — d) vrai — e) vrai — f) faux (6×9=54).",
     "Exercice 6 : a) 40 n'est pas dans la table de 7 — b) 36 n'est pas dans la table de 8 — c) 50 n'est pas dans la table de 9.",
     "Exercice 7 : a) 48 crayons — b) 63 fleurs.",
-    "Exercice 8 : a) 8 — b) 8 — c) dans l'ordre : 2×5 (10), 3×6 (18), 5×5 (25), 4×7 (28)."
+    "Exercice 8 : a) 8 — b) 8 — c) dans l'ordre : 2×5 (10), 3×6 (18), 5×5 (25), 4×7 (28).",
+    "Exercice 9 : a) 64 — b) 49 — c) 6 × 9 = 54 tables."
   ]
 },
 {
@@ -1410,6 +1474,12 @@ const FICHES = [
       {id:'f4e9a', t:tmpl("a) « nous chantons »  Groupe : {0}  Temps : {1}"), parts:[mcq([{v:'1',l:'1er'},{v:'2',l:'2e'},{v:'3',l:'3e'}],'1'), mcq([{v:'p',l:'présent'},{v:'f',l:'futur'},{v:'i',l:'imparfait'}],'p')]},
       {id:'f4e9b', t:tmpl("b) « elles finissaient »  Groupe : {0}  Temps : {1}"), parts:[mcq([{v:'1',l:'1er'},{v:'2',l:'2e'},{v:'3',l:'3e'}],'2'), mcq([{v:'p',l:'présent'},{v:'f',l:'futur'},{v:'i',l:'imparfait'}],'i')]},
       {id:'f4e9c', t:tmpl("c) « il fera »  Groupe : {0}  Temps : {1}"), parts:[mcq([{v:'1',l:'1er'},{v:'2',l:'2e'},{v:'3',l:'3e'}],'3'), mcq([{v:'p',l:'présent'},{v:'f',l:'futur'},{v:'i',l:'imparfait'}],'f')]}
+    ]},
+    {num:10, titre:"🔁 Entraînement supplémentaire", etoiles:3, consigne:"Le petit mot au début de la phrase te donne un indice sur le temps à utiliser.", items:[
+      {id:'f4e10a', t:tmpl("a) L'an prochain, elle {0} (voyager) en avion."), parts:[mcq([{v:'a',l:'voyagera'},{v:'b',l:'voyageait'},{v:'c',l:'voyage'}],'a')]},
+      {id:'f4e10b', t:tmpl("b) Autrefois, nous {0} (habiter) à la campagne."), parts:[mcq([{v:'a',l:'habitons'},{v:'b',l:'habitions'},{v:'c',l:'habiterons'}],'b')]},
+      {id:'f4e10c', t:tmpl("c) En ce moment, tu {0} (finir) ton exercice."), parts:[mcq([{v:'a',l:'finis'},{v:'b',l:'finissais'},{v:'c',l:'finiras'}],'a')]},
+      {id:'f4e10d', t:tmpl("d) Hier soir, j'{0} (avoir) très sommeil."), parts:[mcq([{v:'a',l:'ai eu'},{v:'b',l:'avais'},{v:'c',l:'aurai'}],'a')]}
     ]}
   ],
   corrige:[
@@ -1421,7 +1491,8 @@ const FICHES = [
     "Exercice 6 : a) chanterai — b) auras — c) serons — d) feront.",
     "Exercice 7 : a) ai chanté — b) as fini — c) a fait — d) avons eu.",
     "Exercice 8 : a) a chanté (hier → passé composé) — b) ferons (demain → futur) — c) étaient (avant → imparfait) — d) as (maintenant → présent).",
-    "Exercice 9 : a) 1er groupe, présent — b) 2e groupe, imparfait — c) 3e groupe, futur."
+    "Exercice 9 : a) 1er groupe, présent — b) 2e groupe, imparfait — c) 3e groupe, futur.",
+    "Exercice 10 : a) voyagera (l'an prochain → futur) — b) habitions (autrefois → imparfait) — c) finis (en ce moment → présent) — d) ai eu (hier soir → passé composé)."
   ]
 },
 {
@@ -1503,6 +1574,10 @@ const FICHES = [
     ]},
     {num:11, titre:"Défi : mesure et calcule", etoiles:3, consigne:"", items:[
       {id:'f5e11a', t:tmpl("Un cercle tracé au compas a un écartement de 6 cm. Quel est son diamètre ? {0} cm"), parts:[fill(12,{unit:'cm'})]}
+    ]},
+    {num:12, titre:"🔁 Entraînement supplémentaire", etoiles:2, consigne:"Encore un peu de rayon et de diamètre, en calcul puis sur le papier.", items:[
+      {id:'f5e12a', t:tmpl("a) Le diamètre d'un cercle mesure 18 cm. Son rayon mesure : {0} cm"), parts:[fill(9,{unit:'cm'})]},
+      {id:'f5e12b', t:tmpl("b) Trace un cercle de rayon 4,5 cm avec ton compas. Mesure ensuite son diamètre avec ta règle : trouves-tu bien 9 cm ?"), parts:[write(null,"Le diamètre doit mesurer 9 cm (4,5 cm × 2). Si ta règle donne un autre nombre, recommence en vérifiant bien l'écartement du compas avant de tracer.",{noInput:true})]}
     ]}
   ],
   corrige:[
@@ -1516,7 +1591,8 @@ const FICHES = [
     "Exercice 8 : les deux cercles se croisent maintenant en deux points, car 4 cm est plus petit que 3 cm + 3 cm = 6 cm : les cercles se chevauchent.",
     "Exercice 9 : 6 cm, la somme des deux rayons (3 cm + 3 cm).",
     "Exercice 10 : une rosace à 6 pétales, tous tracés avec le même écartement de compas.",
-    "Exercice 11 : 12 cm."
+    "Exercice 11 : 12 cm.",
+    "Exercice 12 : a) 9 cm — b) le diamètre doit mesurer 9 cm (4,5 cm × 2)."
   ]
 },
 {
@@ -1566,6 +1642,11 @@ const FICHES = [
     ]},
     {num:7, titre:"Défi : problème de distance", etoiles:3, consigne:"", items:[
       {id:'f6e7a', t:tmpl("Madeline fait 3 fois le tour d'un terrain de 250 m de long, à vélo. Quelle distance a-t-elle parcourue en tout ? {0} m, soit {1} km."), parts:[fill(750,{unit:'m'}), fill(0.75,{unit:'km'})]}
+    ]},
+    {num:8, titre:"🔁 Entraînement supplémentaire", etoiles:2, consigne:"Encore un peu de conversions, en repassant par le tableau si besoin.", items:[
+      {id:'f6e8a', t:tmpl("a) 7 m = {0} cm"), parts:[fill(700,{unit:'cm'})]},
+      {id:'f6e8b', t:tmpl("b) 3 hm = {0} m"), parts:[fill(300,{unit:'m'})]},
+      {id:'f6e8c', t:tmpl("c) Un carré a un côté de 6 cm. Son périmètre : {0} cm"), parts:[fill(24,{unit:'cm'})]}
     ]}
   ],
   corrige:[
@@ -1575,7 +1656,8 @@ const FICHES = [
     "Exercice 4 : a) 6 m — b) 3 km — c) 8 cm.",
     "Exercice 5 : a) 500 m — b) 20 m — c) 100 dam.",
     "Exercice 6 : a) (7 + 4) × 2 = 22 cm — b) (12 + 8) × 2 = 40 m, soit 4 000 cm.",
-    "Exercice 7 : 3 × 250 = 750 m, soit 0,75 km."
+    "Exercice 7 : 3 × 250 = 750 m, soit 0,75 km.",
+    "Exercice 8 : a) 700 cm — b) 300 m — c) 4 × 6 = 24 cm."
   ]
 },
 {
@@ -1625,6 +1707,11 @@ const FICHES = [
     ]},
     {num:7, titre:"Défi : problème de pâtisserie", etoiles:3, consigne:"", items:[
       {id:'f7e7a', t:tmpl("Praline prépare 4 portions de pâte à 180 g chacune. Quelle masse totale de pâte a-t-elle préparée ? {0} g, soit {1} kg."), parts:[fill(720,{unit:'g'}), fill(0.72,{unit:'kg'})]}
+    ]},
+    {num:8, titre:"🔁 Entraînement supplémentaire", etoiles:2, consigne:"Encore un peu de conversions, en repassant par le tableau si besoin.", items:[
+      {id:'f7e8a', t:tmpl("a) 8 g = {0} dg"), parts:[fill(80,{unit:'dg'})]},
+      {id:'f7e8b', t:tmpl("b) 4 hg = {0} g"), parts:[fill(400,{unit:'g'})]},
+      {id:'f7e8c', t:tmpl("c) Une boîte de céréales pèse 375 g et un paquet de biscuits pèse 250 g. Masse totale : {0} g"), parts:[fill(625,{unit:'g'})]}
     ]}
   ],
   corrige:[
@@ -1634,7 +1721,8 @@ const FICHES = [
     "Exercice 4 : a) 4 kg — b) 6 g — c) 5 hg.",
     "Exercice 5 : a) 30 g — b) 100 dag — c) 70 dag.",
     "Exercice 6 : a) 250 + 125 = 375 g — b) 2 000 − 350 = 1 650 g.",
-    "Exercice 7 : 4 × 180 = 720 g, soit 0,72 kg."
+    "Exercice 7 : 4 × 180 = 720 g, soit 0,72 kg.",
+    "Exercice 8 : a) 80 dg — b) 400 g — c) 375 + 250 = 625 g."
   ]
 },
 {
@@ -1683,6 +1771,11 @@ const FICHES = [
     ]},
     {num:7, titre:"Défi : problème de jardinage", etoiles:3, consigne:"", items:[
       {id:'f8e7a', t:tmpl("Une citerne contient 5 hL d'eau. Goutte l'utilise pour remplir 20 arrosoirs identiques. Quelle quantité d'eau reçoit chaque arrosoir ? {0} L"), parts:[fill(25,{unit:'l'})]}
+    ]},
+    {num:8, titre:"🔁 Entraînement supplémentaire", etoiles:2, consigne:"Encore un peu de conversions, en repassant par le tableau si besoin.", items:[
+      {id:'f8e8a', t:tmpl("a) 4 L = {0} dL"), parts:[fill(40,{unit:'dl'})]},
+      {id:'f8e8b', t:tmpl("b) 6 hL = {0} L"), parts:[fill(600,{unit:'l'})]},
+      {id:'f8e8c', t:tmpl("c) Un seau contient 8 L d'eau. On en verse 3 L dans une bassine. Quantité restante dans le seau : {0} L"), parts:[fill(5,{unit:'l'})]}
     ]}
   ],
   corrige:[
@@ -1692,7 +1785,8 @@ const FICHES = [
     "Exercice 4 : a) 5 L — b) 4 L — c) 2 hL.",
     "Exercice 5 : a) 30 L — b) 10 daL — c) 20 hL.",
     "Exercice 6 : 75 + 50 = 125 cL, soit 1,25 L.",
-    "Exercice 7 : 5 hL = 500 L ; 500 ÷ 20 = 25 L par arrosoir."
+    "Exercice 7 : 5 hL = 500 L ; 500 ÷ 20 = 25 L par arrosoir.",
+    "Exercice 8 : a) 40 dL — b) 600 L — c) 8 − 3 = 5 L."
   ]
 }
 ];
@@ -1707,6 +1801,7 @@ function loadState(){
   }catch(e){}
   if(!state.items) state.items={};
   if(!state.ficheMeta) state.ficheMeta={};
+  if(!state.parentRequests) state.parentRequests=[];
 }
 function saveState(){
   try{ localStorage.setItem(LS_KEY, JSON.stringify(state)); }catch(e){}
@@ -1796,25 +1891,56 @@ function collectMistakes(){
   });
   return out;
 }
-function mistakesRecapHtml(){
-  const mistakes = collectMistakes();
-  if(mistakes.length===0){
-    return '<div class="mistakes-recap"><p class="mistakes-empty">✓ Aucune erreur enregistrée pour l\'instant — bravo Madeline !</p></div>';
-  }
+const FICHE_ADVICE = {
+  1: "Reprendre de la vraie monnaie (pièces et billets) et s'entraîner à « monter » du prix vers la somme donnée, palier par palier.",
+  2: "Revoir en particulier « moins le quart » (on pense d'abord à l'heure d'après, puis on recule) avec une horloge à aiguilles réelle.",
+  3: "Refaire réciter les tables de 6, 7, 8 et 9 à voix haute : ce sont les plus souvent confondues.",
+  4: "Avant de conjuguer, repérer d'abord l'indice de temps dans la phrase (hier, demain, en ce moment…).",
+  5: "Vérifier systématiquement l'écartement du compas à la règle avant de tracer, puis mesurer après coup pour contrôler.",
+  6: "Refaire construire le tableau de conversion à voix haute, colonne par colonne, avant de remplir des valeurs.",
+  7: "Même méthode que pour les longueurs : reparcourir les colonnes du tableau une par une, sans en sauter.",
+  8: "Repartir du tableau de conversion et bien repérer le litre au centre avant de convertir."
+};
+/* Groupe une liste plate de {ficheId, ficheTitle, ...} en {id: {title, items[]}}, triée du plus au moins d'erreurs. */
+function groupMistakesByFiche(mistakes){
   const byFiche = {}; const order = [];
   mistakes.forEach(m=>{
     if(!byFiche[m.ficheId]){ byFiche[m.ficheId] = {title:m.ficheTitle, items:[]}; order.push(m.ficheId); }
     byFiche[m.ficheId].items.push(m);
   });
-  let html = '<div class="mistakes-recap"><p class="mistakes-title">📝 '+mistakes.length+' réponse(s) à revoir avec Madeline :</p>';
+  order.sort((a,b)=> byFiche[b].items.length - byFiche[a].items.length);
+  return {byFiche, order};
+}
+function mistakesRecapHtml(){
+  const mistakes = collectMistakes();
+  if(mistakes.length===0){
+    return '<div class="mistakes-recap"><p class="mistakes-empty">✓ Aucune erreur enregistrée pour l\'instant — bravo Madeline !</p></div>';
+  }
+  const {byFiche, order} = groupMistakesByFiche(mistakes);
+  let html = '<div class="mistakes-recap">';
+  html += '<div class="mistakes-alert"><span class="alert-icon">⚠️</span><span>'+mistakes.length+' réponse(s) à revoir avec Madeline, dans '+order.length+' fiche'+(order.length>1?'s':'')+'.</span></div>';
+  html += '<p class="mistakes-priority-label">Fiches à revoir en priorité :</p><ol class="mistakes-priority">';
+  order.forEach(fid=>{ html += '<li>Fiche '+fid+' — '+byFiche[fid].title+' ('+byFiche[fid].items.length+' erreur'+(byFiche[fid].items.length>1?'s':'')+')</li>'; });
+  html += '</ol>';
   order.forEach(fid=>{
     const group = byFiche[fid];
-    html += '<p class="mistakes-fiche">Fiche '+fid+' — '+group.title+'</p><ul class="mistakes-list">';
+    html += '<p class="mistakes-fiche">Fiche '+fid+' — '+group.title+'</p>';
+    if(FICHE_ADVICE[fid]){
+      html += '<p class="mistakes-advice">💡 Recommandation : '+FICHE_ADVICE[fid]+' Un exercice « 🔁 Entraînement supplémentaire », avec des questions nouvelles, l’attend à la fin de cette fiche.</p>';
+    }
+    html += '<ul class="mistakes-list">';
     group.items.forEach(m=>{ html += '<li>'+m.text+(m.correct?' <strong>→ '+m.correct+'</strong>':'')+'</li>'; });
     html += '</ul>';
   });
   html += '</div>';
   return html;
+}
+function collectMistakesSummary(){
+  const {byFiche, order} = groupMistakesByFiche(collectMistakes());
+  return order.map(fid=> 'Fiche '+fid+' — '+byFiche[fid].title+' : '+byFiche[fid].items.length+' erreur(s)');
+}
+function escapeHtml(s){
+  return String(s==null?'':s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
 
 /* ============ MASCOT SPEECH ============ */
@@ -2143,6 +2269,11 @@ function renderPartControl(item, idx, part){
   if(part.kind==='write'){ return document.createTextNode(''); }
   const inp = document.createElement('input');
   inp.type='text';
+  if(part.kind==='fill' || part.kind==='money'){
+    inp.setAttribute('inputmode','decimal'); /* réponse attendue = nombre -> clavier numérique */
+  } else {
+    inp.setAttribute('inputmode','text'); /* réponse attendue = mot/heure/fraction -> clavier alphabétique */
+  }
   inp.className = 'fillinput'+(part.wide?' wide':'');
   inp.dataset.item = item.id; inp.dataset.part = idx;
   inp.setAttribute('aria-label', part.label || 'réponse');
@@ -2447,6 +2578,11 @@ document.addEventListener('click', function(e){
   const reflectBtn = e.target.closest('#catReflectBtn');
   if(reflectBtn){ sayConseil(catPool(activeCatId,'reflections')); return; }
 
+  const requestSubmitBtn = e.target.closest('#requestSubmitBtn');
+  if(requestSubmitBtn){ handleRequestSubmit(); return; }
+  const requestLogDel = e.target.closest('.request-log-del');
+  if(requestLogDel){ handleRequestLogDelete(parseInt(requestLogDel.dataset.idx,10)); return; }
+
   const ficheCard = e.target.closest('.fiche-card');
   if(ficheCard){ /* handled via own listener */ }
 });
@@ -2656,6 +2792,85 @@ function handleConvtableVerify(btn){
 }
 
 /* ============ PARENTS ABOUT (HOME) ============ */
+function ficheChecklistHtml(){
+  return FICHES.map(f=>
+    '<label class="request-fiche-chip"><input type="checkbox" class="request-fiche-check" value="'+f.id+'"> '+f.id+'. '+escapeHtml(f.title)+'</label>'
+  ).join('');
+}
+function requestLogHtml(){
+  const log = state.parentRequests || [];
+  if(!log.length) return '';
+  let html = '<p class="request-log-title">Demandes envoyées depuis cet appareil :</p><ul class="request-log-list">';
+  log.forEach((r,i)=>{
+    const d = new Date(r.date).toLocaleDateString('fr-FR');
+    const ficheLabel = (r.fiches && r.fiches.length) ? ('Fiche'+(r.fiches.length>1?'s ':' ')+r.fiches.join(', ')+' — ') : '';
+    html += '<li><span>'+d+' — '+ficheLabel+escapeHtml(r.text||'(sans texte)')+'</span>'+
+      '<button type="button" class="request-log-del" data-idx="'+i+'" aria-label="Supprimer cette demande">🗑</button></li>';
+  });
+  html += '</ul>';
+  return html;
+}
+function buildParentRequestMailto(ficheIds, text){
+  const subject = "Carnet d'étoiles — nouveaux exercices à ajouter";
+  const dateStr = new Date().toLocaleDateString('fr-FR');
+  let body = "Mets à jour l'application « Carnet d'étoiles de Madeline » en ajoutant de nouveaux exercices.\n\n";
+  body += "Fichier à modifier : Carnet-etoiles-de-Madeline.html (à la racine du projet). Une copie de déploiement existe dans carnet-etoiles-madeline/index.html (GitHub Pages) : recopie le fichier racine dessus une fois les modifications terminées.\n\n";
+  body += "Demande envoyée depuis le Coin des parents, le "+dateStr+" :\n« "+(text||'(non précisée)')+" »\n\n";
+  if(ficheIds.length){
+    const titles = ficheIds.map(id=>{ const f=FICHES.find(f=>f.id===Number(id)); return f ? ('Fiche '+f.id+' — '+f.title) : null; }).filter(Boolean);
+    body += "Fiche(s) concernée(s) :\n- "+titles.join('\n- ')+"\n\n";
+  } else {
+    body += "Fiche(s) concernée(s) : non précisée(s) — déduis-la/les de la demande et des erreurs ci-dessous.\n\n";
+  }
+  const summary = collectMistakesSummary();
+  body += summary.length
+    ? "Erreurs actuellement enregistrées par Madeline sur cet appareil (utile pour cibler les nouveaux exercices) :\n- "+summary.join('\n- ')+"\n\n"
+    : "Aucune erreur n'est actuellement enregistrée sur cet appareil.\n\n";
+  body += "Consignes :\n"+
+    "- Respecte le style existant : mêmes fonctions utilitaires (tmpl, mcq, fill, money, dur, write, custom:'order'/'convtable'...), mêmes conventions d'id (f<numéro fiche>e<numéro exercice><lettre>), même ton pédagogique pour une élève de CM1.\n"+
+    "- Ajoute les nouveaux exercices sans modifier ceux qui existent déjà, et mets à jour le corrigé de chaque fiche touchée.\n"+
+    "- Teste chaque nouvel exercice dans le navigateur (bonne et mauvaise réponse) avant de considérer la tâche terminée.\n"+
+    "- Demande confirmation avant de committer ou de pousser sur le dépôt GitHub.";
+  return 'mailto:apercelay@gmail.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+}
+function addParentRequestLog(ficheIds, text){
+  state.parentRequests = state.parentRequests || [];
+  state.parentRequests.unshift({date:Date.now(), fiches:ficheIds.map(Number), text:text});
+  state.parentRequests = state.parentRequests.slice(0,10);
+  saveState();
+}
+function handleRequestSubmit(){
+  const textEl = document.getElementById('requestText');
+  const text = (textEl && textEl.value || '').trim();
+  const ficheIds = Array.from(document.querySelectorAll('.request-fiche-check:checked')).map(c=>c.value);
+  const hint = document.getElementById('requestHint');
+  if(!text){
+    if(hint){ hint.textContent = "Décris d'abord ta demande dans la zone de texte ci-dessus."; hint.hidden = false; }
+    return;
+  }
+  const mailtoUrl = buildParentRequestMailto(ficheIds, text);
+  addParentRequestLog(ficheIds, text);
+  window.location.href = mailtoUrl;
+  renderParentsHome();
+}
+function handleRequestLogDelete(idx){
+  if(!state.parentRequests) return;
+  state.parentRequests.splice(idx,1);
+  saveState();
+  renderParentsHome();
+}
+function parentRequestBoxHtml(){
+  return '<div class="request-box">'+
+    '<p class="request-title">✉️ Demander de nouveaux exercices</p>'+
+    '<p>Une notion qui pose encore difficulté, un thème à ajouter, un exercice à renouveler&nbsp;? Décrivez votre demande ci-dessous.</p>'+
+    '<p><strong>Comment ça marche :</strong> cette application est une simple page, sans serveur ni connexion internet propre — rien ne peut se mettre à jour tout seul. En validant, un e-mail pré-rempli s’ouvre vers Papa ; son contenu est déjà rédigé comme une instruction prête à copier-coller dans Claude Code, pour qu’il crée directement les nouveaux exercices. Une fois l’e-mail envoyé, traité et l’application republiée, Madeline verra les nouveaux exercices à sa prochaine ouverture (pas avant, et pas automatiquement).</p>'+
+    '<div class="request-fiches">'+ficheChecklistHtml()+'</div>'+
+    '<textarea id="requestText" class="request-textarea" rows="3" placeholder="Ex. : Madeline confond encore « moins le quart » l’après-midi, un exercice de plus sur ce point serait utile."></textarea>'+
+    '<p class="request-hint" id="requestHint" hidden></p>'+
+    '<button type="button" class="request-submit-btn" id="requestSubmitBtn">Préparer l’e-mail de demande ✉️</button>'+
+    '<div class="request-log">'+requestLogHtml()+'</div>'+
+  '</div>';
+}
 function renderParentsHome(){
   const body = document.getElementById('parentsBodyHome');
   body.innerHTML =
@@ -2663,9 +2878,10 @@ function renderParentsHome(){
     '<p>Les huit fiches couvrent chacune un point à consolider avant le CM1 : rendre la monnaie, lire l’heure, la multiplication, la conjugaison, le compas, les longueurs, les masses et les contenances (liquides). Chaque fiche commence par une leçon courte (« Je retiens »), puis des exercices du plus facile (★☆☆) au plus difficile (★★★).</p>'+
     '<p><strong>Conseils :</strong> une fiche par jour suffit (15 minutes) ; laissez Madeline chercher seule après avoir relu « Je retiens » à voix haute ; si les deux derniers exercices d’une fiche restent difficiles, ce n’est pas grave — ils sont volontairement un peu au-dessus du niveau strict.</p>'+
     '<p><strong>Deux mécaniques particulières :</strong> la fiche « Le compas » demande un vrai compas et une feuille de papier — l’énoncé est dans l’application, le tracé (et parfois la mesure au fil d’une règle) se fait à la main, et Madeline coche elle-même si c’est réussi après avoir comparé avec le modèle affiché ; ses derniers exercices font découvrir, cercle après cercle, ce qui se passe quand deux cercles se touchent ou se croisent. Les fiches « Les longueurs », « Les masses » et « Les contenances » commencent chacune par une méthode pas à pas, puis un exercice où Madeline construit elle-même le tableau de conversion (en rangeant les unités dans le bon ordre), avant de le remplir avec de vraies conversions.</p>'+
-    '<p><strong>Dans cette version interactive</strong>, chaque question ne se joue qu’une fois : une réponse fausse ne peut pas être retentée, Madeline est prévenue qu’elle la reverra avec vous. Le récapitulatif ci-dessus liste tout ce qu’il reste à corriger ; le corrigé complet de chaque fiche reste aussi disponible dans l’encadré grisé, en bas de chaque fiche.</p>'+
+    '<p><strong>Dans cette version interactive</strong>, chaque question ne se joue qu’une fois : une réponse fausse ne peut pas être retentée, Madeline est prévenue qu’elle la reverra avec vous. Le récapitulatif ci-dessus liste tout ce qu’il reste à corriger, avec une recommandation par fiche ; chaque fiche se termine désormais par un exercice « 🔁 Entraînement supplémentaire » aux questions inédites, pensé pour rejouer sur les points ratés sans jamais retomber sur une question déjà vue. Le corrigé complet de chaque fiche reste aussi disponible dans l’encadré grisé, en bas de chaque fiche.</p>'+
     '<p><strong>Programme de référence :</strong> cycle 2, arrêté du 22 octobre 2024 (JO du 25/10/2024, BO n°41 du 31/10/2024, NOR MENE2415135A), applicable depuis la rentrée 2025.</p>'+
-    '<p style="margin-bottom:0">Bon courage à Madeline, et bravo d’avance pour les huit étoiles !</p>';
+    '<p>Bon courage à Madeline, et bravo d’avance pour les huit étoiles !</p>'+
+    parentRequestBoxHtml();
 }
 
 /* ============ STARFIELD ============ */
