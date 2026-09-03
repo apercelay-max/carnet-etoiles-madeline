@@ -115,6 +115,14 @@ img,svg{ display:block; max-width:100%; }
 }
 .icon-btn:hover{ transform:translateY(-2px); background:var(--paper-card-2); }
 .icon-btn svg{ width:19px; height:19px; }
+.parent-mode-btn{
+  display:inline-flex; align-items:center; gap:.3rem; border:1.5px solid var(--line); background:var(--paper-card);
+  color:var(--ink-soft); border-radius:999px; padding:.42rem .7rem; font-weight:700; font-size:.78rem;
+  cursor:pointer; flex:none; white-space:nowrap; transition:background .2s, border-color .2s, color .2s, transform .15s;
+}
+.parent-mode-btn:hover{ transform:translateY(-2px); }
+.parent-mode-btn.active{ background:var(--good-soft); border-color:var(--good); color:var(--good); }
+@media (max-width:640px){ .parent-mode-btn .pm-label{ display:none; } }
 .back-btn{
   border:none; background:none; color:var(--ink); font-family:var(--font-body); font-weight:700;
   display:flex; align-items:center; gap:.35rem; cursor:pointer; padding:.4rem .2rem; flex:none;
@@ -227,6 +235,25 @@ img,svg{ display:block; max-width:100%; }
 .mistakes-list{ margin:0; padding-left:1.3rem; }
 .mistakes-list li{ margin-bottom:.35rem; }
 .mistakes-list strong{ color:var(--bad); }
+
+/* ---- Coin des parents : code parent (correction immédiate) ---- */
+.pin-box{ margin-top:1.2rem; padding-top:1rem; border-top:1px solid var(--folder-line); }
+.pin-title{ font-weight:700; margin:0 0 .5rem; font-size:.98rem; }
+.pin-status{ font-size:.85rem; font-weight:700; color:var(--folder-ink); margin:.3rem 0 .6rem; }
+.pin-row{ display:flex; flex-wrap:wrap; gap:.5rem; align-items:center; }
+.pin-input{
+  border:1.5px solid var(--folder-line); border-radius:var(--r-sm); padding:.45rem .6rem; font:inherit;
+  font-size:.9rem; background:var(--paper-card); color:var(--ink); width:9em;
+}
+.pin-save-btn{
+  background:var(--accent); color:#fff9ef; border:none; border-radius:999px; padding:.45rem .95rem;
+  font-weight:700; font-size:.85rem; cursor:pointer;
+}
+.pin-save-btn:hover{ filter:brightness(1.08); }
+.pin-clear-btn{
+  background:none; border:1px solid var(--bad); color:var(--bad); border-radius:999px; padding:.42rem .85rem;
+  font-weight:700; font-size:.85rem; cursor:pointer;
+}
 
 /* ---- Coin des parents : demande de nouveaux exercices ---- */
 .request-box{ margin-top:1.2rem; padding-top:1rem; border-top:1px solid var(--folder-line); }
@@ -497,6 +524,7 @@ img,svg{ display:block; max-width:100%; }
   font-weight:700; color:var(--ink-faint);
 }
 .order-slot.filled{ border-style:solid; border-color:var(--accent); color:var(--ink); background:var(--accent-soft); }
+.order-slot.wrong-flash{ border-style:solid; border-color:var(--bad); color:var(--bad); background:var(--bad-soft); animation:shake .4s ease; }
 .order-reset{ background:none; border:none; color:var(--ink-faint); text-decoration:underline; font-size:.85rem; cursor:pointer; }
 
 .convtable-scroll{ overflow-x:auto; margin:.5rem 0 .8rem; padding-bottom:.2rem; }
@@ -512,6 +540,7 @@ img,svg{ display:block; max-width:100%; }
 }
 .convtable-input.correct{ border-color:var(--good); background:var(--good-soft); }
 .convtable-input.wrong-locked{ border-color:var(--bad); background:var(--bad-soft); }
+.convtable-input.wrong-flash{ border-color:var(--bad); background:var(--bad-soft); animation:shake .4s ease; }
 .convtable-input:disabled{ opacity:.85; }
 
 .convref-bar{
@@ -604,6 +633,7 @@ img,svg{ display:block; max-width:100%; }
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.9 6.4 6.9.7-5.2 4.7 1.5 6.9L12 17.6 5.9 21.2l1.5-6.9-5.2-4.7 6.9-.7z"/></svg>
       <span id="starCountText">0 / 24</span>
     </div>
+    <button class="parent-mode-btn" id="parentModeBtn" type="button" aria-pressed="false" aria-label="Activer le mode parent : permet de corriger tout de suite une erreur pendant vos séances avec Madeline">👪 <span class="pm-label">Parent</span></button>
     <button class="icon-btn" id="muteBtn" type="button" aria-label="Couper ou activer le son"></button>
   </div>
 
@@ -1802,6 +1832,7 @@ function loadState(){
   if(!state.items) state.items={};
   if(!state.ficheMeta) state.ficheMeta={};
   if(!state.parentRequests) state.parentRequests=[];
+  if(state.parentPin===undefined) state.parentPin=null;
 }
 function saveState(){
   try{ localStorage.setItem(LS_KEY, JSON.stringify(state)); }catch(e){}
@@ -2083,6 +2114,7 @@ let currentFicheId = null;
 function openFiche(id){
   currentFicheId = id;
   const fiche = FICHES.find(f=>f.id===id);
+  if(parentModeActive) unlockWrongItemsInFiche(fiche);
   document.getElementById('view-map').classList.remove('active');
   document.getElementById('view-fiche').classList.add('active');
   document.getElementById('backBtn').hidden = false;
@@ -2583,6 +2615,11 @@ document.addEventListener('click', function(e){
   const requestLogDel = e.target.closest('.request-log-del');
   if(requestLogDel){ handleRequestLogDelete(parseInt(requestLogDel.dataset.idx,10)); return; }
 
+  const pinSaveBtn = e.target.closest('#pinSaveBtn');
+  if(pinSaveBtn){ handlePinSave(); return; }
+  const pinClearBtn = e.target.closest('#pinClearBtn');
+  if(pinClearBtn){ handlePinClear(); return; }
+
   const ficheCard = e.target.closest('.fiche-card');
   if(ficheCard){ /* handled via own listener */ }
 });
@@ -2612,6 +2649,60 @@ function toggleFolder(tab){
   body.hidden = expanded;
 }
 
+/* ============ MODE PARENT (correction immédiate) ============ */
+let parentModeActive = false;
+function updateParentModeBtn(){
+  const btn = document.getElementById('parentModeBtn');
+  if(!btn) return;
+  btn.classList.toggle('active', parentModeActive);
+  btn.setAttribute('aria-pressed', String(parentModeActive));
+  const label = btn.querySelector('.pm-label');
+  if(label) label.textContent = parentModeActive ? 'Parent ✓' : 'Parent';
+}
+/* Déverrouille, dans une fiche donnée, tout ce qui était figé comme faux : les élèves reprennent leur statut "pending",
+   les items custom (order/colorbar/convtable) résolus-faux sont réinitialisés. Ne touche jamais aux bonnes réponses. */
+function unlockWrongItemsInFiche(fiche){
+  let changed = false;
+  fiche.exercises.forEach(ex=>ex.items.forEach(it=>{
+    const st = state.items[it.id];
+    if(!st) return;
+    if(it.custom){
+      if(st.resolved && !st.correct){ delete state.items[it.id]; changed = true; }
+      return;
+    }
+    (st.parts||[]).forEach(p=>{
+      if(p.status==='resolved-wrong'){ p.status='pending'; delete p.chosen; changed = true; }
+    });
+  }));
+  if(changed) saveState();
+  return changed;
+}
+function toggleParentMode(){
+  if(parentModeActive){
+    parentModeActive = false;
+    updateParentModeBtn();
+    say("Mode parent désactivé.", null);
+    return;
+  }
+  if(!state.parentPin){
+    alert("Configurez d'abord un code parent dans le Coin des parents, sur la page d'accueil.");
+    return;
+  }
+  const entered = window.prompt("Code parent :");
+  if(entered===null) return;
+  if(entered !== state.parentPin){
+    alert('Code incorrect.');
+    return;
+  }
+  parentModeActive = true;
+  updateParentModeBtn();
+  if(currentFicheId!=null){
+    const fiche = FICHES.find(f=>f.id===currentFicheId);
+    if(unlockWrongItemsInFiche(fiche)) renderFiche(fiche);
+  }
+  say("Mode parent activé : Madeline peut corriger tout de suite ! 👪", 'cheer');
+}
+
 function handleOptClick(btn){
   const itemId = btn.dataset.item;
   const idx = parseInt(btn.dataset.part,10);
@@ -2620,6 +2711,12 @@ function handleOptClick(btn){
   const st = getItemState(itemId, ref.def.parts.length);
   if(isPartLocked(st.parts[idx])) return;
   const correct = (btn.dataset.val === part.answer);
+  if(!correct && parentModeActive){
+    btn.classList.add('flash-wrong');
+    setTimeout(()=>btn.classList.remove('flash-wrong'), 450);
+    reactMascot(itemId, false);
+    return; // mode parent : pas de verrouillage, elle rechoisit tout de suite
+  }
   markPart(itemId, idx, correct, btn.dataset.val);
   const group = btn.closest('.mcq-group');
   group.querySelectorAll('.opt-btn').forEach(b=>{ b.disabled=true; if(b!==btn) b.classList.add('dim'); });
@@ -2635,7 +2732,7 @@ function handleVerifyClick(btn){
   const ref = ITEMS_BY_ID[itemId];
   const wrap = btn.closest('.item-card');
   const st = getItemState(itemId, ref.def.parts.length);
-  let allOk = true, anyChecked=false;
+  let allOk = true, anyChecked=false, anyWrongRetry=false;
   ref.def.parts.forEach((part, idx)=>{
     if(part.kind==='mcq' || part.kind==='write') return;
     if(isPartLocked(st.parts[idx])) return;
@@ -2644,11 +2741,18 @@ function handleVerifyClick(btn){
     anyChecked = true;
     const ok = checkPartValue(part, input.value);
     if(!ok) allOk = false;
+    if(!ok && parentModeActive){
+      anyWrongRetry = true;
+      input.classList.add('wrong');
+      setTimeout(()=>input.classList.remove('wrong'), 450);
+      return; // mode parent : la case reste modifiable, elle recorrige tout de suite
+    }
     markPart(itemId, idx, ok, input.value);
     input.disabled = true;
     input.classList.add(ok ? 'correct' : 'wrong-locked');
   });
   if(!anyChecked) return;
+  if(anyWrongRetry){ reactMascot(itemId, false); return; }
   if(allOk) burstNear(btn,'good',14);
   reactMascot(itemId, allOk);
   refreshItemFeedback(itemId);
@@ -2667,6 +2771,10 @@ function handleSelfReport(btn){
   const ref = ITEMS_BY_ID[itemId];
   getItemState(itemId, ref.def.parts.length);
   const idx = ref.def.parts.findIndex(p=>p.kind==='write');
+  if(val==='no' && parentModeActive){
+    reactMascot(itemId, false);
+    return; // mode parent : les deux boutons restent actifs, elle refait la tâche puis reclique
+  }
   markPart(itemId, idx<0?0:idx, val==='yes');
   const row = btn.closest('.selfreport-row');
   row.querySelectorAll('.selfreport-btn').forEach(b=>{ b.disabled=true; });
@@ -2683,14 +2791,26 @@ function handleChipClick(btn){
   const st = state.items[itemId];
   if(st.resolved) return;
   st.seq.push(btn.dataset.val);
-  renderOrderState(ref.def, btn.closest('.item-card'));
+  const holder = btn.closest('.item-card');
+  renderOrderState(ref.def, holder);
   if(st.seq.length === ref.def.order.length){
     const correct = st.seq.every((v,i)=>v===ref.def.order[i]);
+    if(!correct && parentModeActive){
+      reactMascot(itemId, false);
+      holder.querySelectorAll('.order-slot').forEach(s=>s.classList.add('wrong-flash'));
+      setTimeout(()=>{
+        st.seq = [];
+        renderOrderState(ref.def, holder);
+        holder.querySelectorAll('.order-slot').forEach(s=>s.classList.remove('wrong-flash'));
+      }, 700); // mode parent : on relance tout de suite un nouvel essai plutôt que de verrouiller
+      saveState();
+      refreshFicheProgress(ref.ficheId);
+      return;
+    }
     st.resolved = true; st.correct = correct;
     saveState();
     reactMascot(itemId, correct);
     if(correct) burstNear(btn,'good',14);
-    const holder = btn.closest('.item-card');
     holder.querySelectorAll('.chip-btn').forEach(b=>b.disabled=true);
     const resetBtn = holder.querySelector('[data-role="order-reset"]');
     if(resetBtn) resetBtn.disabled = true;
@@ -2724,6 +2844,10 @@ function handleColorbarVerify(btn){
   const st = state.items[itemId];
   if(st.verified) return;
   const ok = ref.def.bars.every((bar,bi)=> st.filled[bi].size === bar.target);
+  if(!ok && parentModeActive){
+    reactMascot(itemId, false);
+    return; // mode parent : les segments restent actifs pour recommencer tout de suite
+  }
   st.verified = true;
   const wrap = btn.closest('.item-card');
   wrap.querySelectorAll('.seg-btn').forEach(b=>b.disabled=true);
@@ -2747,6 +2871,12 @@ function handleColorbarCmp(btn){
   const st = state.items[itemId];
   if(st.resolved) return;
   const correct = btn.dataset.val === ref.def.cmpAnswer;
+  if(!correct && parentModeActive){
+    btn.classList.add('flash-wrong');
+    setTimeout(()=>btn.classList.remove('flash-wrong'), 450);
+    reactMascot(itemId, false);
+    return; // mode parent : pas de verrouillage, elle rechoisit tout de suite
+  }
   st.resolved = true; st.correct = correct; st.cmpChosen = btn.dataset.val;
   const group = btn.closest('.mcq-group');
   group.querySelectorAll('.opt-btn').forEach(b=>{ b.disabled=true; if(b!==btn) b.classList.add('dim'); });
@@ -2770,6 +2900,7 @@ function handleConvtableVerify(btn){
   if(st.resolved) return;
   const wrap = btn.closest('.item-card');
   let allOk = true;
+  const cellEls = [];
   ref.def.rows.forEach((row,ri)=>{
     row.cells.forEach((c,ci)=>{
       if(c===null) return;
@@ -2778,10 +2909,17 @@ function handleConvtableVerify(btn){
       st.values[ri][ci] = val;
       const ok = val === String(c);
       if(!ok) allOk = false;
-      inp.disabled = true;
-      inp.classList.add(ok ? 'correct' : 'wrong-locked');
+      cellEls.push({inp, ok});
     });
   });
+  if(!allOk && parentModeActive){
+    cellEls.forEach(({inp,ok})=>{
+      if(!ok){ inp.classList.add('wrong-flash'); setTimeout(()=>inp.classList.remove('wrong-flash'), 450); }
+    });
+    reactMascot(itemId, false);
+    return; // mode parent : les cases fausses restent modifiables pour recorriger tout de suite
+  }
+  cellEls.forEach(({inp,ok})=>{ inp.disabled = true; inp.classList.add(ok ? 'correct' : 'wrong-locked'); });
   st.resolved = true; st.correct = allOk;
   saveState();
   btn.disabled = true;
@@ -2859,6 +2997,34 @@ function handleRequestLogDelete(idx){
   saveState();
   renderParentsHome();
 }
+function parentPinBoxHtml(){
+  const has = !!state.parentPin;
+  return '<div class="pin-box">'+
+    '<p class="pin-title">🔒 Code parent</p>'+
+    '<p>Ce code active, pendant vos séances avec Madeline, la <strong>correction immédiate</strong> d’une erreur (au lieu d’attendre la prochaine fois) : tapez-le une fois en cliquant sur « 👪 Parent » en haut de l’écran. Madeline n’a pas besoin de le connaître.</p>'+
+    '<p class="pin-status">'+(has ? '✓ Un code est actuellement défini.' : 'Aucun code défini pour l’instant.')+'</p>'+
+    '<div class="pin-row">'+
+      '<input type="text" inputmode="numeric" id="pinInput" class="pin-input" placeholder="Ex. 1234" maxlength="12" autocomplete="off">'+
+      '<button type="button" class="pin-save-btn" id="pinSaveBtn">'+(has?'Changer':'Définir')+'</button>'+
+      (has?'<button type="button" class="pin-clear-btn" id="pinClearBtn">Supprimer</button>':'')+
+    '</div>'+
+  '</div>';
+}
+function handlePinSave(){
+  const inp = document.getElementById('pinInput');
+  const val = (inp.value||'').trim();
+  if(!val){ inp.focus(); return; }
+  state.parentPin = val;
+  saveState();
+  renderParentsHome();
+}
+function handlePinClear(){
+  state.parentPin = null;
+  parentModeActive = false;
+  updateParentModeBtn();
+  saveState();
+  renderParentsHome();
+}
 function parentRequestBoxHtml(){
   return '<div class="request-box">'+
     '<p class="request-title">✉️ Demander de nouveaux exercices</p>'+
@@ -2878,9 +3044,11 @@ function renderParentsHome(){
     '<p>Les huit fiches couvrent chacune un point à consolider avant le CM1 : rendre la monnaie, lire l’heure, la multiplication, la conjugaison, le compas, les longueurs, les masses et les contenances (liquides). Chaque fiche commence par une leçon courte (« Je retiens »), puis des exercices du plus facile (★☆☆) au plus difficile (★★★).</p>'+
     '<p><strong>Conseils :</strong> une fiche par jour suffit (15 minutes) ; laissez Madeline chercher seule après avoir relu « Je retiens » à voix haute ; si les deux derniers exercices d’une fiche restent difficiles, ce n’est pas grave — ils sont volontairement un peu au-dessus du niveau strict.</p>'+
     '<p><strong>Deux mécaniques particulières :</strong> la fiche « Le compas » demande un vrai compas et une feuille de papier — l’énoncé est dans l’application, le tracé (et parfois la mesure au fil d’une règle) se fait à la main, et Madeline coche elle-même si c’est réussi après avoir comparé avec le modèle affiché ; ses derniers exercices font découvrir, cercle après cercle, ce qui se passe quand deux cercles se touchent ou se croisent. Les fiches « Les longueurs », « Les masses » et « Les contenances » commencent chacune par une méthode pas à pas, puis un exercice où Madeline construit elle-même le tableau de conversion (en rangeant les unités dans le bon ordre), avant de le remplir avec de vraies conversions.</p>'+
-    '<p><strong>Dans cette version interactive</strong>, chaque question ne se joue qu’une fois : une réponse fausse ne peut pas être retentée, Madeline est prévenue qu’elle la reverra avec vous. Le récapitulatif ci-dessus liste tout ce qu’il reste à corriger, avec une recommandation par fiche ; chaque fiche se termine désormais par un exercice « 🔁 Entraînement supplémentaire » aux questions inédites, pensé pour rejouer sur les points ratés sans jamais retomber sur une question déjà vue. Le corrigé complet de chaque fiche reste aussi disponible dans l’encadré grisé, en bas de chaque fiche.</p>'+
+    '<p><strong>Dans cette version interactive</strong>, en dehors des séances avec vous, chaque question ne se joue qu’une fois : une réponse fausse ne peut pas être retentée, Madeline est prévenue qu’elle la reverra avec vous. Le récapitulatif ci-dessus liste tout ce qu’il reste à corriger, avec une recommandation par fiche ; chaque fiche se termine désormais par un exercice « 🔁 Entraînement supplémentaire » aux questions inédites, pensé pour rejouer sur les points ratés sans jamais retomber sur une question déjà vue. Le corrigé complet de chaque fiche reste aussi disponible dans l’encadré grisé, en bas de chaque fiche.</p>'+
+    '<p><strong>Quand vous travaillez avec elle</strong>, activez le « 👪 Parent » en haut de l’écran (avec le code ci-dessous) pour que Madeline puisse corriger une erreur tout de suite, sans attendre : les questions déjà ratées se rouvrent, et les nouvelles erreurs ne se verrouillent plus tant que le mode est actif.</p>'+
     '<p><strong>Programme de référence :</strong> cycle 2, arrêté du 22 octobre 2024 (JO du 25/10/2024, BO n°41 du 31/10/2024, NOR MENE2415135A), applicable depuis la rentrée 2025.</p>'+
     '<p>Bon courage à Madeline, et bravo d’avance pour les huit étoiles !</p>'+
+    parentPinBoxHtml()+
     parentRequestBoxHtml();
 }
 
@@ -2905,10 +3073,12 @@ function init(){
   renderHeroCats();
   setActiveCat('mistigri');
   updateMuteBtn();
+  updateParentModeBtn();
   renderParentsHome();
   initStarfield();
   renderMap();
 
+  document.getElementById('parentModeBtn').addEventListener('click', toggleParentMode);
   document.getElementById('muteBtn').addEventListener('click', function(){
     muted = !muted;
     try{ localStorage.setItem('madeline_muted', muted?'1':'0'); }catch(e){}
