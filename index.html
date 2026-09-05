@@ -297,7 +297,9 @@ img,svg{ display:block; max-width:100%; }
 .cat-ear-inner{ fill:#F0A9A5; }
 .cat-paw{ fill:var(--cat-body,#B98A5E); }
 .cat-paw-l,.cat-paw-r{ transform-box:fill-box; transform-origin:center; transition:transform .35s cubic-bezier(.34,1.56,.64,1); }
-.cat-nose{ fill:#E8837D; }
+.cat-nose{ fill:var(--cat-nose,#E8837D); }
+.cat-fur-fluff{ fill:var(--cat-body,#B98A5E); }
+.cat-tail-poof{ fill:var(--cat-body,#B98A5E); }
 .cat-mouth{ fill:none; stroke:var(--cat-outline); stroke-width:1.6; stroke-linecap:round; transform-box:fill-box; transform-origin:center; transition:transform .3s; }
 .cat-eye-white{ fill:#FFFDF7; stroke:var(--cat-outline); stroke-width:1.4; }
 .cat-pupil{ fill:#2A2036; }
@@ -983,16 +985,16 @@ const CATS = {
     }
   },
   reglisse:{
-    name:'Réglisse', fur:'#3A3A3E', belly:'#F5F3EC', accent:'var(--f9)', accessory:'pencil',
-    blurb:"Bonjour, moi c'est Réglisse ! Je vérifie toujours deux fois ce que j'écris et ce que je calcule — noir sur blanc, comme mon pelage, je n'aime pas l'à-peu-près. Dictée ou nombres, aujourd'hui on révise les devoirs ensemble !",
-    tip:"Mon secret pour la dictée : je relis chaque mot lettre par lettre, à voix haute, en insistant sur les accents. Pour les nombres, je compare chiffre par chiffre en partant de la gauche, sans jamais sauter une étape.",
+    name:'Réglisse', fur:'#8E72C0', belly:'#F5EAFB', nose:'#FF6FA0', accent:'var(--f9)', accessory:'glasses', fluffy:true,
+    blurb:"Miaou-hi-hi, bonjour, moi c'est Réglisse ! Pelage tout violet façon réglisse à la myrtille, moustaches interminables, lunettes de réviseuse sur la truffe (toute rose, regarde comme elle brille) : avec un look pareil, aucune faute ni aucun chiffre ne peut m'échapper. Dictée ou nombres, aujourd'hui on révise les devoirs ensemble !",
+    tip:"Mon secret pour la dictée : je relis chaque mot lettre par lettre, à voix haute, en insistant sur les accents. Pour les nombres, je compare chiffre par chiffre en partant de la gauche, sans jamais sauter une étape. Et quand j'hésite, mes longues moustaches se mettent à frétiller toutes seules, miaou !",
     pools:{
       correctFirst:["Pas une seule faute, bravo grande réviseuse !","Miaou-parfait, ton crayon de correction peut se reposer !","Exact du premier coup, comme noir sur blanc !","Aucune coquille dans cette réponse, impeccable !","Tu relis aussi bien que tu écris, bravo !","Réponse nette et juste, j'adore !","Pile la bonne réponse, pas besoin de repasser derrière toi !","Tu mérites une étoile bien noire, et bien méritée !","Vérifié deux fois par mes soins : c'est juste !","Aucune erreur à corriger ici, chapeau !","Tu chasses les fautes mieux que moi les souris !","Réponse aussi propre qu'une copie bien recopiée !"],
       wrong:["Petite coquille dans la réponse, rien de grave : on la corrige avec Papa ou Maman.","Pas tout à fait, mais bel effort de réviseuse ! Un adulte t'aidera à voir où ça coince.","Oups, mon crayon de correction a repéré une erreur. Ce n'est pas grave, à revoir avec un adulte.","Raté de peu, mais tu as vraiment cherché. Papa ou Maman corrigera ça avec toi.","Ce n'est pas la bonne réponse, mais quelle belle tentative ! On la revoit ensemble tranquillement.","Petite erreur à noter dans mon carnet, rien de dramatique. Un adulte t'expliquera.","Pas gagné cette fois, mais même les meilleures réviseuses se trompent parfois. Papa ou Maman t'aidera.","Zut, une lettre ou un chiffre s'est glissé de travers. On corrige ça avec un adulte.","Pas cette réponse-là, mais ton énergie est parfaite. À revoir avec Papa ou Maman.","Miaou raté, mais je vois que tu as bien réfléchi. C'est le plus important.","Petit oubli dans la réponse, rien de grave du tout. Un adulte t'expliquera la suite.","Pas la bonne réponse, mais joli travail d'essai ! Papa ou Maman corrigera ça.","Raté, mais avec beaucoup d'application, bravo pour ça. On revoit ça avec un adulte.","Ce n'est pas exact, mais tu progresses à chaque révision. Papa ou Maman t'aidera à ajuster."],
       exerciseDone:["Un exercice révisé de plus, bravo !","Encore une page de devoirs bien travaillée.","Tu avances comme une vraie championne des révisions.","Un de plus dans le carnet, bien joué !","Miaou, ça progresse à vue d'œil !","Belle application sur cet exercice.","Encore un point coché sur la liste des devoirs.","Tu tiens le rythme, continue comme ça.","Un exercice de plus, sans la moindre coquille qui traîne.","Bien réviser, ça se voit déjà !"],
       ficheWelcome:["Aujourd'hui, on révise les devoirs ensemble : la dictée et les nombres, mes deux matières préférées.","Sors ton crayon (imaginaire) de correction, on relit tout comme il faut.","J'ai relu deux fois cette fiche avant de te la donner, à ton tour maintenant.","Prête à réviser tes mots de dictée et tes grands nombres ?","Cette fiche sent bon le cahier de devoirs fraîchement corrigé.","On y va tranquillement, mot par mot, chiffre par chiffre.","J'ai préparé une révision noir sur blanc, sans aucun à-peu-près.","Prête à devenir une championne de la relecture et du calcul ?","Accroche-toi bien, cette fiche mélange les lettres et les chiffres.","Aujourd'hui, chaque mot et chaque nombre comptent, à toi de jouer !"],
       ficheDone:["Fiche terminée, ta dictée et tes nombres sont fin prêts !","Bravo, toutes les révisions sont cochées !","Miaou, quelle belle relecture aujourd'hui !","Tu es prête pour ta dictée et pour tes exercices de nombres, bravo !","Fiche bouclée, noir sur blanc, sans aucune bavure !","Championne de la révision, chapeau bas, enfin, oreilles basses !","Tout est relu, tout est vérifié, bravo grande réviseuse !","Tu termines cette fiche avec un sérieux qui me rend fier !","Une fiche de plus dans ton beau parcours vers le CM1 !","Devoirs révisés, mission accomplie !"],
-      reflections:["Mon secret de réviseuse : je relis toujours mes mots de dictée à voix haute, lettre par lettre, surtout les accents.","Pour comparer deux grands nombres, je compte d'abord leurs chiffres : le plus de chiffres gagne presque toujours.","Un jour, j'ai confondu 987 et 9 870 en oubliant un zéro. Depuis, je compte toujours les chiffres avant de répondre.","Mon pelage est noir et blanc, comme une bonne copie bien corrigée : le brouillon d'un côté, le propre de l'autre.","Astuce de dictée : les mots invariables comme « déjà » ou « pendant » ne changent jamais, je les apprends une bonne fois pour toutes.","Je rêve parfois que je corrige une dictée écrite entièrement par des souris. Beaucoup de fautes, miaou.","Pour ranger une liste de nombres, je cherche toujours le plus petit en premier, je le mets de côté, et je recommence.","1 000, c'est mille. Et neuf mille, c'est neuf fois plus. Les zéros, il ne faut jamais les perdre en chemin.","Une fois, j'ai écrit « atentif » sans le deuxième t. Depuis, je vérifie toujours les lettres doubles avec ma patte.","Je vérifie toujours mon travail deux fois avant de le rendre : une fois pour moi, une fois pour être vraiment sûre."]
+      reflections:["Mon secret de réviseuse : je relis toujours mes mots de dictée à voix haute, lettre par lettre, surtout les accents.","Pour comparer deux grands nombres, je compte d'abord leurs chiffres : le plus de chiffres gagne presque toujours.","Un jour, j'ai confondu 987 et 9 870 en oubliant un zéro. Depuis, je compte toujours les chiffres avant de répondre.","Mon pelage violet, c'est ma couleur porte-bonheur pour les devoirs — un peu comme si toute une boîte de réglisses à la myrtille avait déteint sur moi, miaou !","Astuce de dictée : les mots invariables comme « déjà » ou « pendant » ne changent jamais, je les apprends une bonne fois pour toutes.","Je rêve parfois que je corrige une dictée écrite entièrement par des souris. Beaucoup de fautes, miaou.","Pour ranger une liste de nombres, je cherche toujours le plus petit en premier, je le mets de côté, et je recommence.","1 000, c'est mille. Et neuf mille, c'est neuf fois plus. Les zéros, il ne faut jamais les perdre en chemin.","Une fois, j'ai écrit « atentif » sans le deuxième t. Depuis, je vérifie toujours les lettres doubles avec ma patte.","Je vérifie toujours mon travail deux fois avant de le rendre : une fois pour moi, une fois pour être vraiment sûre.","Mes moustaches sont si longues qu'un jour j'ai mesuré un nombre à neuf chiffres rien qu'en les dépliant. Pratique, mais un peu ridicule.","Astuce générale pour tous les devoirs : je pose mes affaires, je relis la consigne deux fois, et seulement après je fonce. Ça évite bien des miaous de panique.","Mes lunettes ne corrigent rien du tout en vrai — je les porte juste parce qu'une réviseuse sérieuse, ça a toujours l'air plus sérieux avec des lunettes, miaou-hi-hi.","Pour ne jamais oublier un devoir, je fais toujours ma liste avant de commencer. Une case cochée, c'est presque aussi satisfaisant qu'une pelote de laine bien enroulée."]
     }
   }
 };
@@ -1027,10 +1029,11 @@ function catAccessorySvg(type, accentExpr){
 }
 function catMarkup(catId){
   const cat = CATS[catId];
-  const acc = cat.accessory, ax = cat.accent;
+  const acc = cat.accessory, ax = cat.accent, fluffy = !!cat.fluffy;
   return '<ellipse class="cat-shadow" cx="80" cy="150" rx="32" ry="6"/>'+
   '<g class="cat-body-group">'+
     '<path class="cat-tail" d="M116 118 Q146 108 140 76 Q136 54 116 58"/>'+
+    (fluffy ? '<circle class="cat-tail-poof" cx="116" cy="58" r="10"/>' : '')+
     '<ellipse class="cat-paw cat-paw-l" cx="66" cy="142" rx="9" ry="5"/>'+
     '<ellipse class="cat-paw cat-paw-r" cx="94" cy="142" rx="9" ry="5"/>'+
     '<ellipse class="cat-body" cx="80" cy="100" rx="42" ry="46"/>'+
@@ -1039,13 +1042,22 @@ function catMarkup(catId){
     '<path class="cat-ear-inner" d="M47 51 L41 30 L60 45 Z"/>'+
     '<path class="cat-ear" d="M114 58 L124 22 L92 46 Z"/>'+
     '<path class="cat-ear-inner" d="M113 51 L119 30 L100 45 Z"/>'+
+    (fluffy ? '<path class="cat-fur-fluff" d="M36 22 Q28 8 34 2 Q41 11 36 22 Z"/><path class="cat-fur-fluff" d="M36 22 Q35 5 44 0 Q45 11 36 22 Z"/><path class="cat-fur-fluff" d="M124 22 Q132 8 126 2 Q119 11 124 22 Z"/><path class="cat-fur-fluff" d="M124 22 Q125 5 116 0 Q115 11 124 22 Z"/>' : '')+
+    (fluffy ? '<circle class="cat-fur-fluff" cx="42" cy="82" r="9"/><circle class="cat-fur-fluff" cx="40" cy="102" r="10"/><circle class="cat-fur-fluff" cx="43" cy="122" r="9"/><circle class="cat-fur-fluff" cx="118" cy="82" r="9"/><circle class="cat-fur-fluff" cx="120" cy="102" r="10"/><circle class="cat-fur-fluff" cx="117" cy="122" r="9"/>' : '')+
     (acc==='goggles' ? catAccessorySvg('goggles', ax) : '')+
     '<circle class="cat-cheek" cx="47" cy="90" r="7"/>'+
     '<circle class="cat-cheek" cx="113" cy="90" r="7"/>'+
-    '<g class="cat-whiskers">'+
-      '<line x1="38" y1="88" x2="10" y2="84"/><line x1="38" y1="94" x2="10" y2="94"/>'+
-      '<line x1="122" y1="88" x2="150" y2="84"/><line x1="122" y1="94" x2="150" y2="94"/>'+
-    '</g>'+
+    (fluffy ? (
+      '<g class="cat-whiskers">'+
+        '<line x1="38" y1="82" x2="-8" y2="70"/><line x1="38" y1="88" x2="-10" y2="88"/><line x1="38" y1="94" x2="-8" y2="106"/>'+
+        '<line x1="122" y1="82" x2="168" y2="70"/><line x1="122" y1="88" x2="170" y2="88"/><line x1="122" y1="94" x2="168" y2="106"/>'+
+      '</g>'
+    ) : (
+      '<g class="cat-whiskers">'+
+        '<line x1="38" y1="88" x2="10" y2="84"/><line x1="38" y1="94" x2="10" y2="94"/>'+
+        '<line x1="122" y1="88" x2="150" y2="84"/><line x1="122" y1="94" x2="150" y2="94"/>'+
+      '</g>'
+    ))+
     catEyeMarkup(62,80,64,81,60,76)+
     catEyeMarkup(98,80,100,81,96,76)+
     (acc==='glasses' ? catAccessorySvg('glasses', ax) : '')+
@@ -1080,6 +1092,7 @@ function renderCatInto(elId, catId){
   svg.classList.add('cat');
   svg.style.setProperty('--cat-body', cat.fur);
   svg.style.setProperty('--cat-belly', cat.belly);
+  svg.style.setProperty('--cat-nose', cat.nose || '#E8837D');
   svg.innerHTML = catMarkup(catId);
 }
 let activeCatId = 'mistigri';
