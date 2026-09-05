@@ -31,6 +31,7 @@
   --f6:#33508A; --f6-soft:#DBE2F1;
   --f7:#2E7D66; --f7-soft:#D9EEE5;
   --f8:#1F84A3; --f8-soft:#D6EBF1;
+  --f9:#77883A; --f9-soft:#E6EAD3;
   --cat-outline:#332640;
   --card-ink:#332640; --card-ink-soft:#5B4B68; --card-chip-bg:#F6EEDF;
   --font-display:'Delius','Segoe Print','Bradley Hand',cursive;
@@ -57,7 +58,7 @@
     --shadow: 0 10px 30px -8px rgba(0,0,0,.6);
     --shadow-sm: 0 4px 14px -6px rgba(0,0,0,.55);
     --f1-soft:#4A3A22; --f2-soft:#4A3427; --f3-soft:#452A35;
-    --f4-soft:#392946; --f5-soft:#2C2A49; --f6-soft:#212C48; --f7-soft:#1E3A30; --f8-soft:#1B3640;
+    --f4-soft:#392946; --f5-soft:#2C2A49; --f6-soft:#212C48; --f7-soft:#1E3A30; --f8-soft:#1B3640; --f9-soft:#33401E;
   }
 }
 :root[data-theme="dark"]{
@@ -68,7 +69,7 @@
   --star-color:#F0C15A;
   --shadow: 0 10px 30px -8px rgba(0,0,0,.6); --shadow-sm: 0 4px 14px -6px rgba(0,0,0,.55);
   --f1-soft:#4A3A22; --f2-soft:#4A3427; --f3-soft:#452A35;
-  --f4-soft:#392946; --f5-soft:#2C2A49; --f6-soft:#212C48; --f7-soft:#1E3A30;
+  --f4-soft:#392946; --f5-soft:#2C2A49; --f6-soft:#212C48; --f7-soft:#1E3A30; --f9-soft:#33401E;
 }
 
 /* ============ RESET / BASE ============ */
@@ -647,7 +648,7 @@ img,svg{ display:block; max-width:100%; }
           <div class="cat-slot hc-right"><svg class="cat-svg" id="heroCatRight" viewBox="0 0 160 160"></svg></div>
         </div>
         <h1>Le carnet d'étoiles</h1>
-        <p>Nougat, Mistigri, Croquette, Prof Ronron, Bidouille, Nouille, Praline et la petite nouvelle Goutte t'attendent pour allumer huit étoiles avant la rentrée en CM1&nbsp;! Chaque île a son propre chat, avec ses conseils et ses petites manies. Choisis une île de ciel pour commencer.</p>
+        <p>Nougat, Mistigri, Croquette, Prof Ronron, Bidouille, Nouille, Praline, Goutte et la petite nouvelle Réglisse t'attendent pour allumer neuf étoiles avant la rentrée en CM1&nbsp;! Chaque île a son propre chat, avec ses conseils et ses petites manies. Choisis une île de ciel pour commencer.</p>
         <div class="speech" id="heroSpeech" aria-live="polite"></div>
       </div>
       <div class="map-wrap">
@@ -687,8 +688,8 @@ img,svg{ display:block; max-width:100%; }
         <circle cx="50" cy="42" r="32" fill="var(--star-color)" stroke="#332640" stroke-width="2"/>
         <path d="M50 22l6.5 14.3 15.5 1.6-11.7 10.6 3.4 15.5L50 55.9 36.3 64l3.4-15.5-11.7-10.6 15.5-1.6z" fill="var(--paper-card)"/>
       </svg>
-      <h2>Huit étoiles allumées !</h2>
-      <p>Bravo Madeline, tu as terminé les huit fiches. Toute la bande de chats est fière de toi — le CM1 n'a qu'à bien se tenir !</p>
+      <h2>Neuf étoiles allumées !</h2>
+      <p>Bravo Madeline, tu as terminé les neuf fiches. Toute la bande de chats est fière de toi — le CM1 n'a qu'à bien se tenir !</p>
       <button class="modal-close" id="finaleCloseBtn" type="button">Retourner voir le ciel</button>
     </div>
   </div>
@@ -870,7 +871,8 @@ null,
 '<path d="M24 8 L14 40" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><path d="M24 8 L34 40" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><circle cx="24" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M10 40 A14 5 0 0 0 38 40" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="3 3" opacity=".6"/>',
 '<rect x="6" y="19" width="36" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="2.4"/><line x1="13" y1="19" x2="13" y2="24" stroke="currentColor" stroke-width="2"/><line x1="20" y1="19" x2="20" y2="27" stroke="currentColor" stroke-width="2"/><line x1="27" y1="19" x2="27" y2="24" stroke="currentColor" stroke-width="2"/><line x1="34" y1="19" x2="34" y2="27" stroke="currentColor" stroke-width="2"/>',
 '<line x1="24" y1="9" x2="24" y2="34" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><line x1="10" y1="15" x2="38" y2="15" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M10 15 L5 27 A7 7 0 0 0 15 27 Z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M38 15 L33 27 A7 7 0 0 0 43 27 Z" fill="none" stroke="currentColor" stroke-width="2"/><rect x="17" y="35" width="14" height="4" rx="1" fill="currentColor"/>',
-'<path d="M14 8 L34 8 L29.5 39 Q24 43 18.5 39 Z" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"/><path d="M18.7 25 L29.3 25 L27 38 Q24 40.5 21 38 Z" fill="currentColor" opacity=".38"/><line x1="16.3" y1="16" x2="31.7" y2="16" stroke="currentColor" stroke-width="1.6" opacity=".55"/>'
+'<path d="M14 8 L34 8 L29.5 39 Q24 43 18.5 39 Z" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"/><path d="M18.7 25 L29.3 25 L27 38 Q24 40.5 21 38 Z" fill="currentColor" opacity=".38"/><line x1="16.3" y1="16" x2="31.7" y2="16" stroke="currentColor" stroke-width="1.6" opacity=".55"/>',
+'<path d="M8 14 Q24 8 24 14 Q24 8 40 14 L40 36 Q24 30 24 36 Q24 30 8 36 Z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><path d="M18 24 L23 29 L32 18" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>'
 ];
 function badgeSvg(n){ return '<svg viewBox="0 0 48 48">'+BADGES[n]+'</svg>'; }
 
@@ -979,6 +981,19 @@ const CATS = {
       ficheDone:["Fiche terminée, le jardin est fier de toi !","Toutes les contenances sont à leur juste niveau, bravo !","Une nouvelle séance d'arrosage réussie !","Miaou, quel beau jardin bien arrosé !","Chef-d'œuvre d'arrosage complet, bravo grande jardinière !","Tu ranges ton arrosoir avec fierté aujourd'hui.","Fiche bouclée avec une précision de vraie fontainière.","Le jardin ferme ses portes sur une très belle réussite.","Tous tes calculs sont parfaitement dosés, bravo !","Une fiche de plus dans ton carnet de jardinière accomplie."],
       reflections:["Dans le tableau des contenances, chaque colonne vaut dix fois plus que sa voisine de droite : kL, hL, daL, L, dL, cL, mL. Je ne saute jamais une case, sinon l'arrosoir déborde !","1 L, c'est 1 000 mL, comme mille petites gouttes bien alignées. Enfin, façon de parler, une vraie goutte est bien plus petite que ça.","Astuce de jardinière : grande unité vers petite, je multiplie et j'ajoute des zéros. Petite vers grande, je divise et j'en enlève.","Une fois j'ai voulu arroser toutes mes plantes avec un seul verre d'eau. Résultat : des plantes très déçues et beaucoup d'allers-retours.","Mon secret : je pose toujours un chiffre par colonne dans le tableau, jamais deux dans la même case, sinon tout déborde.","Je rêve parfois d'une pluie qui tomberait exactement en litres comptés, plante par plante. Ce serait bien pratique.","Un jour, j'ai confondu litres et centilitres pour arroser un petit pot de basilic. Résultat : une petite mare dans la cuisine.","Astuce : pour ne pas me perdre dans le tableau, je compte toujours les colonnes une par une, comme des marches d'escalier qui descendent vers le robinet.","Les millilitres, c'est parfait pour les petites quantités ; les hectolitres, pour arroser tout un champ. Un peu comme une goutte et une averse.","Je vérifie toujours deux fois la quantité avant de verser, comme je vérifie deux fois s'il pleut avant de sortir sans parapluie."]
     }
+  },
+  reglisse:{
+    name:'Réglisse', fur:'#3A3A3E', belly:'#F5F3EC', accent:'var(--f9)', accessory:'pencil',
+    blurb:"Bonjour, moi c'est Réglisse ! Je vérifie toujours deux fois ce que j'écris et ce que je calcule — noir sur blanc, comme mon pelage, je n'aime pas l'à-peu-près. Dictée ou nombres, aujourd'hui on révise les devoirs ensemble !",
+    tip:"Mon secret pour la dictée : je relis chaque mot lettre par lettre, à voix haute, en insistant sur les accents. Pour les nombres, je compare chiffre par chiffre en partant de la gauche, sans jamais sauter une étape.",
+    pools:{
+      correctFirst:["Pas une seule faute, bravo grande réviseuse !","Miaou-parfait, ton crayon de correction peut se reposer !","Exact du premier coup, comme noir sur blanc !","Aucune coquille dans cette réponse, impeccable !","Tu relis aussi bien que tu écris, bravo !","Réponse nette et juste, j'adore !","Pile la bonne réponse, pas besoin de repasser derrière toi !","Tu mérites une étoile bien noire, et bien méritée !","Vérifié deux fois par mes soins : c'est juste !","Aucune erreur à corriger ici, chapeau !","Tu chasses les fautes mieux que moi les souris !","Réponse aussi propre qu'une copie bien recopiée !"],
+      wrong:["Petite coquille dans la réponse, rien de grave : on la corrige avec Papa ou Maman.","Pas tout à fait, mais bel effort de réviseuse ! Un adulte t'aidera à voir où ça coince.","Oups, mon crayon de correction a repéré une erreur. Ce n'est pas grave, à revoir avec un adulte.","Raté de peu, mais tu as vraiment cherché. Papa ou Maman corrigera ça avec toi.","Ce n'est pas la bonne réponse, mais quelle belle tentative ! On la revoit ensemble tranquillement.","Petite erreur à noter dans mon carnet, rien de dramatique. Un adulte t'expliquera.","Pas gagné cette fois, mais même les meilleures réviseuses se trompent parfois. Papa ou Maman t'aidera.","Zut, une lettre ou un chiffre s'est glissé de travers. On corrige ça avec un adulte.","Pas cette réponse-là, mais ton énergie est parfaite. À revoir avec Papa ou Maman.","Miaou raté, mais je vois que tu as bien réfléchi. C'est le plus important.","Petit oubli dans la réponse, rien de grave du tout. Un adulte t'expliquera la suite.","Pas la bonne réponse, mais joli travail d'essai ! Papa ou Maman corrigera ça.","Raté, mais avec beaucoup d'application, bravo pour ça. On revoit ça avec un adulte.","Ce n'est pas exact, mais tu progresses à chaque révision. Papa ou Maman t'aidera à ajuster."],
+      exerciseDone:["Un exercice révisé de plus, bravo !","Encore une page de devoirs bien travaillée.","Tu avances comme une vraie championne des révisions.","Un de plus dans le carnet, bien joué !","Miaou, ça progresse à vue d'œil !","Belle application sur cet exercice.","Encore un point coché sur la liste des devoirs.","Tu tiens le rythme, continue comme ça.","Un exercice de plus, sans la moindre coquille qui traîne.","Bien réviser, ça se voit déjà !"],
+      ficheWelcome:["Aujourd'hui, on révise les devoirs ensemble : la dictée et les nombres, mes deux matières préférées.","Sors ton crayon (imaginaire) de correction, on relit tout comme il faut.","J'ai relu deux fois cette fiche avant de te la donner, à ton tour maintenant.","Prête à réviser tes mots de dictée et tes grands nombres ?","Cette fiche sent bon le cahier de devoirs fraîchement corrigé.","On y va tranquillement, mot par mot, chiffre par chiffre.","J'ai préparé une révision noir sur blanc, sans aucun à-peu-près.","Prête à devenir une championne de la relecture et du calcul ?","Accroche-toi bien, cette fiche mélange les lettres et les chiffres.","Aujourd'hui, chaque mot et chaque nombre comptent, à toi de jouer !"],
+      ficheDone:["Fiche terminée, ta dictée et tes nombres sont fin prêts !","Bravo, toutes les révisions sont cochées !","Miaou, quelle belle relecture aujourd'hui !","Tu es prête pour ta dictée et pour tes exercices de nombres, bravo !","Fiche bouclée, noir sur blanc, sans aucune bavure !","Championne de la révision, chapeau bas, enfin, oreilles basses !","Tout est relu, tout est vérifié, bravo grande réviseuse !","Tu termines cette fiche avec un sérieux qui me rend fier !","Une fiche de plus dans ton beau parcours vers le CM1 !","Devoirs révisés, mission accomplie !"],
+      reflections:["Mon secret de réviseuse : je relis toujours mes mots de dictée à voix haute, lettre par lettre, surtout les accents.","Pour comparer deux grands nombres, je compte d'abord leurs chiffres : le plus de chiffres gagne presque toujours.","Un jour, j'ai confondu 987 et 9 870 en oubliant un zéro. Depuis, je compte toujours les chiffres avant de répondre.","Mon pelage est noir et blanc, comme une bonne copie bien corrigée : le brouillon d'un côté, le propre de l'autre.","Astuce de dictée : les mots invariables comme « déjà » ou « pendant » ne changent jamais, je les apprends une bonne fois pour toutes.","Je rêve parfois que je corrige une dictée écrite entièrement par des souris. Beaucoup de fautes, miaou.","Pour ranger une liste de nombres, je cherche toujours le plus petit en premier, je le mets de côté, et je recommence.","1 000, c'est mille. Et neuf mille, c'est neuf fois plus. Les zéros, il ne faut jamais les perdre en chemin.","Une fois, j'ai écrit « atentif » sans le deuxième t. Depuis, je vérifie toujours les lettres doubles avec ma patte.","Je vérifie toujours mon travail deux fois avant de le rendre : une fois pour moi, une fois pour être vraiment sûre."]
+    }
   }
 };
 
@@ -1005,6 +1020,8 @@ function catAccessorySvg(type, accentExpr){
       return '<g class="cat-accessory"><line x1="127" y1="110" x2="127" y2="131" stroke="'+accentExpr+'" stroke-width="2.6"/><line x1="117" y1="115" x2="137" y2="115" stroke="'+accentExpr+'" stroke-width="2.6" stroke-linecap="round"/><path d="M117 115 L112 126 A5.5 5.5 0 0 0 122 126 Z" fill="none" stroke="'+accentExpr+'" stroke-width="1.8"/><path d="M137 115 L132 126 A5.5 5.5 0 0 0 142 126 Z" fill="none" stroke="'+accentExpr+'" stroke-width="1.8"/></g>';
     case 'wateringcan':
       return '<g class="cat-accessory"><rect x="117" y="119" width="17" height="14" rx="3" fill="'+accentExpr+'"/><path d="M134 123 L145 116" stroke="'+accentExpr+'" stroke-width="2.8" stroke-linecap="round"/><circle cx="146" cy="115" r="1.8" fill="'+accentExpr+'"/><path d="M118 120 Q111 116 115 109" fill="none" stroke="'+accentExpr+'" stroke-width="2.2" stroke-linecap="round"/></g>';
+    case 'pencil':
+      return '<g class="cat-accessory"><path d="M116 141 L136 115" stroke="'+accentExpr+'" stroke-width="7" stroke-linecap="round"/><path d="M136 115 L142 108 L146 114 L140 121 Z" fill="'+accentExpr+'"/><path d="M116 141 L120 144 L123 140 L119 137 Z" fill="rgba(255,255,255,.7)"/></g>';
     default: return '';
   }
 }
@@ -1042,6 +1059,7 @@ function catMarkup(catId){
     (acc==='pouch' ? catAccessorySvg('pouch', ax) : '')+
     (acc==='scale' ? catAccessorySvg('scale', ax) : '')+
     (acc==='wateringcan' ? catAccessorySvg('wateringcan', ax) : '')+
+    (acc==='pencil' ? catAccessorySvg('pencil', ax) : '')+
   '</g>';
 }
 function catEyeMarkup(cx,cy,px,py,sx,sy){
@@ -1076,7 +1094,7 @@ function setActiveCat(catId){
 function renderHeroCats(){
   renderCatInto('heroCatLeft','praline');
   renderCatInto('heroCatCenter','mistigri');
-  renderCatInto('heroCatRight','goutte');
+  renderCatInto('heroCatRight','reglisse');
 }
 function catEls(){ return Array.from(document.querySelectorAll('.cat')); }
 function catReact(mood){
@@ -1818,6 +1836,99 @@ const FICHES = [
     "Exercice 7 : 5 hL = 500 L ; 500 ÷ 20 = 25 L par arrosoir.",
     "Exercice 8 : a) 40 dL — b) 600 L — c) 8 − 3 = 5 L."
   ]
+},
+{
+  id:9, color:'f9', badge:9, cat:'reglisse', title:"Réviser ses devoirs : dictée et nombres",
+  eyebrow:"Devoirs", desc:"Revoir les mots de la dictée en cours sur la rentrée des classes, et s'entraîner à lire, comparer et ranger les nombres jusqu'à 9 999 (et un peu plus).",
+  lesson:[
+    {k:'note', text:"Cette fiche t'aide à réviser deux devoirs en cours : les mots de la dictée sur la rentrée des classes, et la lecture des nombres jusqu'à 9 999 (et même un peu au-delà !)."},
+    {k:'table', headers:['Noms','Verbes','Adjectifs','Mots invariables'], rows:[
+      ['la rentrée','retrouver','coloré / colorée',"aujourd'hui"],
+      ['la cour','remplir','nouveau / nouvelle','enfin'],
+      ['les cartables','','','déjà'],
+      ['les cahiers','','','']
+    ]},
+    {k:'table', headers:['Noms','Verbes','Adjectifs','Mots invariables'], rows:[
+      ['les retrouvailles','ranger','impatient / impatiente','ensemble'],
+      ['la maîtresse','distribuer','attentif / attentive','pendant'],
+      ["l'attention",'écouter','',''],
+      ['la récréation','choisir','','']
+    ]},
+    {k:'tip', text:"Pour bien préparer une dictée, je relis chaque mot à voix haute, je l'épelle lettre par lettre, et je fais surtout attention aux accents (é, è, ê) et aux lettres qu'on n'entend pas à la fin, comme le -s de « cartables » ou le -t de « attentif »."},
+    {k:'steps', title:"Comment je compare deux grands nombres", steps:[
+      "Je compte d'abord le nombre de chiffres de chaque nombre : celui qui en a le plus est toujours le plus grand (9 274 a 4 chiffres, 987 n'en a que 3, donc 9 274 est plus grand).",
+      "À nombre de chiffres égal, je compare le chiffre le plus à gauche (celui des milliers).",
+      "S'il est identique, je compare le chiffre suivant (les centaines), puis les dizaines, puis les unités.",
+      "Le premier chiffre différent, en partant de la gauche, décide qui est le plus grand."
+    ]},
+    {k:'tip', text:"Pour ranger toute une liste de nombres, je cherche d'abord le plus petit de tous, je le mets de côté, puis je recommence avec ceux qui restent."}
+  ],
+  exercises:[
+    {num:1, titre:"Dictée (1) : trouve la bonne orthographe", etoiles:1, consigne:"Une seule réponse est bien écrite.", items:[
+      {id:'f9e1a', t:tmpl("a) {0}"), parts:[mcq([{v:'a',l:'la rentré'},{v:'b',l:'la rentrée'},{v:'c',l:'la rantrée'},{v:'d',l:'la renttrée'}],'b')]},
+      {id:'f9e1b', t:tmpl("b) {0}"), parts:[mcq([{v:'a',l:'les cartables'},{v:'b',l:'les cartabbles'},{v:'c',l:'les kartables'},{v:'d',l:'les cartablent'}],'a')]},
+      {id:'f9e1c', t:tmpl("c) {0}"), parts:[mcq([{v:'a',l:"aujourd'ui"},{v:'b',l:'aujourdhui'},{v:'c',l:"aujourd'hui"},{v:'d',l:"aujour'dhui"}],'c')]},
+      {id:'f9e1d', t:tmpl("d) {0}"), parts:[mcq([{v:'a',l:'nouvel'},{v:'b',l:'nouvelle'},{v:'c',l:'nouvele'},{v:'d',l:'nouvelles'}],'b')]}
+    ]},
+    {num:2, titre:"Dictée (2) : trouve la bonne orthographe", etoiles:1, consigne:"Une seule réponse est bien écrite.", items:[
+      {id:'f9e2a', t:tmpl("a) {0}"), parts:[mcq([{v:'a',l:'les retrouvaille'},{v:'b',l:'les retrouvailles'},{v:'c',l:'les retrouvailes'},{v:'d',l:'les retoruvailles'}],'b')]},
+      {id:'f9e2b', t:tmpl("b) {0}"), parts:[mcq([{v:'a',l:'la maitresse'},{v:'b',l:'la maîtraisse'},{v:'c',l:'la maîtresse'},{v:'d',l:'la mêtresse'}],'c')]},
+      {id:'f9e2c', t:tmpl("c) {0}"), parts:[mcq([{v:'a',l:'la récréasion'},{v:'b',l:'la recréation'},{v:'c',l:'la récréaction'},{v:'d',l:'la récréation'}],'d')]},
+      {id:'f9e2d', t:tmpl("d) {0}"), parts:[mcq([{v:'a',l:'atentive'},{v:'b',l:'attentive'},{v:'c',l:'attentifve'},{v:'d',l:'attentibe'}],'b')]}
+    ]},
+    {num:3, titre:"Dictée (1) : complète la phrase", etoiles:2, consigne:"Écris le mot qui manque, avec la bonne orthographe.", items:[
+      {id:'f9e3a', t:tmpl("a) Madeline a hâte de {0} ses copains à la rentrée."), parts:[textPart("retrouver",{placeholder:true})]},
+      {id:'f9e3b', t:tmpl("b) Il faut {0} sa trousse de crayons neufs avant la rentrée."), parts:[textPart("remplir",{placeholder:true})]},
+      {id:'f9e3c', t:tmpl("c) {0}, c'est le grand jour de la rentrée !"), parts:[textPart("enfin",{placeholder:true})]},
+      {id:'f9e3d', t:tmpl("d) Les vacances sont {0} terminées."), parts:[textPart("déjà",{placeholder:true})]}
+    ]},
+    {num:4, titre:"Dictée (2) : complète la phrase", etoiles:2, consigne:"Écris le ou les mots qui manquent.", items:[
+      {id:'f9e4a', t:tmpl("a) Il faut {0} attentivement la maîtresse."), parts:[textPart("écouter",{placeholder:true})]},
+      {id:'f9e4b', t:tmpl("b) Madeline va {0} ses cahiers neufs dans son cartable."), parts:[textPart("ranger",{placeholder:true})]},
+      {id:'f9e4c', t:tmpl("c) Madeline est {0} de retrouver ses amies."), parts:[textPart("impatiente",{placeholder:true})]},
+      {id:'f9e4d', t:tmpl("d) Toute la classe se retrouve {0} dans la cour {1} la récréation."), parts:[textPart("ensemble",{placeholder:true}),textPart("pendant",{placeholder:true})]}
+    ]},
+    {num:5, titre:"Nombres : lire et écrire", etoiles:1, consigne:"", items:[
+      {id:'f9e5a', t:tmpl("a) Comment écrit-on 672 en lettres ? {0}"), parts:[mcq([{v:'a',l:'six cent soixante-deux'},{v:'b',l:'six mille soixante-douze'},{v:'c',l:'six cent soixante-douze'},{v:'d',l:'soixante-douze'}],'c')]},
+      {id:'f9e5b', t:tmpl("b) Comment écrit-on 4 023 en lettres ? {0}"), parts:[mcq([{v:'a',l:'quatre mille vingt-trois'},{v:'b',l:'quatre cents vingt-trois'},{v:'c',l:'quarante-deux mille trois'},{v:'d',l:'quatre mille deux cent trente'}],'a')]},
+      {id:'f9e5c', t:tmpl("c) « Neuf mille huit cent quatre-vingt-huit », ça s'écrit en chiffres : {0}"), parts:[fill(9888)]},
+      {id:'f9e5d', t:tmpl("d) « Sept mille deux cent un », ça s'écrit en chiffres : {0}"), parts:[fill(7201)]}
+    ]},
+    {num:6, titre:"Nombres : range la série (a) du plus petit au plus grand", etoiles:2, consigne:"Comme dans ta fiche de devoirs.", items:[
+      {id:'f9e6a', custom:'order', orderPrompt:"Range ces nombres du plus petit au plus grand :", orderSep:' < ', chips:['672','4 023','2 702','1 005','5 693','2 731'], order:['672','1 005','2 702','2 731','4 023','5 693']}
+    ]},
+    {num:7, titre:"Nombres : range la série (b) du plus petit au plus grand", etoiles:2, consigne:"", items:[
+      {id:'f9e7a', custom:'order', orderPrompt:"Range ces nombres du plus petit au plus grand :", orderSep:' < ', chips:['2 074','987','2 764','3 728','9 274','9 888'], order:['987','2 074','2 764','3 728','9 274','9 888']}
+    ]},
+    {num:8, titre:"Nombres : les séries les plus corsées (c et d)", etoiles:3, consigne:"Ces deux séries contiennent des nombres qui se ressemblent : lis bien chaque chiffre !", items:[
+      {id:'f9e8a', custom:'order', orderPrompt:"Série (c) — range du plus petit au plus grand :", orderSep:' < ', chips:['9 493','6 294','5 912','351','9 030','12 590'], order:['351','5 912','6 294','9 030','9 493','12 590']},
+      {id:'f9e8b', custom:'order', orderPrompt:"Série (d) — range du plus petit au plus grand :", orderSep:' < ', chips:['1 734','3 458','9 999','7 201','8 004','7 035'], order:['1 734','3 458','7 035','7 201','8 004','9 999']}
+    ]},
+    {num:9, titre:"Nombres : compare avec <, > ou =", etoiles:2, consigne:"Choisis le bon signe.", items:[
+      {id:'f9e9a', t:tmpl("a) 4 023 {0} 2 702"), parts:[mcq([{v:'a',l:'<'},{v:'b',l:'>'},{v:'c',l:'='}],'b')]},
+      {id:'f9e9b', t:tmpl("b) 987 {0} 1 005"), parts:[mcq([{v:'a',l:'<'},{v:'b',l:'>'},{v:'c',l:'='}],'a')]},
+      {id:'f9e9c', t:tmpl("c) 9 030 {0} 9 274"), parts:[mcq([{v:'a',l:'<'},{v:'b',l:'>'},{v:'c',l:'='}],'a')]},
+      {id:'f9e9d', t:tmpl("d) 9 999 {0} 9 888"), parts:[mcq([{v:'a',l:'<'},{v:'b',l:'>'},{v:'c',l:'='}],'b')]}
+    ]},
+    {num:10, titre:"🔁 Entraînement supplémentaire", etoiles:2, consigne:"Encore un peu de dictée et de nombres, pour finir en beauté.", items:[
+      {id:'f9e10a', t:tmpl("a) {0}"), parts:[mcq([{v:'a',l:'la cours'},{v:'b',l:'la cour'},{v:'c',l:'la kour'},{v:'d',l:'la courre'}],'b')]},
+      {id:'f9e10b', t:tmpl("b) Le maître va {0} les crayons de couleur à toute la classe."), parts:[textPart("distribuer",{placeholder:true})]},
+      {id:'f9e10c', t:tmpl("c) Comment écrit-on 5 306 en lettres ? {0}"), parts:[mcq([{v:'a',l:'cinq mille trois cent six'},{v:'b',l:'cinq cent six'},{v:'c',l:'cinq mille soixante'},{v:'d',l:'cinq mille trois cent seize'}],'a')]},
+      {id:'f9e10d', t:tmpl("d) 6 108 {0} 6 180"), parts:[mcq([{v:'a',l:'<'},{v:'b',l:'>'},{v:'c',l:'='}],'a')]}
+    ]}
+  ],
+  corrige:[
+    "Exercice 1 (Dictée 1, orthographe) : a) la rentrée — b) les cartables — c) aujourd'hui — d) nouvelle.",
+    "Exercice 2 (Dictée 2, orthographe) : a) les retrouvailles — b) la maîtresse — c) la récréation — d) attentive.",
+    "Exercice 3 (Dictée 1, phrases) : a) retrouver — b) remplir — c) enfin — d) déjà.",
+    "Exercice 4 (Dictée 2, phrases) : a) écouter — b) ranger — c) impatiente — d) ensemble ... pendant.",
+    "Exercice 5 (Nombres, lire/écrire) : a) six cent soixante-douze — b) quatre mille vingt-trois — c) 9 888 — d) 7 201.",
+    "Exercice 6 (série a) : 672 < 1 005 < 2 702 < 2 731 < 4 023 < 5 693.",
+    "Exercice 7 (série b) : 987 < 2 074 < 2 764 < 3 728 < 9 274 < 9 888.",
+    "Exercice 8 (séries c et d) : c) 351 < 5 912 < 6 294 < 9 030 < 9 493 < 12 590 — d) 1 734 < 3 458 < 7 035 < 7 201 < 8 004 < 9 999.",
+    "Exercice 9 (comparaisons) : a) > — b) < — c) < — d) >.",
+    "Exercice 10 (entraînement supplémentaire) : a) la cour — b) distribuer — c) cinq mille trois cent six — d) <."
+  ]
 }
 ];
 
@@ -1981,14 +2092,12 @@ function catPool(catId, name){
   if(!lastPick[key]) lastPick[key]={v:-1};
   return pickVaried(CATS[catId].pools[name], lastPick[key]);
 }
-let bubbleTimer=null;
 function say(text, mood){
   const bubble = document.getElementById('catBubble');
   bubble.textContent = text;
+  bubble.classList.remove('conseil');
   bubble.classList.add('show');
   catReact(mood);
-  clearTimeout(bubbleTimer);
-  bubbleTimer = setTimeout(()=>bubble.classList.remove('show'), 4600);
   const heroSpeech = document.getElementById('heroSpeech');
   if(heroSpeech && document.getElementById('view-map').classList.contains('active')){
     heroSpeech.textContent = '“'+text+'”';
@@ -1998,8 +2107,6 @@ function sayConseil(text){
   const bubble = document.getElementById('catBubble');
   bubble.textContent = text;
   bubble.classList.add('show','conseil');
-  clearTimeout(bubbleTimer);
-  bubbleTimer = setTimeout(()=>bubble.classList.remove('show','conseil'), 5400);
   catEls().forEach(c=>{
     c.classList.remove('cheer','oops','wink','purr');
     void c.offsetWidth;
@@ -3041,13 +3148,13 @@ function renderParentsHome(){
   const body = document.getElementById('parentsBodyHome');
   body.innerHTML =
     mistakesRecapHtml()+
-    '<p>Les huit fiches couvrent chacune un point à consolider avant le CM1 : rendre la monnaie, lire l’heure, la multiplication, la conjugaison, le compas, les longueurs, les masses et les contenances (liquides). Chaque fiche commence par une leçon courte (« Je retiens »), puis des exercices du plus facile (★☆☆) au plus difficile (★★★).</p>'+
+    '<p>Les neuf fiches couvrent chacune un point à consolider avant le CM1 : rendre la monnaie, lire l’heure, la multiplication, la conjugaison, le compas, les longueurs, les masses, les contenances (liquides) et la révision des devoirs en cours (dictée et nombres). Chaque fiche commence par une leçon courte (« Je retiens »), puis des exercices du plus facile (★☆☆) au plus difficile (★★★).</p>'+
     '<p><strong>Conseils :</strong> une fiche par jour suffit (15 minutes) ; laissez Madeline chercher seule après avoir relu « Je retiens » à voix haute ; si les deux derniers exercices d’une fiche restent difficiles, ce n’est pas grave — ils sont volontairement un peu au-dessus du niveau strict.</p>'+
     '<p><strong>Deux mécaniques particulières :</strong> la fiche « Le compas » demande un vrai compas et une feuille de papier — l’énoncé est dans l’application, le tracé (et parfois la mesure au fil d’une règle) se fait à la main, et Madeline coche elle-même si c’est réussi après avoir comparé avec le modèle affiché ; ses derniers exercices font découvrir, cercle après cercle, ce qui se passe quand deux cercles se touchent ou se croisent. Les fiches « Les longueurs », « Les masses » et « Les contenances » commencent chacune par une méthode pas à pas, puis un exercice où Madeline construit elle-même le tableau de conversion (en rangeant les unités dans le bon ordre), avant de le remplir avec de vraies conversions.</p>'+
     '<p><strong>Dans cette version interactive</strong>, en dehors des séances avec vous, chaque question ne se joue qu’une fois : une réponse fausse ne peut pas être retentée, Madeline est prévenue qu’elle la reverra avec vous. Le récapitulatif ci-dessus liste tout ce qu’il reste à corriger, avec une recommandation par fiche ; chaque fiche se termine désormais par un exercice « 🔁 Entraînement supplémentaire » aux questions inédites, pensé pour rejouer sur les points ratés sans jamais retomber sur une question déjà vue. Le corrigé complet de chaque fiche reste aussi disponible dans l’encadré grisé, en bas de chaque fiche.</p>'+
     '<p><strong>Quand vous travaillez avec elle</strong>, activez le « 👪 Parent » en haut de l’écran (avec le code ci-dessous) pour que Madeline puisse corriger une erreur tout de suite, sans attendre : les questions déjà ratées se rouvrent, et les nouvelles erreurs ne se verrouillent plus tant que le mode est actif.</p>'+
     '<p><strong>Programme de référence :</strong> cycle 2, arrêté du 22 octobre 2024 (JO du 25/10/2024, BO n°41 du 31/10/2024, NOR MENE2415135A), applicable depuis la rentrée 2025.</p>'+
-    '<p>Bon courage à Madeline, et bravo d’avance pour les huit étoiles !</p>'+
+    '<p>Bon courage à Madeline, et bravo d’avance pour les neuf étoiles !</p>'+
     parentPinBoxHtml()+
     parentRequestBoxHtml();
 }
