@@ -69,7 +69,7 @@
   --star-color:#F0C15A;
   --shadow: 0 10px 30px -8px rgba(0,0,0,.6); --shadow-sm: 0 4px 14px -6px rgba(0,0,0,.55);
   --f1-soft:#4A3A22; --f2-soft:#4A3427; --f3-soft:#452A35;
-  --f4-soft:#392946; --f5-soft:#2C2A49; --f6-soft:#212C48; --f7-soft:#1E3A30; --f9-soft:#33401E;
+  --f4-soft:#392946; --f5-soft:#2C2A49; --f6-soft:#212C48; --f7-soft:#1E3A30; --f8-soft:#1B3640; --f9-soft:#33401E;
 }
 
 /* ============ RESET / BASE ============ */
@@ -171,7 +171,7 @@ img,svg{ display:block; max-width:100%; }
   border-radius:var(--r-lg); padding:1.1rem 1.1rem 1rem; text-align:left;
   border:none; cursor:pointer; box-shadow:var(--shadow); font-family:var(--font-body);
   display:flex; flex-direction:column; gap:.55rem;
-  transition:transform .2s ease, box-shadow .2s ease;
+  transition:transform .2s ease, box-shadow .2s ease, background .3s ease;
 }
 :root[data-theme="dark"] .fiche-card, @media (prefers-color-scheme:dark){ .fiche-card{ } }
 .fiche-card:hover, .fiche-card:focus-visible{ transform:translateY(-5px) rotate(-.3deg); box-shadow:0 16px 30px -10px rgba(0,0,0,.45); }
@@ -180,7 +180,15 @@ img,svg{ display:block; max-width:100%; }
   background:linear-gradient(135deg,var(--accent),transparent 60%); opacity:.55;
   -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite:xor; mask-composite:exclude; pointer-events:none;
+  transition:opacity .3s ease;
 }
+/* Fiche non commencée : carte neutre (état par défaut ci-dessus). */
+/* Fiche commencée : léger voile de la couleur de la fiche, même teinte que "terminée" mais bien plus clair. */
+.fiche-card.is-started{ background:color-mix(in srgb, var(--accent) 15%, rgba(255,253,249,.96)); }
+.fiche-card.is-started::before{ opacity:.75; }
+/* Fiche terminée : voile nettement plus dense/saturé de la même couleur, pour un contraste net avec les deux autres états. */
+.fiche-card.is-done{ background:color-mix(in srgb, var(--accent) 34%, rgba(255,253,249,.96)); }
+.fiche-card.is-done::before{ opacity:1; }
 .fiche-card-top{ display:flex; align-items:center; gap:.7rem; }
 .badge-icon{
   width:46px; height:46px; flex:none; border-radius:50%; background:var(--accent-soft);
@@ -199,6 +207,13 @@ img,svg{ display:block; max-width:100%; }
   background:var(--accent); color:#fff9ef;
 }
 .status-pill.todo{ background:var(--card-chip-bg); color:var(--accent); }
+/* "Commencé" : même fond/texte que "todo" (déjà lisible dans les deux thèmes), avec juste un
+   liseré de la couleur de la fiche pour le distinguer — évite d'utiliser --accent-soft comme
+   fond ici, qui devient trop sombre en thème nuit pour porter du texte de la même couleur. */
+.status-pill.started{
+  background:var(--card-chip-bg); color:var(--accent);
+  border:1.5px solid var(--accent); padding:calc(.28rem - 1.5px) calc(.65rem - 1.5px);
+}
 
 .parents-toggle-wrap{ position:relative; z-index:1; max-width:920px; margin:2.4rem auto 0; }
 .folder{
@@ -2182,11 +2197,15 @@ function starsRowHtml(n){
 }
 
 /* ============ RENDER: MAP ============ */
-function ficheCardHtml(f, stats){
-  let statusLabel = 'Commencer';
-  let pillClass='todo';
-  if(stats.complete){ statusLabel='Revoir ✓'; pillClass=''; }
-  else if(stats.resolved>0){ statusLabel='Continuer'; pillClass=''; }
+/* Trois états d'un onglet-fiche : 'todo' (pas commencée), 'started' (en cours), 'done' (terminée). */
+function ficheState(stats){
+  if(stats.complete) return 'done';
+  if(stats.resolved>0) return 'started';
+  return 'todo';
+}
+function ficheCardHtml(f, stats, state){
+  const statusLabel = state==='done' ? 'Revoir ✓' : state==='started' ? 'Continuer' : 'Commencer';
+  const pillClass = state==='todo' ? 'todo' : state==='started' ? 'started' : '';
   return '<div class="fiche-card-top">'+
       '<div class="badge-icon">'+badgeSvg(f.badge)+'</div>'+
       '<div><span class="fiche-eyebrow">Fiche '+f.id+' • '+f.eyebrow+'</span><h2>'+f.title+'</h2></div>'+
@@ -2202,12 +2221,13 @@ function renderMap(){
   grid.innerHTML='';
   FICHES.forEach(f=>{
     const stats = ficheStats(f);
-    const card = el('button','fiche-card');
+    const state = ficheState(stats);
+    const card = el('button','fiche-card is-'+state);
     card.style.setProperty('--accent','var(--'+f.color+')');
     card.style.setProperty('--accent-soft','var(--'+f.color+'-soft)');
     card.type='button';
     card.setAttribute('data-fiche', f.id);
-    card.innerHTML = ficheCardHtml(f, stats);
+    card.innerHTML = ficheCardHtml(f, stats, state);
     card.addEventListener('click', ()=>openFiche(f.id));
     grid.appendChild(card);
   });
