@@ -364,6 +364,7 @@ img,svg{ display:block; max-width:100%; }
   opacity:0; transform:translateY(6px) scale(.96); transition:opacity .25s, transform .25s;
 }
 .cat-widget .bubble.show{ opacity:1; transform:none; }
+.cat-widget .bubble.show{ pointer-events:auto; cursor:pointer; }
 .cat-widget .bubble.conseil{
   max-width:min(88vw,360px); font-size:1.3rem; line-height:1.35; padding:.9rem 1.15rem;
   border-width:3px; border-color:var(--star-color);
@@ -1868,6 +1869,7 @@ const FICHES = [
       ['la récréation','choisir','','']
     ]},
     {k:'tip', text:"Pour bien préparer une dictée, je relis chaque mot à voix haute, je l'épelle lettre par lettre, et je fais surtout attention aux accents (é, è, ê) et aux lettres qu'on n'entend pas à la fin, comme le -s de « cartables » ou le -t de « attentif »."},
+    {k:'tip', text:"Pour écrire un nombre en lettres sans faute : « mille » ne prend JAMAIS de s (quatre mille, neuf mille...). « Cent » prend un s seulement s'il est multiplié pile et qu'aucun autre nombre ne le suit (six cents), mais pas s'il est suivi d'un autre nombre (six cent douze). Et je n'oublie pas le tiret entre les dizaines et les unités en dessous de cent (soixante-douze, quatre-vingt-trois)."},
     {k:'steps', title:"Comment je compare deux grands nombres", steps:[
       "Je compte d'abord le nombre de chiffres de chaque nombre : celui qui en a le plus est toujours le plus grand (9 274 a 4 chiffres, 987 n'en a que 3, donc 9 274 est plus grand).",
       "À nombre de chiffres égal, je compare le chiffre le plus à gauche (celui des milliers).",
@@ -1889,21 +1891,21 @@ const FICHES = [
       {id:'f9e2c', t:tmpl("c) {0}"), parts:[mcq([{v:'a',l:'la récréasion'},{v:'b',l:'la recréation'},{v:'c',l:'la récréaction'},{v:'d',l:'la récréation'}],'d')]},
       {id:'f9e2d', t:tmpl("d) {0}"), parts:[mcq([{v:'a',l:'atentive'},{v:'b',l:'attentive'},{v:'c',l:'attentifve'},{v:'d',l:'attentibe'}],'b')]}
     ]},
-    {num:3, titre:"Dictée (1) : complète la phrase", etoiles:2, consigne:"Écris le mot qui manque, avec la bonne orthographe.", items:[
-      {id:'f9e3a', t:tmpl("a) Madeline a hâte de {0} ses copains à la rentrée."), parts:[textPart("retrouver",{placeholder:true})]},
-      {id:'f9e3b', t:tmpl("b) Il faut {0} sa trousse de crayons neufs avant la rentrée."), parts:[textPart("remplir",{placeholder:true})]},
-      {id:'f9e3c', t:tmpl("c) {0}, c'est le grand jour de la rentrée !"), parts:[textPart("enfin",{placeholder:true})]},
-      {id:'f9e3d', t:tmpl("d) Les vacances sont {0} terminées."), parts:[textPart("déjà",{placeholder:true})]}
+    {num:3, titre:"Dictée (1) : complète la phrase", etoiles:2, consigne:"Choisis le mot bien écrit pour compléter la phrase.", items:[
+      {id:'f9e3a', t:tmpl("a) Madeline a hâte de {0} ses copains à la rentrée."), parts:[mcq([{v:'a',l:'retrouvé'},{v:'b',l:'retrouver'},{v:'c',l:'retrouvez'},{v:'d',l:'rettrouver'}],'b')]},
+      {id:'f9e3b', t:tmpl("b) Il faut {0} sa trousse de crayons neufs avant la rentrée."), parts:[mcq([{v:'a',l:'ramplir'},{v:'b',l:'remplir'},{v:'c',l:'remplire'},{v:'d',l:'remplirent'}],'b')]},
+      {id:'f9e3c', t:tmpl("c) {0}, c'est le grand jour de la rentrée !"), parts:[mcq([{v:'a',l:'enfin'},{v:'b',l:'enfain'},{v:'c',l:'anfin'},{v:'d',l:'enffin'}],'a')]},
+      {id:'f9e3d', t:tmpl("d) Les vacances sont {0} terminées."), parts:[mcq([{v:'a',l:'déja'},{v:'b',l:'dèjà'},{v:'c',l:'déjà'},{v:'d',l:'deja'}],'c')]}
     ]},
-    {num:4, titre:"Dictée (2) : complète la phrase", etoiles:2, consigne:"Écris le ou les mots qui manquent.", items:[
-      {id:'f9e4a', t:tmpl("a) Il faut {0} attentivement la maîtresse."), parts:[textPart("écouter",{placeholder:true})]},
-      {id:'f9e4b', t:tmpl("b) Madeline va {0} ses cahiers neufs dans son cartable."), parts:[textPart("ranger",{placeholder:true})]},
-      {id:'f9e4c', t:tmpl("c) Madeline est {0} de retrouver ses amies."), parts:[textPart("impatiente",{placeholder:true})]},
-      {id:'f9e4d', t:tmpl("d) Toute la classe se retrouve {0} dans la cour {1} la récréation."), parts:[textPart("ensemble",{placeholder:true}),textPart("pendant",{placeholder:true})]}
+    {num:4, titre:"Dictée (2) : complète la phrase", etoiles:2, consigne:"Choisis le mot bien écrit pour chaque phrase.", items:[
+      {id:'f9e4a', t:tmpl("a) Il faut {0} attentivement la maîtresse."), parts:[mcq([{v:'a',l:'écouté'},{v:'b',l:'écouter'},{v:'c',l:'écoutez'},{v:'d',l:'ècouter'}],'b')]},
+      {id:'f9e4b', t:tmpl("b) Madeline va {0} ses cahiers neufs dans son cartable."), parts:[mcq([{v:'a',l:'rangé'},{v:'b',l:'ranjer'},{v:'c',l:'ranger'},{v:'d',l:'rangere'}],'c')]},
+      {id:'f9e4c', t:tmpl("c) Madeline est {0} de retrouver ses amies."), parts:[mcq([{v:'a',l:'impatient'},{v:'b',l:'impatiente'},{v:'c',l:'impassiente'},{v:'d',l:'inpatiente'}],'b')]},
+      {id:'f9e4d', t:tmpl("d) Toute la classe se retrouve {0} dans la cour {1} la récréation."), parts:[mcq([{v:'a',l:'ansemble'},{v:'b',l:'ensemble'},{v:'c',l:'enssemble'},{v:'d',l:'essemble'}],'b'),mcq([{v:'a',l:'pendant'},{v:'b',l:'pendan'},{v:'c',l:'pendent'},{v:'d',l:'pendants'}],'a')]}
     ]},
     {num:5, titre:"Nombres : lire et écrire", etoiles:1, consigne:"", items:[
-      {id:'f9e5a', t:tmpl("a) Comment écrit-on 672 en lettres ? {0}"), parts:[mcq([{v:'a',l:'six cent soixante-deux'},{v:'b',l:'six mille soixante-douze'},{v:'c',l:'six cent soixante-douze'},{v:'d',l:'soixante-douze'}],'c')]},
-      {id:'f9e5b', t:tmpl("b) Comment écrit-on 4 023 en lettres ? {0}"), parts:[mcq([{v:'a',l:'quatre mille vingt-trois'},{v:'b',l:'quatre cents vingt-trois'},{v:'c',l:'quarante-deux mille trois'},{v:'d',l:'quatre mille deux cent trente'}],'a')]},
+      {id:'f9e5a', t:tmpl("a) Comment écrit-on 672 en lettres ? {0}"), parts:[mcq([{v:'a',l:'six cent soixante douze'},{v:'b',l:'six cents soixante-douze'},{v:'c',l:'six cent soixante-douze'},{v:'d',l:'six cents soixante douze'}],'c')]},
+      {id:'f9e5b', t:tmpl("b) Comment écrit-on 4 023 en lettres ? {0}"), parts:[mcq([{v:'a',l:'quatre mille vingt-trois'},{v:'b',l:'quatre milles vingt-trois'},{v:'c',l:'quatre mille vingt trois'},{v:'d',l:'quatre milles vingt trois'}],'a')]},
       {id:'f9e5c', t:tmpl("c) « Neuf mille huit cent quatre-vingt-huit », ça s'écrit en chiffres : {0}"), parts:[fill(9888)]},
       {id:'f9e5d', t:tmpl("d) « Sept mille deux cent un », ça s'écrit en chiffres : {0}"), parts:[fill(7201)]}
     ]},
@@ -1925,8 +1927,8 @@ const FICHES = [
     ]},
     {num:10, titre:"🔁 Entraînement supplémentaire", etoiles:2, consigne:"Encore un peu de dictée et de nombres, pour finir en beauté.", items:[
       {id:'f9e10a', t:tmpl("a) {0}"), parts:[mcq([{v:'a',l:'la cours'},{v:'b',l:'la cour'},{v:'c',l:'la kour'},{v:'d',l:'la courre'}],'b')]},
-      {id:'f9e10b', t:tmpl("b) Le maître va {0} les crayons de couleur à toute la classe."), parts:[textPart("distribuer",{placeholder:true})]},
-      {id:'f9e10c', t:tmpl("c) Comment écrit-on 5 306 en lettres ? {0}"), parts:[mcq([{v:'a',l:'cinq mille trois cent six'},{v:'b',l:'cinq cent six'},{v:'c',l:'cinq mille soixante'},{v:'d',l:'cinq mille trois cent seize'}],'a')]},
+      {id:'f9e10b', t:tmpl("b) Le maître va {0} les crayons de couleur à toute la classe."), parts:[mcq([{v:'a',l:'distribué'},{v:'b',l:'distribuer'},{v:'c',l:'distribuez'},{v:'d',l:'disstribuer'}],'b')]},
+      {id:'f9e10c', t:tmpl("c) Comment écrit-on 5 306 en lettres ? {0}"), parts:[mcq([{v:'a',l:'cinq mille trois cent six'},{v:'b',l:'cinq milles trois cent six'},{v:'c',l:'cinq mille trois cents six'},{v:'d',l:'cinq milles trois cents six'}],'a')]},
       {id:'f9e10d', t:tmpl("d) 6 108 {0} 6 180"), parts:[mcq([{v:'a',l:'<'},{v:'b',l:'>'},{v:'c',l:'='}],'a')]}
     ]}
   ],
@@ -2105,11 +2107,21 @@ function catPool(catId, name){
   if(!lastPick[key]) lastPick[key]={v:-1};
   return pickVaried(CATS[catId].pools[name], lastPick[key]);
 }
+let bubbleHideTimer = null;
+function scheduleBubbleHide(bubble, text){
+  if(bubbleHideTimer){ clearTimeout(bubbleHideTimer); bubbleHideTimer=null; }
+  const duration = Math.min(9000, Math.max(3200, String(text||'').length*70));
+  bubbleHideTimer = setTimeout(function(){
+    bubble.classList.remove('show','conseil');
+    bubbleHideTimer = null;
+  }, duration);
+}
 function say(text, mood){
   const bubble = document.getElementById('catBubble');
   bubble.textContent = text;
   bubble.classList.remove('conseil');
   bubble.classList.add('show');
+  scheduleBubbleHide(bubble, text);
   catReact(mood);
   const heroSpeech = document.getElementById('heroSpeech');
   if(heroSpeech && document.getElementById('view-map').classList.contains('active')){
@@ -2120,6 +2132,7 @@ function sayConseil(text){
   const bubble = document.getElementById('catBubble');
   bubble.textContent = text;
   bubble.classList.add('show','conseil');
+  scheduleBubbleHide(bubble, text);
   catEls().forEach(c=>{
     c.classList.remove('cheer','oops','wink','purr');
     void c.offsetWidth;
@@ -3203,6 +3216,10 @@ function init(){
     muted = !muted;
     try{ localStorage.setItem('madeline_muted', muted?'1':'0'); }catch(e){}
     updateMuteBtn();
+  });
+  document.getElementById('catBubble').addEventListener('click', function(){
+    if(bubbleHideTimer){ clearTimeout(bubbleHideTimer); bubbleHideTimer=null; }
+    this.classList.remove('show','conseil');
   });
   document.getElementById('catWidgetBtn').addEventListener('click', function(){
     const poolNames = ['ficheWelcome','exerciseDone','reflections'];
