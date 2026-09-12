@@ -666,7 +666,7 @@ img,svg{ display:block; max-width:100%; }
           <div class="cat-slot hc-right"><svg class="cat-svg" id="heroCatRight" viewBox="0 0 160 160"></svg></div>
         </div>
         <h1>Le carnet d'étoiles</h1>
-        <p>Nougat, Mistigri, Croquette, Prof Ronron, Bidouille, Nouille, Praline, Goutte et la petite nouvelle Réglisse t'attendent pour allumer neuf étoiles avant la rentrée en CM1&nbsp;! Chaque île a son propre chat, avec ses conseils et ses petites manies. Choisis une île de ciel pour commencer.</p>
+        <p>Nougat, Mistigri, Croquette, Prof Ronron, Bidouille, Nouille, Praline, Goutte et le petit nouveau Fripouille (un capybara, pas un chat, mais chut, il s'est incrusté quand même) t'attendent pour allumer neuf étoiles avant la rentrée en CM1&nbsp;! Chaque île a sa propre mascotte, avec ses conseils et ses petites manies. Choisis une île de ciel pour commencer.</p>
         <div class="speech" id="heroSpeech" aria-live="polite"></div>
       </div>
       <div class="map-wrap">
@@ -693,7 +693,7 @@ img,svg{ display:block; max-width:100%; }
   <div id="fxLayer"></div>
   <div class="cat-widget" id="catWidget">
     <div class="bubble" id="catBubble"></div>
-    <button class="cat-widget-icon" id="catWidgetBtn" type="button" aria-label="Parler au chat">
+    <button class="cat-widget-icon" id="catWidgetBtn" type="button" aria-label="Parler à la mascotte">
       <svg class="cat-svg" id="widgetCatSvg" viewBox="0 0 160 160"></svg>
     </button>
   </div>
@@ -707,7 +707,7 @@ img,svg{ display:block; max-width:100%; }
         <path d="M50 22l6.5 14.3 15.5 1.6-11.7 10.6 3.4 15.5L50 55.9 36.3 64l3.4-15.5-11.7-10.6 15.5-1.6z" fill="var(--paper-card)"/>
       </svg>
       <h2>Neuf étoiles allumées !</h2>
-      <p>Bravo Madeline, tu as terminé les neuf fiches. Toute la bande de chats est fière de toi — le CM1 n'a qu'à bien se tenir !</p>
+      <p>Bravo Madeline, tu as terminé les neuf fiches. Toute la bande (chats et capybara réunis) est fière de toi — le CM1 n'a qu'à bien se tenir !</p>
       <button class="modal-close" id="finaleCloseBtn" type="button">Retourner voir le ciel</button>
     </div>
   </div>
@@ -1000,17 +1000,17 @@ const CATS = {
       reflections:["Dans le tableau des contenances, chaque colonne vaut dix fois plus que sa voisine de droite : kL, hL, daL, L, dL, cL, mL. Je ne saute jamais une case, sinon l'arrosoir déborde !","1 L, c'est 1 000 mL, comme mille petites gouttes bien alignées. Enfin, façon de parler, une vraie goutte est bien plus petite que ça.","Astuce de jardinière : grande unité vers petite, je multiplie et j'ajoute des zéros. Petite vers grande, je divise et j'en enlève.","Une fois j'ai voulu arroser toutes mes plantes avec un seul verre d'eau. Résultat : des plantes très déçues et beaucoup d'allers-retours.","Mon secret : je pose toujours un chiffre par colonne dans le tableau, jamais deux dans la même case, sinon tout déborde.","Je rêve parfois d'une pluie qui tomberait exactement en litres comptés, plante par plante. Ce serait bien pratique.","Un jour, j'ai confondu litres et centilitres pour arroser un petit pot de basilic. Résultat : une petite mare dans la cuisine.","Astuce : pour ne pas me perdre dans le tableau, je compte toujours les colonnes une par une, comme des marches d'escalier qui descendent vers le robinet.","Les millilitres, c'est parfait pour les petites quantités ; les hectolitres, pour arroser tout un champ. Un peu comme une goutte et une averse.","Je vérifie toujours deux fois la quantité avant de verser, comme je vérifie deux fois s'il pleut avant de sortir sans parapluie."]
     }
   },
-  reglisse:{
-    name:'Réglisse', fur:'#8E72C0', belly:'#F5EAFB', nose:'#FF6FA0', accent:'var(--f9)', accessory:'glasses', fluffy:true,
-    blurb:"Miaou-hi-hi, bonjour, moi c'est Réglisse ! Pelage tout violet façon réglisse à la myrtille, moustaches interminables, lunettes de réviseuse sur la truffe (toute rose, regarde comme elle brille) : avec un look pareil, aucune faute ni aucun chiffre ne peut m'échapper. Dictée ou nombres, aujourd'hui on révise les devoirs ensemble !",
-    tip:"Mon secret pour la dictée : je relis chaque mot lettre par lettre, à voix haute, en insistant sur les accents. Pour les nombres, je compare chiffre par chiffre en partant de la gauche, sans jamais sauter une étape. Et quand j'hésite, mes longues moustaches se mettent à frétiller toutes seules, miaou !",
+  fripouille:{
+    name:'Fripouille', species:'capybara', fur:'#A9764F', belly:'#F3E4C8', nose:'#3B2A20', accent:'var(--f9)', accessory:'pencil',
+    blurb:"Coucou, moi c'est Fripouille ! Je suis un capybara — l'animal le plus tranquille de la savane, celui avec qui absolument tout le monde s'entend bien. Ne te fie pas à mon air toujours zen : dictée, nombres, grammaire ou tables, je fourre mon grand nez plat partout et j'ai un avis sur tout (souvent le bon, promis, croix de bois). Cette semaine, on révise ensemble tout ce qu'il y a à réviser !",
+    tip:"Mon secret de capybara : je ne panique jamais, même face à un tas de devoirs. Un exercice à la fois, je relis bien la consigne deux fois plutôt qu'une, et si je bloque, je passe au suivant et j'y reviens après — ça finit toujours par passer.",
     pools:{
-      correctFirst:["Pas une seule faute, bravo grande réviseuse !","Miaou-parfait, ton crayon de correction peut se reposer !","Exact du premier coup, comme noir sur blanc !","Aucune coquille dans cette réponse, impeccable !","Tu relis aussi bien que tu écris, bravo !","Réponse nette et juste, j'adore !","Pile la bonne réponse, pas besoin de repasser derrière toi !","Tu mérites une étoile bien noire, et bien méritée !","Vérifié deux fois par mes soins : c'est juste !","Aucune erreur à corriger ici, chapeau !","Tu chasses les fautes mieux que moi les souris !","Réponse aussi propre qu'une copie bien recopiée !"],
-      wrong:["Petite coquille dans la réponse, rien de grave : on la corrige avec Papa ou Maman.","Pas tout à fait, mais bel effort de réviseuse ! Un adulte t'aidera à voir où ça coince.","Oups, mon crayon de correction a repéré une erreur. Ce n'est pas grave, à revoir avec un adulte.","Raté de peu, mais tu as vraiment cherché. Papa ou Maman corrigera ça avec toi.","Ce n'est pas la bonne réponse, mais quelle belle tentative ! On la revoit ensemble tranquillement.","Petite erreur à noter dans mon carnet, rien de dramatique. Un adulte t'expliquera.","Pas gagné cette fois, mais même les meilleures réviseuses se trompent parfois. Papa ou Maman t'aidera.","Zut, une lettre ou un chiffre s'est glissé de travers. On corrige ça avec un adulte.","Pas cette réponse-là, mais ton énergie est parfaite. À revoir avec Papa ou Maman.","Miaou raté, mais je vois que tu as bien réfléchi. C'est le plus important.","Petit oubli dans la réponse, rien de grave du tout. Un adulte t'expliquera la suite.","Pas la bonne réponse, mais joli travail d'essai ! Papa ou Maman corrigera ça.","Raté, mais avec beaucoup d'application, bravo pour ça. On revoit ça avec un adulte.","Ce n'est pas exact, mais tu progresses à chaque révision. Papa ou Maman t'aidera à ajuster."],
-      exerciseDone:["Un exercice révisé de plus, bravo !","Encore une page de devoirs bien travaillée.","Tu avances comme une vraie championne des révisions.","Un de plus dans le carnet, bien joué !","Miaou, ça progresse à vue d'œil !","Belle application sur cet exercice.","Encore un point coché sur la liste des devoirs.","Tu tiens le rythme, continue comme ça.","Un exercice de plus, sans la moindre coquille qui traîne.","Bien réviser, ça se voit déjà !"],
-      ficheWelcome:["Aujourd'hui, on révise les devoirs ensemble : la dictée et les nombres, mes deux matières préférées.","Sors ton crayon (imaginaire) de correction, on relit tout comme il faut.","J'ai relu deux fois cette fiche avant de te la donner, à ton tour maintenant.","Prête à réviser tes mots de dictée et tes grands nombres ?","Cette fiche sent bon le cahier de devoirs fraîchement corrigé.","On y va tranquillement, mot par mot, chiffre par chiffre.","J'ai préparé une révision noir sur blanc, sans aucun à-peu-près.","Prête à devenir une championne de la relecture et du calcul ?","Accroche-toi bien, cette fiche mélange les lettres et les chiffres.","Aujourd'hui, chaque mot et chaque nombre comptent, à toi de jouer !"],
-      ficheDone:["Fiche terminée, ta dictée et tes nombres sont fin prêts !","Bravo, toutes les révisions sont cochées !","Miaou, quelle belle relecture aujourd'hui !","Tu es prête pour ta dictée et pour tes exercices de nombres, bravo !","Fiche bouclée, noir sur blanc, sans aucune bavure !","Championne de la révision, chapeau bas, enfin, oreilles basses !","Tout est relu, tout est vérifié, bravo grande réviseuse !","Tu termines cette fiche avec un sérieux qui me rend fier !","Une fiche de plus dans ton beau parcours vers le CM1 !","Devoirs révisés, mission accomplie !"],
-      reflections:["Mon secret de réviseuse : je relis toujours mes mots de dictée à voix haute, lettre par lettre, surtout les accents.","Pour comparer deux grands nombres, je compte d'abord leurs chiffres : le plus de chiffres gagne presque toujours.","Un jour, j'ai confondu 987 et 9 870 en oubliant un zéro. Depuis, je compte toujours les chiffres avant de répondre.","Mon pelage violet, c'est ma couleur porte-bonheur pour les devoirs — un peu comme si toute une boîte de réglisses à la myrtille avait déteint sur moi, miaou !","Astuce de dictée : les mots invariables comme « déjà » ou « pendant » ne changent jamais, je les apprends une bonne fois pour toutes.","Je rêve parfois que je corrige une dictée écrite entièrement par des souris. Beaucoup de fautes, miaou.","Pour ranger une liste de nombres, je cherche toujours le plus petit en premier, je le mets de côté, et je recommence.","1 000, c'est mille. Et neuf mille, c'est neuf fois plus. Les zéros, il ne faut jamais les perdre en chemin.","Une fois, j'ai écrit « atentif » sans le deuxième t. Depuis, je vérifie toujours les lettres doubles avec ma patte.","Je vérifie toujours mon travail deux fois avant de le rendre : une fois pour moi, une fois pour être vraiment sûre.","Mes moustaches sont si longues qu'un jour j'ai mesuré un nombre à neuf chiffres rien qu'en les dépliant. Pratique, mais un peu ridicule.","Astuce générale pour tous les devoirs : je pose mes affaires, je relis la consigne deux fois, et seulement après je fonce. Ça évite bien des miaous de panique.","Mes lunettes ne corrigent rien du tout en vrai — je les porte juste parce qu'une réviseuse sérieuse, ça a toujours l'air plus sérieux avec des lunettes, miaou-hi-hi.","Pour ne jamais oublier un devoir, je fais toujours ma liste avant de commencer. Une case cochée, c'est presque aussi satisfaisant qu'une pelote de laine bien enroulée."]
+      correctFirst:["Pile bon, et sans même bouger une oreille !","Bien vu ! Même allongé dans mon bain chaud imaginaire, j'aurais pas fait mieux.","Exact du premier coup, franchement, respect.","Zéro stress, réponse juste : t'as tout compris de mon style de vie.","Nickel ! Mon grand nez plat approuve à 100 %.","Pile la bonne réponse. Même les capybaras applaudissent (en interne, on n'aime pas trop s'agiter).","Impec ! Tu commences à avoir mon flegme légendaire, ça me plaît.","Juste, net, précis. Toi au moins, tu ne traînes pas des pieds.","Réponse parfaite. Je note ça dans mon carnet, entre deux siestes.","Ça, c'est fait. Et sans même transpirer, comme moi dans mon bain.","Bravo, championne. Je t'accorderais bien une place sur mon rocher préféré.","Exact ! Toutes les autres bêtes de la mare seraient d'accord avec toi."],
+      wrong:["Raté, mais bon, personne n'est parfait — même pas moi, et j'ai un melon à la place du nez. On corrige ça avec un adulte.","Pas tout à fait, mais t'inquiète, je ne juge jamais personne, c'est mon principe numéro un. Papa ou Maman t'aidera à revoir ça.","Aïe, loupé de peu ! Rien de grave du tout, on reverra ça ensemble avec un adulte.","Pas la bonne réponse, mais tu as osé, et ça, ça me plaît déjà bien. À revoir avec Papa ou Maman.","Oups. Bon, je ne vais pas paniquer pour si peu — moi je ne panique jamais, de toute façon. Un adulte t'expliquera ça.","Raté, mais avec un sacré aplomb ! On corrige ça tranquillement avec un adulte.","Pas cette fois. Je garde mon calme légendaire, et toi aussi : on la reverra avec Papa ou Maman.","Ce n'est pas exact, mais je préfère largement quelqu'un qui essaie à quelqu'un qui n'essaie pas. Un adulte t'aidera à ajuster.","Manqué, mais pas de drame chez les capybaras. Papa ou Maman corrigera ça avec toi.","Erreur notée dans mon carnet, entre deux bâillements. Rien de grave, à revoir avec un adulte.","Pas gagné, mais tu as de l'énergie à revendre. On règle ça ensemble avec Papa ou Maman.","Raté, mais je t'assure que même les meilleurs capybaras se trompent parfois de mare. À revoir avec un adulte.","Pas la bonne case, mais belle tentative quand même. Papa ou Maman t'expliquera la suite.","Oups, une petite entourloupe dans cette réponse. Ce n'est pas grave, on corrige ça avec un adulte."],
+      exerciseDone:["Un exercice de plus dans la mare aux réussites.","Encore une révision avalée sans effort, ou presque.","Tu avances à ton rythme, et c'est exactement le bon rythme.","Un de plus, bien joué, je retourne me prélasser.","Ça progresse, et sans jamais s'agiter — j'adore ce style.","Encore un point coché sur ta liste de devoirs.","Belle application, digne d'un capybara studieux (ça existe, je te jure).","Un exercice de plus, tranquille et efficace.","Tu tiens le rythme, continue, je te regarde faire d'un œil (l'autre fait la sieste).","Encore une réussite dans le carnet, bravo."],
+      ficheWelcome:["Salut, c'est moi qui m'occupe des devoirs de la semaine — installe-toi, on va tout revoir tranquillement.","Cette semaine, virelangue, dictée, nombres, phrases et tables : un vrai buffet de révisions, mon plat préféré.","Prête à réviser sans stress ? C'est un peu ma spécialité, le sans-stress.","J'ai tout rassemblé ici : ce qu'il y a à revoir cette semaine, rien de plus, rien de moins.","On y va doucement, comme moi je fais tout : sans jamais me presser.","Cette fiche change chaque semaine selon tes devoirs du moment — aujourd'hui, en voici le menu.","Prête à devenir aussi zen que moi devant une pile de devoirs ?","J'ai relu deux fois cette fiche avant de te la donner. Même moi, je fais les choses bien, parfois.","Accroche-toi, ça mélange les matières aujourd'hui, un peu comme mon pelage mélange toutes les nuances de marron.","Prête à réviser un peu de tout, sans jamais paniquer ? Suis mon exemple."],
+      ficheDone:["Fiche terminée, et personne n'a eu besoin de s'énerver. Exactement comme j'aime.","Bravo, toutes les révisions de la semaine sont cochées !","Tu termines cette fiche avec un calme qui forcerait presque mon admiration.","Devoirs révisés, mission accomplie, je retourne à ma sieste l'esprit tranquille.","Fiche bouclée sans un seul coup de stress, championne.","Toutes les matières de la semaine, révisées d'une traite. Chapeau, ou plutôt, chapeau de paille sur mon nez.","Tu sors de cette fiche prête pour tes devoirs, et moi je suis prêt pour un bon bain.","Bravo, grande réviseuse de la semaine ! Même les canards de ma mare applaudiraient.","Une fiche de plus dans ton beau parcours vers le CM1, révisée dans le calme absolu.","Mission de la semaine accomplie. Je savais que tu y arriverais, je ne m'inquiète jamais, de toute façon."],
+      reflections:["Mon secret pour une dictée réussie : je relis chaque mot à voix haute, lettre par lettre, avant même de l'écrire.","Vrai ou faux : je suis le rongeur le plus grand du monde. Vrai ! Mais je n'ai jamais rongé un seul cahier, promis.","Pour écrire un grand nombre en lettres, je repère d'abord les espaces : elles séparent les classes (mille, millions, milliards).","« Mille » ne prend JAMAIS de -s. Même si j'en avais mille, je dirais toujours « mille », pas « milles ».","J'adore me prélasser dans l'eau chaude pendant des heures. Un peu comme un exercice de calcul, en fait : ni trop vite, ni trop lentement.","Astuce grammaire : pour trouver le type d'une phrase, je regarde toujours la ponctuation de fin en premier. Un gros indice, presque toujours juste.","Mes petites oreilles n'entendent pas grand-chose de loin, mais je n'ai jamais raté une table de multiplication pour autant.","La table de 5 se termine toujours par 0 ou 5. Aussi régulier que mes heures de sieste.","« Million » et « milliard » sont des mots comme les autres : ils prennent un -s au pluriel (deux millions, trois milliards), contrairement à « mille ».","Je m'entends avec tous les autres animaux de la mare, même les plus grognons. Un peu comme les devoirs : il y en a pour tous les goûts, et on finit toujours par s'entendre avec eux.","Pour une phrase impérative, le verbe n'a pas besoin de sujet : « Range ta chambre ! » Personne n'a besoin de dire « tu » pour comprendre.","Un jour, j'ai essayé de dire le virelangue de la semaine à un ami flamand rose. Résultat : deux minutes de fou rire, zéro réussite.","Je ne me presse jamais, jamais, jamais. Résultat : je me trompe moins souvent qu'on ne le croit.","Mon nez est plat, large, et je m'en sers pour à peu près tout, même pour pousser mes affaires de devoirs vers toi. Allez, au travail !"]
     }
   }
 };
@@ -1045,6 +1045,7 @@ function catAccessorySvg(type, accentExpr){
 }
 function catMarkup(catId){
   const cat = CATS[catId];
+  if(cat.species==='capybara') return capybaraMarkup(catId);
   const acc = cat.accessory, ax = cat.accent, fluffy = !!cat.fluffy;
   return '<ellipse class="cat-shadow" cx="80" cy="150" rx="32" ry="6"/>'+
   '<g class="cat-body-group">'+
@@ -1090,6 +1091,41 @@ function catMarkup(catId){
     (acc==='pencil' ? catAccessorySvg('pencil', ax) : '')+
   '</g>';
 }
+function capybaraMarkup(catId){
+  const cat = CATS[catId];
+  const acc = cat.accessory, ax = cat.accent;
+  return '<ellipse class="cat-shadow" cx="80" cy="150" rx="34" ry="6"/>'+
+  '<g class="cat-body-group">'+
+    '<path class="cat-tail" d="M116 128 Q123 124 120 118"/>'+
+    '<ellipse class="cat-paw cat-paw-l" cx="62" cy="144" rx="11" ry="6"/>'+
+    '<ellipse class="cat-paw cat-paw-r" cx="98" cy="144" rx="11" ry="6"/>'+
+    '<ellipse class="cat-body" cx="80" cy="100" rx="46" ry="42"/>'+
+    '<ellipse class="cat-belly" cx="80" cy="118" rx="28" ry="25"/>'+
+    '<ellipse class="cat-ear" cx="44" cy="59" rx="9" ry="10"/>'+
+    '<ellipse class="cat-ear" cx="116" cy="59" rx="9" ry="10"/>'+
+    (acc==='goggles' ? catAccessorySvg('goggles', ax) : '')+
+    '<circle class="cat-cheek" cx="46" cy="92" r="7"/>'+
+    '<circle class="cat-cheek" cx="114" cy="92" r="7"/>'+
+    '<g class="cat-whiskers">'+
+      '<line x1="55" y1="98" x2="22" y2="92"/><line x1="55" y1="104" x2="22" y2="108"/>'+
+      '<line x1="105" y1="98" x2="138" y2="92"/><line x1="105" y1="104" x2="138" y2="108"/>'+
+    '</g>'+
+    catEyeMarkup(62,80,64,81,60,76)+
+    catEyeMarkup(98,80,100,81,96,76)+
+    (acc==='glasses' ? catAccessorySvg('glasses', ax) : '')+
+    (acc==='patch' ? catAccessorySvg('patch', ax) : '')+
+    '<rect class="cat-nose" x="53" y="93" width="54" height="25" rx="12.5"/>'+
+    '<path class="cat-mouth" d="M73 118 Q80 122 87 118"/>'+
+    (acc==='bandana' ? catAccessorySvg('bandana', ax) : '')+
+    (acc==='bib' ? catAccessorySvg('bib', ax) : '')+
+    (acc==='yarn' ? catAccessorySvg('yarn', ax) : '')+
+    (acc==='compasstool' ? catAccessorySvg('compasstool', ax) : '')+
+    (acc==='pouch' ? catAccessorySvg('pouch', ax) : '')+
+    (acc==='scale' ? catAccessorySvg('scale', ax) : '')+
+    (acc==='wateringcan' ? catAccessorySvg('wateringcan', ax) : '')+
+    (acc==='pencil' ? catAccessorySvg('pencil', ax) : '')+
+  '</g>';
+}
 function catEyeMarkup(cx,cy,px,py,sx,sy){
   const side = cx<80 ? 'l' : 'r';
   const happyY = cy+3, happyPeakY = cy-11;
@@ -1123,7 +1159,7 @@ function setActiveCat(catId){
 function renderHeroCats(){
   renderCatInto('heroCatLeft','praline');
   renderCatInto('heroCatCenter','mistigri');
-  renderCatInto('heroCatRight','reglisse');
+  renderCatInto('heroCatRight','fripouille');
 }
 function catEls(){ return Array.from(document.querySelectorAll('.cat')); }
 function catReact(mood){
@@ -1867,97 +1903,119 @@ const FICHES = [
   ]
 },
 {
-  id:9, color:'f9', badge:9, cat:'reglisse', title:"Réviser ses devoirs : dictée et nombres",
-  eyebrow:"Devoirs", desc:"Revoir les mots de la dictée en cours sur la rentrée des classes, et s'entraîner à lire, comparer et ranger les nombres jusqu'à 9 999 (et un peu plus).",
+  id:9, color:'f9', badge:9, cat:'fripouille', title:"Réviser ses devoirs de la semaine",
+  eyebrow:"Devoirs", desc:"Le virelangue à dompter, la dictée « La rentrée des classes (2) », les nombres en lettres jusqu'au milliard, les types de phrases et les tables de multiplication de 2 à 5.",
   lesson:[
-    {k:'note', text:"Cette fiche t'aide à réviser deux devoirs en cours : les mots de la dictée sur la rentrée des classes, et la lecture des nombres jusqu'à 9 999 (et même un peu au-delà !)."},
-    {k:'table', headers:['Noms','Verbes','Adjectifs','Mots invariables'], rows:[
-      ['la rentrée','retrouver','coloré / colorée',"aujourd'hui"],
-      ['la cour','remplir','nouveau / nouvelle','enfin'],
-      ['les cartables','','','déjà'],
-      ['les cahiers','','','']
-    ]},
+    {k:'note', text:"Cette fiche change chaque semaine selon les devoirs en cours ! Cette fois-ci, cinq choses à réviser : un virelangue à dompter, la dictée « La rentrée des classes (2) », les nombres en lettres jusqu'au milliard, les types de phrases, et les tables de multiplication de 2 à 5."},
+    {k:'rule', tag:'Virelangue de la semaine', title:"Attention aux langues qui fourchent !", desc:"Répète-le à voix haute, doucement d'abord, puis de plus en plus vite.", ex:"Flavien fait faire à Fabien fourbe et fautif force farces fausses et fantasques."},
+    {k:'tip', text:"Défi supplémentaire : essaie de le dire à voix haute à quelqu'un. Même sans appareil dentaire, ce virelangue n'est vraiment pas facile !"},
     {k:'table', headers:['Noms','Verbes','Adjectifs','Mots invariables'], rows:[
       ['les retrouvailles','ranger','impatient / impatiente','ensemble'],
       ['la maîtresse','distribuer','attentif / attentive','pendant'],
       ["l'attention",'écouter','',''],
       ['la récréation','choisir','','']
     ]},
-    {k:'tip', text:"Pour bien préparer une dictée, je relis chaque mot à voix haute, je l'épelle lettre par lettre, et je fais surtout attention aux accents (é, è, ê) et aux lettres qu'on n'entend pas à la fin, comme le -s de « cartables » ou le -t de « attentif »."},
-    {k:'tip', text:"Pour écrire un nombre en lettres sans faute : « mille » ne prend JAMAIS de s (quatre mille, neuf mille...). « Cent » prend un s seulement s'il est multiplié pile et qu'aucun autre nombre ne le suit (six cents), mais pas s'il est suivi d'un autre nombre (six cent douze). Et je n'oublie pas le tiret entre les dizaines et les unités en dessous de cent (soixante-douze, quatre-vingt-trois)."},
-    {k:'steps', title:"Comment je compare deux grands nombres", steps:[
-      "Je compte d'abord le nombre de chiffres de chaque nombre : celui qui en a le plus est toujours le plus grand (9 274 a 4 chiffres, 987 n'en a que 3, donc 9 274 est plus grand).",
-      "À nombre de chiffres égal, je compare le chiffre le plus à gauche (celui des milliers).",
-      "S'il est identique, je compare le chiffre suivant (les centaines), puis les dizaines, puis les unités.",
-      "Le premier chiffre différent, en partant de la gauche, décide qui est le plus grand."
+    {k:'tip', text:"Pour bien préparer la dictée « La rentrée des classes (2) », je relis chaque mot à voix haute, je l'épelle lettre par lettre, et je fais surtout attention aux accents (é, è, ê) et aux lettres qu'on n'entend pas à la fin, comme le -s de « retrouvailles » ou le -t de « attentif »."},
+    {k:'tip', text:"Pour écrire un nombre en lettres sans faute : « mille » ne prend JAMAIS de s (quatre mille, neuf mille...). « Cent » prend un s seulement s'il est multiplié pile et qu'aucun autre nombre (ni « mille », ni « million ») ne le suit (six cents), mais pas s'il est suivi d'un autre nombre (six cent douze, six cent mille). Et je n'oublie pas le tiret entre les dizaines et les unités en dessous de cent (soixante-douze, quatre-vingt-trois)."},
+    {k:'tip', text:"Contrairement à « mille », « million » et « milliard » sont de vrais noms : ils prennent un -s au pluriel (deux millions, trois milliards). Et pour lire un très grand nombre, je repère d'abord les espaces : elles séparent les classes, des milliards jusqu'aux unités."},
+    {k:'steps', title:"Comment je lis 1 234 567 890", steps:[
+      "Je repère les classes séparées par des espaces, en partant de la gauche : 1 (milliards) | 234 (millions) | 567 (mille) | 890 (unités).",
+      "Je lis chaque groupe comme un nombre normal, puis j'ajoute le nom de sa classe.",
+      "1 → « un milliard » (jamais de s, il n'y en a qu'un).",
+      "234 → « deux cent trente-quatre millions » (millions prend un s car il y en a plusieurs).",
+      "567 → « cinq cent soixante-sept mille » (mille ne prend JAMAIS de s).",
+      "890 → « huit cent quatre-vingt-dix » (le dernier groupe n'a pas de nom de classe)."
     ]},
-    {k:'tip', text:"Pour ranger toute une liste de nombres, je cherche d'abord le plus petit de tous, je le mets de côté, puis je recommence avec ceux qui restent."}
+    {k:'table', headers:['Milliards','Millions','Mille','Unités'], rows:[['1','234','567','890']]},
+    {k:'rule', tag:'Type de phrase', title:'Déclarative', desc:"Elle raconte, explique ou donne une information. Elle se termine par un point.", ex:"Madeline retrouve ses amies à la récréation."},
+    {k:'rule', tag:'Type de phrase', title:'Interrogative', desc:"Elle pose une question. Elle se termine par un point d'interrogation.", ex:"As-tu rangé ton cahier ?"},
+    {k:'rule', tag:'Type de phrase', title:'Exclamative', desc:"Elle exprime une émotion forte (surprise, joie...). Elle se termine par un point d'exclamation.", ex:"Quelle belle rentrée !"},
+    {k:'rule', tag:'Type de phrase', title:'Impérative (ou injonctive)', desc:"Elle donne un ordre ou un conseil. Le verbe n'a pas de sujet exprimé.", ex:"Range ton cartable."},
+    {k:'tip', text:"Astuce : pour trouver le type d'une phrase, je regarde d'abord sa ponctuation de fin — c'est souvent un gros indice. Puis je vérifie : elle raconte (déclarative), elle questionne (interrogative), elle s'exclame (exclamative), ou elle donne un ordre sans sujet (impérative) ?"},
+    {k:'tip', text:"Rappel éclair pour les tables : table de 2, je double le nombre ; table de 5, ça se termine toujours par 0 ou 5 ; table de 4, c'est le double du double ; table de 3, je peux aussi compter de 3 en 3."},
+    {k:'table', headers:['×','2','3','4','5'], rows:[
+      ['1','2','3','4','5'],
+      ['2','4','6','8','10'],
+      ['3','6','9','12','15'],
+      ['4','8','12','16','20'],
+      ['5','10','15','20','25'],
+      ['6','12','18','24','30'],
+      ['7','14','21','28','35'],
+      ['8','16','24','32','40'],
+      ['9','18','27','36','45'],
+      ['10','20','30','40','50']
+    ]}
   ],
   exercises:[
-    {num:1, titre:"Dictée (1) : trouve la bonne orthographe", etoiles:1, consigne:"Une seule réponse est bien écrite.", items:[
-      {id:'f9e1a', t:tmpl("a) {0}"), parts:[mcq([{v:'a',l:'la rentré'},{v:'b',l:'la rentrée'},{v:'c',l:'la rantrée'},{v:'d',l:'la renttrée'}],'b')]},
-      {id:'f9e1b', t:tmpl("b) {0}"), parts:[mcq([{v:'a',l:'les cartables'},{v:'b',l:'les cartabbles'},{v:'c',l:'les kartables'},{v:'d',l:'les cartablent'}],'a')]},
-      {id:'f9e1c', t:tmpl("c) {0}"), parts:[mcq([{v:'a',l:"aujourd'ui"},{v:'b',l:'aujourdhui'},{v:'c',l:"aujourd'hui"},{v:'d',l:"aujour'dhui"}],'c')]},
-      {id:'f9e1d', t:tmpl("d) {0}"), parts:[mcq([{v:'a',l:'nouvel'},{v:'b',l:'nouvelle'},{v:'c',l:'nouvele'},{v:'d',l:'nouvelles'}],'b')]}
+    {num:1, titre:"Le virelangue de la semaine", etoiles:1, consigne:"À répéter à voix haute, plusieurs fois, de plus en plus vite.", items:[
+      {id:'f9e1a', t:tmpl("Répète ce virelangue à voix haute, doucement puis de plus en plus vite : « Flavien fait faire à Fabien fourbe et fautif force farces fausses et fantasques. » {0}"), parts:[write(null,"Il n'y a pas de correction possible pour un exercice à l'oral ! Le but, c'est de s'entraîner encore et encore : bravo si la langue a fourché de moins en moins à chaque essai.",{noInput:true})]}
     ]},
-    {num:2, titre:"Dictée (2) : trouve la bonne orthographe", etoiles:1, consigne:"Une seule réponse est bien écrite.", items:[
+    {num:2, titre:"Dictée « La rentrée des classes (2) » : la bonne orthographe", etoiles:1, consigne:"Une seule réponse est bien écrite.", items:[
       {id:'f9e2a', t:tmpl("a) {0}"), parts:[mcq([{v:'a',l:'les retrouvaille'},{v:'b',l:'les retrouvailles'},{v:'c',l:'les retrouvailes'},{v:'d',l:'les retoruvailles'}],'b')]},
       {id:'f9e2b', t:tmpl("b) {0}"), parts:[mcq([{v:'a',l:'la maitresse'},{v:'b',l:'la maîtraisse'},{v:'c',l:'la maîtresse'},{v:'d',l:'la mêtresse'}],'c')]},
       {id:'f9e2c', t:tmpl("c) {0}"), parts:[mcq([{v:'a',l:'la récréasion'},{v:'b',l:'la recréation'},{v:'c',l:'la récréaction'},{v:'d',l:'la récréation'}],'d')]},
       {id:'f9e2d', t:tmpl("d) {0}"), parts:[mcq([{v:'a',l:'atentive'},{v:'b',l:'attentive'},{v:'c',l:'attentifve'},{v:'d',l:'attentibe'}],'b')]}
     ]},
-    {num:3, titre:"Dictée (1) : complète la phrase", etoiles:2, consigne:"Choisis le mot bien écrit pour compléter la phrase.", items:[
-      {id:'f9e3a', t:tmpl("a) Madeline a hâte de {0} ses copains à la rentrée."), parts:[mcq([{v:'a',l:'retrouvé'},{v:'b',l:'retrouver'},{v:'c',l:'retrouvez'},{v:'d',l:'rettrouver'}],'b')]},
-      {id:'f9e3b', t:tmpl("b) Il faut {0} sa trousse de crayons neufs avant la rentrée."), parts:[mcq([{v:'a',l:'ramplir'},{v:'b',l:'remplir'},{v:'c',l:'remplire'},{v:'d',l:'remplirent'}],'b')]},
-      {id:'f9e3c', t:tmpl("c) {0}, c'est le grand jour de la rentrée !"), parts:[mcq([{v:'a',l:'enfin'},{v:'b',l:'enfain'},{v:'c',l:'anfin'},{v:'d',l:'enffin'}],'a')]},
-      {id:'f9e3d', t:tmpl("d) Les vacances sont {0} terminées."), parts:[mcq([{v:'a',l:'déja'},{v:'b',l:'dèjà'},{v:'c',l:'déjà'},{v:'d',l:'deja'}],'c')]}
+    {num:3, titre:"Dictée « La rentrée des classes (2) » : complète la phrase", etoiles:2, consigne:"Choisis le mot bien écrit pour chaque phrase.", items:[
+      {id:'f9e3a', t:tmpl("a) Il faut {0} attentivement la maîtresse."), parts:[mcq([{v:'a',l:'écouté'},{v:'b',l:'écouter'},{v:'c',l:'écoutez'},{v:'d',l:'ècouter'}],'b')]},
+      {id:'f9e3b', t:tmpl("b) Madeline va {0} ses cahiers neufs dans son cartable."), parts:[mcq([{v:'a',l:'rangé'},{v:'b',l:'ranjer'},{v:'c',l:'ranger'},{v:'d',l:'rangere'}],'c')]},
+      {id:'f9e3c', t:tmpl("c) Madeline est {0} de retrouver ses amies."), parts:[mcq([{v:'a',l:'impatient'},{v:'b',l:'impatiente'},{v:'c',l:'impassiente'},{v:'d',l:'inpatiente'}],'b')]},
+      {id:'f9e3d', t:tmpl("d) Toute la classe se retrouve {0} dans la cour {1} la récréation."), parts:[mcq([{v:'a',l:'ansemble'},{v:'b',l:'ensemble'},{v:'c',l:'enssemble'},{v:'d',l:'essemble'}],'b'),mcq([{v:'a',l:'pendant'},{v:'b',l:'pendan'},{v:'c',l:'pendent'},{v:'d',l:'pendants'}],'a')]}
     ]},
-    {num:4, titre:"Dictée (2) : complète la phrase", etoiles:2, consigne:"Choisis le mot bien écrit pour chaque phrase.", items:[
-      {id:'f9e4a', t:tmpl("a) Il faut {0} attentivement la maîtresse."), parts:[mcq([{v:'a',l:'écouté'},{v:'b',l:'écouter'},{v:'c',l:'écoutez'},{v:'d',l:'ècouter'}],'b')]},
-      {id:'f9e4b', t:tmpl("b) Madeline va {0} ses cahiers neufs dans son cartable."), parts:[mcq([{v:'a',l:'rangé'},{v:'b',l:'ranjer'},{v:'c',l:'ranger'},{v:'d',l:'rangere'}],'c')]},
-      {id:'f9e4c', t:tmpl("c) Madeline est {0} de retrouver ses amies."), parts:[mcq([{v:'a',l:'impatient'},{v:'b',l:'impatiente'},{v:'c',l:'impassiente'},{v:'d',l:'inpatiente'}],'b')]},
-      {id:'f9e4d', t:tmpl("d) Toute la classe se retrouve {0} dans la cour {1} la récréation."), parts:[mcq([{v:'a',l:'ansemble'},{v:'b',l:'ensemble'},{v:'c',l:'enssemble'},{v:'d',l:'essemble'}],'b'),mcq([{v:'a',l:'pendant'},{v:'b',l:'pendan'},{v:'c',l:'pendent'},{v:'d',l:'pendants'}],'a')]}
+    {num:4, titre:"Nombres en lettres : jusqu'au million", etoiles:1, consigne:"", items:[
+      {id:'f9e4a', t:tmpl("a) Comment écrit-on 45 000 en lettres ? {0}"), parts:[mcq([{v:'a',l:'quarante-cinq mil'},{v:'b',l:'quarante cinq mille'},{v:'c',l:'quarante-cinq mille'},{v:'d',l:'quarante-cinq milles'}],'c')]},
+      {id:'f9e4b', t:tmpl("b) Comment écrit-on 152 300 en lettres ? {0}"), parts:[mcq([{v:'a',l:'cent cinquante-deux mille trois cent'},{v:'b',l:'cent cinquante-deux mille trois cents'},{v:'c',l:'cent cinquante deux mille trois cents'},{v:'d',l:'cent cinquante-deux milles trois cents'}],'b')]},
+      {id:'f9e4c', t:tmpl("c) « Neuf cent mille », ça s'écrit en chiffres : {0}"), parts:[fill(900000)]},
+      {id:'f9e4d', t:tmpl("d) « Cent trois mille deux cent quarante », ça s'écrit en chiffres : {0}"), parts:[fill(103240)]}
     ]},
-    {num:5, titre:"Nombres : lire et écrire", etoiles:1, consigne:"", items:[
-      {id:'f9e5a', t:tmpl("a) Comment écrit-on 672 en lettres ? {0}"), parts:[mcq([{v:'a',l:'six cent soixante douze'},{v:'b',l:'six cents soixante-douze'},{v:'c',l:'six cent soixante-douze'},{v:'d',l:'six cents soixante douze'}],'c')]},
-      {id:'f9e5b', t:tmpl("b) Comment écrit-on 4 023 en lettres ? {0}"), parts:[mcq([{v:'a',l:'quatre mille vingt-trois'},{v:'b',l:'quatre milles vingt-trois'},{v:'c',l:'quatre mille vingt trois'},{v:'d',l:'quatre milles vingt trois'}],'a')]},
-      {id:'f9e5c', t:tmpl("c) « Neuf mille huit cent quatre-vingt-huit », ça s'écrit en chiffres : {0}"), parts:[fill(9888)]},
-      {id:'f9e5d', t:tmpl("d) « Sept mille deux cent un », ça s'écrit en chiffres : {0}"), parts:[fill(7201)]}
+    {num:5, titre:"Nombres en lettres : jusqu'au milliard, le défi !", etoiles:3, consigne:"Les grands nombres se lisent classe par classe, comme dans la leçon.", items:[
+      {id:'f9e5a', t:tmpl("a) Comment écrit-on 2 000 000 en lettres ? {0}"), parts:[mcq([{v:'a',l:'deux million'},{v:'b',l:'deux millions'},{v:'c',l:'deux mille'},{v:'d',l:'vingt millions'}],'b')]},
+      {id:'f9e5b', t:tmpl("b) Comment écrit-on 3 500 000 en lettres ? {0}"), parts:[mcq([{v:'a',l:'trois millions cinq cent mille'},{v:'b',l:'trois million cinq cent mille'},{v:'c',l:'trois millions cinq cents mille'},{v:'d',l:'trois millions cinq cent milles'}],'a')]},
+      {id:'f9e5c', t:tmpl("c) « Un milliard », ça s'écrit en chiffres : {0}"), parts:[fill(1000000000)]},
+      {id:'f9e5d', t:tmpl("d) « Deux milliards trois cent millions », ça s'écrit en chiffres : {0}"), parts:[fill(2300000000)]}
     ]},
-    {num:6, titre:"Nombres : range la série (a) du plus petit au plus grand", etoiles:2, consigne:"Comme dans ta fiche de devoirs.", items:[
-      {id:'f9e6a', custom:'order', orderPrompt:"Range ces nombres du plus petit au plus grand :", orderSep:' < ', chips:['672','4 023','2 702','1 005','5 693','2 731'], order:['672','1 005','2 702','2 731','4 023','5 693']}
+    {num:6, titre:"Types de phrases : quel est le type ?", etoiles:1, consigne:"Choisis le bon type pour chaque phrase.", items:[
+      {id:'f9e6a', t:tmpl("a) « Madeline retrouve ses amies à la récréation. » {0}"), parts:[mcq(OPT_TYPE,'d')]},
+      {id:'f9e6b', t:tmpl("b) « Où as-tu rangé ton cahier ? » {0}"), parts:[mcq(OPT_TYPE,'i')]},
+      {id:'f9e6c', t:tmpl("c) « Quelle belle rentrée ! » {0}"), parts:[mcq(OPT_TYPE,'e')]},
+      {id:'f9e6d', t:tmpl("d) « Écoute bien la maîtresse. » {0}"), parts:[mcq(OPT_TYPE,'m')]}
     ]},
-    {num:7, titre:"Nombres : range la série (b) du plus petit au plus grand", etoiles:2, consigne:"", items:[
-      {id:'f9e7a', custom:'order', orderPrompt:"Range ces nombres du plus petit au plus grand :", orderSep:' < ', chips:['2 074','987','2 764','3 728','9 274','9 888'], order:['987','2 074','2 764','3 728','9 274','9 888']}
+    {num:7, titre:"Types de phrases : reconnaître à l'écrit", etoiles:2, consigne:"Choisis la phrase demandée.", items:[
+      {id:'f9e7a', t:tmpl("a) Laquelle est une phrase interrogative ? {0}"), parts:[mcq([{v:'a',l:'Tu as fini tes devoirs.'},{v:'b',l:'As-tu fini tes devoirs ?'},{v:'c',l:'Finis tes devoirs !'},{v:'d',l:'Quels devoirs interminables !'}],'b')]},
+      {id:'f9e7b', t:tmpl("b) Laquelle est une phrase exclamative ? {0}"), parts:[mcq([{v:'a',l:'Le classeur est sur la table.'},{v:'b',l:'Le classeur est-il sur la table ?'},{v:'c',l:'Range le classeur.'},{v:'d',l:'Quel beau classeur tout neuf !'}],'d')]},
+      {id:'f9e7c', t:tmpl("c) Laquelle est une phrase impérative ? {0}"), parts:[mcq([{v:'a',l:'Tu ranges ton classeur.'},{v:'b',l:'Ranges-tu ton classeur ?'},{v:'c',l:'Range ton classeur.'},{v:'d',l:'Quel classeur bien rangé !'}],'c')]},
+      {id:'f9e7d', t:tmpl("d) Laquelle est une phrase déclarative ? {0}"), parts:[mcq([{v:'a',l:'Le classeur est sur la table.'},{v:'b',l:'Le classeur est-il sur la table ?'},{v:'c',l:'Range le classeur !'},{v:'d',l:'Quel beau classeur !'}],'a')]}
     ]},
-    {num:8, titre:"Nombres : les séries les plus corsées (c et d)", etoiles:3, consigne:"Ces deux séries contiennent des nombres qui se ressemblent : lis bien chaque chiffre !", items:[
-      {id:'f9e8a', custom:'order', orderPrompt:"Série (c) — range du plus petit au plus grand :", orderSep:' < ', chips:['9 493','6 294','5 912','351','9 030','12 590'], order:['351','5 912','6 294','9 030','9 493','12 590']},
-      {id:'f9e8b', custom:'order', orderPrompt:"Série (d) — range du plus petit au plus grand :", orderSep:' < ', chips:['1 734','3 458','9 999','7 201','8 004','7 035'], order:['1 734','3 458','7 035','7 201','8 004','9 999']}
+    {num:8, titre:"Tables de 2 et 3 : calcule vite", etoiles:1, consigne:"", items:[
+      {id:'f9e8a', t:tmpl("a) 2 × 7 = {0}"), parts:[mcq([{v:'a',l:'12'},{v:'b',l:'14'},{v:'c',l:'16'},{v:'d',l:'9'}],'b')]},
+      {id:'f9e8b', t:tmpl("b) 2 × 9 = {0}"), parts:[mcq([{v:'a',l:'16'},{v:'b',l:'18'},{v:'c',l:'20'},{v:'d',l:'11'}],'b')]},
+      {id:'f9e8c', t:tmpl("c) 3 × 6 = {0}"), parts:[mcq([{v:'a',l:'15'},{v:'b',l:'18'},{v:'c',l:'21'},{v:'d',l:'9'}],'b')]},
+      {id:'f9e8d', t:tmpl("d) 3 × 8 = {0}"), parts:[mcq([{v:'a',l:'24'},{v:'b',l:'21'},{v:'c',l:'27'},{v:'d',l:'11'}],'a')]}
     ]},
-    {num:9, titre:"Nombres : compare avec <, > ou =", etoiles:2, consigne:"Choisis le bon signe.", items:[
-      {id:'f9e9a', t:tmpl("a) 4 023 {0} 2 702"), parts:[mcq([{v:'a',l:'<'},{v:'b',l:'>'},{v:'c',l:'='}],'b')]},
-      {id:'f9e9b', t:tmpl("b) 987 {0} 1 005"), parts:[mcq([{v:'a',l:'<'},{v:'b',l:'>'},{v:'c',l:'='}],'a')]},
-      {id:'f9e9c', t:tmpl("c) 9 030 {0} 9 274"), parts:[mcq([{v:'a',l:'<'},{v:'b',l:'>'},{v:'c',l:'='}],'a')]},
-      {id:'f9e9d', t:tmpl("d) 9 999 {0} 9 888"), parts:[mcq([{v:'a',l:'<'},{v:'b',l:'>'},{v:'c',l:'='}],'b')]}
+    {num:9, titre:"Tables de 4 et 5 : calcule vite", etoiles:2, consigne:"", items:[
+      {id:'f9e9a', t:tmpl("a) 4 × 6 = {0}"), parts:[mcq([{v:'a',l:'22'},{v:'b',l:'24'},{v:'c',l:'26'},{v:'d',l:'20'}],'b')]},
+      {id:'f9e9b', t:tmpl("b) 4 × 9 = {0}"), parts:[mcq([{v:'a',l:'32'},{v:'b',l:'36'},{v:'c',l:'40'},{v:'d',l:'13'}],'b')]},
+      {id:'f9e9c', t:tmpl("c) 5 × 7 = {0}"), parts:[mcq([{v:'a',l:'30'},{v:'b',l:'35'},{v:'c',l:'40'},{v:'d',l:'12'}],'b')]},
+      {id:'f9e9d', t:tmpl("d) 5 × 8 = {0}"), parts:[mcq([{v:'a',l:'35'},{v:'b',l:'40'},{v:'c',l:'45'},{v:'d',l:'13'}],'b')]}
     ]},
-    {num:10, titre:"🔁 Entraînement supplémentaire", etoiles:2, consigne:"Encore un peu de dictée et de nombres, pour finir en beauté.", items:[
-      {id:'f9e10a', t:tmpl("a) {0}"), parts:[mcq([{v:'a',l:'la cours'},{v:'b',l:'la cour'},{v:'c',l:'la kour'},{v:'d',l:'la courre'}],'b')]},
-      {id:'f9e10b', t:tmpl("b) Le maître va {0} les crayons de couleur à toute la classe."), parts:[mcq([{v:'a',l:'distribué'},{v:'b',l:'distribuer'},{v:'c',l:'distribuez'},{v:'d',l:'disstribuer'}],'b')]},
-      {id:'f9e10c', t:tmpl("c) Comment écrit-on 5 306 en lettres ? {0}"), parts:[mcq([{v:'a',l:'cinq mille trois cent six'},{v:'b',l:'cinq milles trois cent six'},{v:'c',l:'cinq mille trois cents six'},{v:'d',l:'cinq milles trois cents six'}],'a')]},
-      {id:'f9e10d', t:tmpl("d) 6 108 {0} 6 180"), parts:[mcq([{v:'a',l:'<'},{v:'b',l:'>'},{v:'c',l:'='}],'a')]}
+    {num:10, titre:"🔁 Entraînement supplémentaire", etoiles:2, consigne:"Encore un peu de tout, pour finir en beauté.", items:[
+      {id:'f9e10a', t:tmpl("a) {0}"), parts:[mcq([{v:'a',l:"l'attension"},{v:'b',l:"l'attention"},{v:'c',l:"l'atttention"},{v:'d',l:"l'attantion"}],'b')]},
+      {id:'f9e10b', t:tmpl("b) Comment écrit-on 610 000 en lettres ? {0}"), parts:[mcq([{v:'a',l:'six cent dix mille'},{v:'b',l:'six cents dix mille'},{v:'c',l:'six cent dix milles'},{v:'d',l:'soixante-dix mille'}],'a')]},
+      {id:'f9e10c', t:tmpl("c) « Est-ce que la récréation est bientôt finie ? » {0}"), parts:[mcq(OPT_TYPE,'i')]},
+      {id:'f9e10d', t:tmpl("d) 4 × 7 = {0}"), parts:[mcq([{v:'a',l:'26'},{v:'b',l:'28'},{v:'c',l:'30'},{v:'d',l:'24'}],'b')]}
     ]}
   ],
   corrige:[
-    "Exercice 1 (Dictée 1, orthographe) : a) la rentrée — b) les cartables — c) aujourd'hui — d) nouvelle.",
-    "Exercice 2 (Dictée 2, orthographe) : a) les retrouvailles — b) la maîtresse — c) la récréation — d) attentive.",
-    "Exercice 3 (Dictée 1, phrases) : a) retrouver — b) remplir — c) enfin — d) déjà.",
-    "Exercice 4 (Dictée 2, phrases) : a) écouter — b) ranger — c) impatiente — d) ensemble ... pendant.",
-    "Exercice 5 (Nombres, lire/écrire) : a) six cent soixante-douze — b) quatre mille vingt-trois — c) 9 888 — d) 7 201.",
-    "Exercice 6 (série a) : 672 < 1 005 < 2 702 < 2 731 < 4 023 < 5 693.",
-    "Exercice 7 (série b) : 987 < 2 074 < 2 764 < 3 728 < 9 274 < 9 888.",
-    "Exercice 8 (séries c et d) : c) 351 < 5 912 < 6 294 < 9 030 < 9 493 < 12 590 — d) 1 734 < 3 458 < 7 035 < 7 201 < 8 004 < 9 999.",
-    "Exercice 9 (comparaisons) : a) > — b) < — c) < — d) >.",
-    "Exercice 10 (entraînement supplémentaire) : a) la cour — b) distribuer — c) cinq mille trois cent six — d) <."
+    "Exercice 1 (virelangue) : pas de correction possible, c'est un exercice à l'oral — l'essentiel est de s'entraîner à le dire de mieux en mieux, de plus en plus vite !",
+    "Exercice 2 (Dictée « La rentrée des classes (2) », orthographe) : a) les retrouvailles — b) la maîtresse — c) la récréation — d) attentive.",
+    "Exercice 3 (Dictée « La rentrée des classes (2) », phrases) : a) écouter — b) ranger — c) impatiente — d) ensemble ... pendant.",
+    "Exercice 4 (nombres jusqu'au million) : a) quarante-cinq mille — b) cent cinquante-deux mille trois cents — c) 900 000 — d) 103 240.",
+    "Exercice 5 (nombres jusqu'au milliard) : a) deux millions — b) trois millions cinq cent mille — c) 1 000 000 000 — d) 2 300 000 000.",
+    "Exercice 6 (types de phrases, reconnaître) : a) déclarative — b) interrogative — c) exclamative — d) impérative.",
+    "Exercice 7 (types de phrases, à l'écrit) : a) As-tu fini tes devoirs ? — b) Quel beau classeur tout neuf ! — c) Range ton classeur. — d) Le classeur est sur la table.",
+    "Exercice 8 (tables de 2 et 3) : a) 14 — b) 18 — c) 18 — d) 24.",
+    "Exercice 9 (tables de 4 et 5) : a) 24 — b) 36 — c) 35 — d) 40.",
+    "Exercice 10 (entraînement supplémentaire) : a) l'attention — b) six cent dix mille — c) interrogative — d) 28."
   ]
 }
 ];
@@ -3194,7 +3252,7 @@ function renderParentsHome(){
   const body = document.getElementById('parentsBodyHome');
   body.innerHTML =
     mistakesRecapHtml()+
-    '<p>Les neuf fiches couvrent chacune un point à consolider avant le CM1 : rendre la monnaie, lire l’heure, la multiplication, la conjugaison, le compas, les longueurs, les masses, les contenances (liquides) et la révision des devoirs en cours (dictée et nombres). Chaque fiche commence par une leçon courte (« Je retiens »), puis des exercices du plus facile (★☆☆) au plus difficile (★★★).</p>'+
+    '<p>Les neuf fiches couvrent chacune un point à consolider avant le CM1 : rendre la monnaie, lire l’heure, la multiplication, la conjugaison, le compas, les longueurs, les masses, les contenances (liquides) et la révision des devoirs de la semaine en cours (mots à réviser, dictée, nombres, grammaire, tables… selon ce qui est donné en classe). Chaque fiche commence par une leçon courte (« Je retiens »), puis des exercices du plus facile (★☆☆) au plus difficile (★★★).</p>'+
     '<p><strong>Conseils :</strong> une fiche par jour suffit (15 minutes) ; laissez Madeline chercher seule après avoir relu « Je retiens » à voix haute ; si les deux derniers exercices d’une fiche restent difficiles, ce n’est pas grave — ils sont volontairement un peu au-dessus du niveau strict.</p>'+
     '<p><strong>Deux mécaniques particulières :</strong> la fiche « Le compas » demande un vrai compas et une feuille de papier — l’énoncé est dans l’application, le tracé (et parfois la mesure au fil d’une règle) se fait à la main, et Madeline coche elle-même si c’est réussi après avoir comparé avec le modèle affiché ; ses derniers exercices font découvrir, cercle après cercle, ce qui se passe quand deux cercles se touchent ou se croisent. Les fiches « Les longueurs », « Les masses » et « Les contenances » commencent chacune par une méthode pas à pas, puis un exercice où Madeline construit elle-même le tableau de conversion (en rangeant les unités dans le bon ordre), avant de le remplir avec de vraies conversions.</p>'+
     '<p><strong>Dans cette version interactive</strong>, en dehors des séances avec vous, chaque question ne se joue qu’une fois : une réponse fausse ne peut pas être retentée, Madeline est prévenue qu’elle la reverra avec vous. Le récapitulatif ci-dessus liste tout ce qu’il reste à corriger, avec une recommandation par fiche ; chaque fiche se termine désormais par un exercice « 🔁 Entraînement supplémentaire » aux questions inédites, pensé pour rejouer sur les points ratés sans jamais retomber sur une question déjà vue. Le corrigé complet de chaque fiche reste aussi disponible dans l’encadré grisé, en bas de chaque fiche.</p>'+
