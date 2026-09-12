@@ -3279,36 +3279,63 @@ function initStarfield(){
 }
 
 /* ============ INIT ============ */
-function init(){
-  loadState();
-  renderHeroCats();
-  setActiveCat('mistigri');
-  updateMuteBtn();
-  updateParentModeBtn();
-  renderParentsHome();
-  initStarfield();
-  renderMap();
+/* ============ ERROR SAFETY NET ============ */
+/* Une panne dans un morceau (ex. le dessin d'une mascotte) ne doit jamais
+   empêcher le reste (surtout les fiches) de s'afficher. Si ça arrive quand
+   même, un bandeau visible donne le message d'erreur exact pour le signaler. */
+function reportInitError(label, err){
+  try{
+    let banner = document.getElementById('initErrorBanner');
+    if(!banner){
+      banner = document.createElement('div');
+      banner.id = 'initErrorBanner';
+      banner.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:99999;background:#b91c1c;color:#fff;font:12px/1.5 -apple-system,BlinkMacSystemFont,sans-serif;padding:.5em .8em;white-space:pre-wrap;';
+      (document.body || document.documentElement).insertBefore(banner, (document.body || document.documentElement).firstChild);
+    }
+    banner.textContent += '⚠️ Bug technique (' + label + ') : ' + (err && err.message ? err.message : String(err)) + '\n';
+  }catch(e2){}
+}
+function safeRun(label, fn){
+  try{ fn(); }catch(err){
+    if(window.console && console.error) console.error('['+label+']', err);
+    reportInitError(label, err);
+  }
+}
+window.addEventListener('error', function(ev){ reportInitError('erreur JS', ev.error || ev.message); });
+window.addEventListener('unhandledrejection', function(ev){ reportInitError('promesse rejetée', ev.reason); });
 
-  document.getElementById('parentModeBtn').addEventListener('click', toggleParentMode);
-  document.getElementById('muteBtn').addEventListener('click', function(){
-    muted = !muted;
-    try{ localStorage.setItem('madeline_muted', muted?'1':'0'); }catch(e){}
-    updateMuteBtn();
+function init(){
+  safeRun('chargement', loadState);
+  safeRun('mascottes de la bannière', renderHeroCats);
+  safeRun('mascotte active', function(){ setActiveCat('mistigri'); });
+  safeRun('bouton son', updateMuteBtn);
+  safeRun('bouton mode parent', updateParentModeBtn);
+  safeRun('coin des parents', renderParentsHome);
+  safeRun('ciel étoilé', initStarfield);
+  safeRun('carte des fiches', renderMap);
+
+  safeRun('boutons de la page', function(){
+    document.getElementById('parentModeBtn').addEventListener('click', toggleParentMode);
+    document.getElementById('muteBtn').addEventListener('click', function(){
+      muted = !muted;
+      try{ localStorage.setItem('madeline_muted', muted?'1':'0'); }catch(e){}
+      updateMuteBtn();
+    });
+    document.getElementById('catBubble').addEventListener('click', function(){
+      if(bubbleHideTimer){ clearTimeout(bubbleHideTimer); bubbleHideTimer=null; }
+      this.classList.remove('show','conseil');
+    });
+    document.getElementById('catWidgetBtn').addEventListener('click', function(){
+      const poolNames = ['ficheWelcome','exerciseDone','reflections'];
+      const chosen = poolNames[Math.floor(Math.random()*poolNames.length)];
+      if(chosen==='reflections') sayConseil(catPool(activeCatId, chosen));
+      else say(catPool(activeCatId, chosen), 'cheer');
+    });
+    document.getElementById('finaleCloseBtn').addEventListener('click', function(){
+      document.getElementById('finaleModal').classList.remove('show');
+    });
   });
-  document.getElementById('catBubble').addEventListener('click', function(){
-    if(bubbleHideTimer){ clearTimeout(bubbleHideTimer); bubbleHideTimer=null; }
-    this.classList.remove('show','conseil');
-  });
-  document.getElementById('catWidgetBtn').addEventListener('click', function(){
-    const poolNames = ['ficheWelcome','exerciseDone','reflections'];
-    const chosen = poolNames[Math.floor(Math.random()*poolNames.length)];
-    if(chosen==='reflections') sayConseil(catPool(activeCatId, chosen));
-    else say(catPool(activeCatId, chosen), 'cheer');
-  });
-  document.getElementById('finaleCloseBtn').addEventListener('click', function(){
-    document.getElementById('finaleModal').classList.remove('show');
-  });
-  say("Bonjour Madeline ! Choisis une île du ciel pour commencer.", null);
+  safeRun('message d\'accueil', function(){ say("Bonjour Madeline ! Choisis une île du ciel pour commencer.", null); });
 }
 if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', init); } else { init(); }
 
