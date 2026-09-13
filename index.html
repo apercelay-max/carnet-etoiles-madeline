@@ -2032,6 +2032,32 @@ function loadState(){
   if(!state.ficheMeta) state.ficheMeta={};
   if(!state.parentRequests) state.parentRequests=[];
   if(state.parentPin===undefined) state.parentPin=null;
+  pruneStaleItemState();
+}
+/* La fiche "Devoirs" est réécrite chaque semaine : ses identifiants d'exercice
+   sont réutilisés d'une semaine à l'autre pour des questions différentes — donc
+   parfois avec une forme d'état différente ("parts": [...] pour un exercice
+   normal, vs "resolved"/"correct" pour un exercice spécial comme "ranger ces
+   nombres"). Un identifiant recyclé d'une forme à l'autre garde la vieille
+   valeur enregistrée, incompatible avec ce que le code actuel attend, et fait
+   planter la page. On supprime donc, à chaque chargement, toute réponse dont
+   l'identifiant n'existe plus OU dont la forme ne correspond plus à
+   l'exercice actuellement défini sous cet identifiant. */
+function pruneStaleItemState(){
+  try{
+    const currentItems = new Map();
+    FICHES.forEach(f=>f.exercises.forEach(ex=>ex.items.forEach(it=>currentItems.set(it.id, it))));
+    let removed = false;
+    Object.keys(state.items).forEach(id=>{
+      const it = currentItems.get(id);
+      const st = state.items[id];
+      const shapeOk = it && (it.custom
+        ? !Array.isArray(st.parts)
+        : (Array.isArray(st.parts) && st.parts.length === it.parts.length));
+      if(!shapeOk){ delete state.items[id]; removed = true; }
+    });
+    if(removed) saveState();
+  }catch(e){}
 }
 function saveState(){
   try{ localStorage.setItem(LS_KEY, JSON.stringify(state)); }catch(e){}
@@ -2070,7 +2096,7 @@ function ficheStats(fiche){
     }
     total += it.parts.length;
     const st = state.items[it.id];
-    if(!st) return;
+    if(!st || !st.parts) return;
     st.parts.forEach(p=>{
       if(isPartLocked(p)){
         resolved+=1;
@@ -2109,7 +2135,7 @@ function collectMistakes(){
           return;
         }
         const st = state.items[it.id];
-        if(!st) return;
+        if(!st || !st.parts) return;
         const wrongIdx = [];
         st.parts.forEach((p, idx)=>{ if(p.status==='resolved-wrong') wrongIdx.push(idx); });
         if(wrongIdx.length===0) return;
