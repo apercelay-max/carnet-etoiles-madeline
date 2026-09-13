@@ -1903,7 +1903,7 @@ const FICHES = [
   ]
 },
 {
-  id:9, color:'f9', badge:9, cat:'fripouille', title:"Réviser ses devoirs de la semaine",
+  id:9, color:'f9', badge:9, cat:'fripouille', rotating:true, title:"Réviser ses devoirs de la semaine",
   eyebrow:"Devoirs", desc:"Le virelangue à dompter, la dictée « La rentrée des classes (2) », les nombres en lettres jusqu'au milliard, les types de phrases et les tables de multiplication de 2 à 5.",
   lesson:[
     {k:'note', text:"Cette fiche change chaque semaine selon les devoirs en cours ! Cette fois-ci, cinq choses à réviser : un virelangue à dompter, la dictée « La rentrée des classes (2) », les nombres en lettres jusqu'au milliard, les types de phrases, et les tables de multiplication de 2 à 5."},
@@ -2034,29 +2034,39 @@ function loadState(){
   if(state.parentPin===undefined) state.parentPin=null;
   pruneStaleItemState();
 }
-/* La fiche "Devoirs" est réécrite chaque semaine : ses identifiants d'exercice
-   sont réutilisés d'une semaine à l'autre pour des questions différentes — donc
-   parfois avec une forme d'état différente ("parts": [...] pour un exercice
-   normal, vs "resolved"/"correct" pour un exercice spécial comme "ranger ces
-   nombres"). Un identifiant recyclé d'une forme à l'autre garde la vieille
-   valeur enregistrée, incompatible avec ce que le code actuel attend, et fait
-   planter la page. On supprime donc, à chaque chargement, toute réponse dont
-   l'identifiant n'existe plus OU dont la forme ne correspond plus à
-   l'exercice actuellement défini sous cet identifiant. */
+/* La fiche "Devoirs" est réécrite chaque semaine, en réutilisant souvent les
+   mêmes identifiants d'exercice (f9e1a, f9e2a...) pour des QUESTIONS
+   différentes. Une réponse enregistrée la semaine dernière sous un identifiant
+   recyclé n'a donc plus rien à voir avec la nouvelle question posée sous ce
+   même identifiant — au mieux elle est simplement fausse (mauvaise fiche
+   affichée comme "déjà faite"), au pire sa forme ne correspond plus du tout
+   (plantage). On calcule donc, pour chaque fiche, une empreinte de son
+   contenu actuel ; si elle diffère de celle enregistrée lors de la dernière
+   visite, TOUTES les réponses de cette fiche repartent de zéro avant même
+   d'être affichées (jamais de mélange partiel). Seules les fiches marquées
+   rotating:true (la fiche "Devoirs") sont concernées — les fiches 1 à 8 ne
+   changent jamais, et leurs étoiles restent acquises normalement. */
+function hashText(s){
+  let h = 0;
+  for(let i=0;i<s.length;i++){ h = (Math.imul(31, h) + s.charCodeAt(i)) | 0; }
+  return h.toString(36);
+}
+function resetFicheIfContentChanged(fiche){
+  try{
+    const sig = hashText(JSON.stringify(fiche.exercises));
+    if(!state.ficheMeta[fiche.id]) state.ficheMeta[fiche.id] = {};
+    if(state.ficheMeta[fiche.id].contentSig === sig) return false;
+    const prefix = 'f'+fiche.id+'e';
+    Object.keys(state.items).forEach(id=>{ if(id.indexOf(prefix)===0) delete state.items[id]; });
+    state.ficheMeta[fiche.id].contentSig = sig;
+    return true;
+  }catch(e){ return false; }
+}
 function pruneStaleItemState(){
   try{
-    const currentItems = new Map();
-    FICHES.forEach(f=>f.exercises.forEach(ex=>ex.items.forEach(it=>currentItems.set(it.id, it))));
-    let removed = false;
-    Object.keys(state.items).forEach(id=>{
-      const it = currentItems.get(id);
-      const st = state.items[id];
-      const shapeOk = it && (it.custom
-        ? !Array.isArray(st.parts)
-        : (Array.isArray(st.parts) && st.parts.length === it.parts.length));
-      if(!shapeOk){ delete state.items[id]; removed = true; }
-    });
-    if(removed) saveState();
+    let changed = false;
+    FICHES.forEach(f=>{ if(f.rotating && resetFicheIfContentChanged(f)) changed = true; });
+    if(changed) saveState();
   }catch(e){}
 }
 function saveState(){
