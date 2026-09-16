@@ -32,6 +32,7 @@
   --f7:#2E7D66; --f7-soft:#D9EEE5;
   --f8:#1F84A3; --f8-soft:#D6EBF1;
   --f9:#77883A; --f9-soft:#E6EAD3;
+  --f10:#95447C; --f10-soft:#F4DCEA;
   --cat-outline:#332640;
   --card-ink:#332640; --card-ink-soft:#5B4B68; --card-chip-bg:#F6EEDF;
   --font-display:'Delius','Segoe Print','Bradley Hand',cursive;
@@ -58,7 +59,7 @@
     --shadow: 0 10px 30px -8px rgba(0,0,0,.6);
     --shadow-sm: 0 4px 14px -6px rgba(0,0,0,.55);
     --f1-soft:#4A3A22; --f2-soft:#4A3427; --f3-soft:#452A35;
-    --f4-soft:#392946; --f5-soft:#2C2A49; --f6-soft:#212C48; --f7-soft:#1E3A30; --f8-soft:#1B3640; --f9-soft:#33401E;
+    --f4-soft:#392946; --f5-soft:#2C2A49; --f6-soft:#212C48; --f7-soft:#1E3A30; --f8-soft:#1B3640; --f9-soft:#33401E; --f10-soft:#452A3E;
   }
 }
 :root[data-theme="dark"]{
@@ -69,7 +70,7 @@
   --star-color:#F0C15A;
   --shadow: 0 10px 30px -8px rgba(0,0,0,.6); --shadow-sm: 0 4px 14px -6px rgba(0,0,0,.55);
   --f1-soft:#4A3A22; --f2-soft:#4A3427; --f3-soft:#452A35;
-  --f4-soft:#392946; --f5-soft:#2C2A49; --f6-soft:#212C48; --f7-soft:#1E3A30; --f8-soft:#1B3640; --f9-soft:#33401E;
+  --f4-soft:#392946; --f5-soft:#2C2A49; --f6-soft:#212C48; --f7-soft:#1E3A30; --f8-soft:#1B3640; --f9-soft:#33401E; --f10-soft:#452A3E;
 }
 
 /* ============ RESET / BASE ============ */
@@ -666,7 +667,7 @@ img,svg{ display:block; max-width:100%; }
           <div class="cat-slot hc-right"><svg class="cat-svg" id="heroCatRight" viewBox="0 0 160 160"></svg></div>
         </div>
         <h1>Le carnet d'étoiles</h1>
-        <p>Nougat, Mistigri, Croquette, Prof Ronron, Bidouille, Nouille, Praline, Goutte et le petit nouveau Fripouille (un capybara, pas un chat, mais chut, il s'est incrusté quand même) t'attendent pour allumer neuf étoiles avant la rentrée en CM1&nbsp;! Chaque île a sa propre mascotte, avec ses conseils et ses petites manies. Choisis une île de ciel pour commencer.</p>
+        <p>Nougat, Mistigri, Croquette, Prof Ronron, Bidouille, Nouille, Praline, Goutte, Virgule et le petit nouveau Fripouille (un capybara, pas un chat, mais chut, il s'est incrusté quand même) t'attendent pour allumer dix étoiles avant la rentrée en CM1&nbsp;! Chaque île a sa propre mascotte, avec ses conseils et ses petites manies. Choisis une île de ciel pour commencer.</p>
         <div class="speech" id="heroSpeech" aria-live="polite"></div>
       </div>
       <div class="map-wrap">
@@ -706,8 +707,8 @@ img,svg{ display:block; max-width:100%; }
         <circle cx="50" cy="42" r="32" fill="var(--star-color)" stroke="#332640" stroke-width="2"/>
         <path d="M50 22l6.5 14.3 15.5 1.6-11.7 10.6 3.4 15.5L50 55.9 36.3 64l3.4-15.5-11.7-10.6 15.5-1.6z" fill="var(--paper-card)"/>
       </svg>
-      <h2>Neuf étoiles allumées !</h2>
-      <p>Bravo Madeline, tu as terminé les neuf fiches. Toute la bande (chats et capybara réunis) est fière de toi — le CM1 n'a qu'à bien se tenir !</p>
+      <h2>Dix étoiles allumées !</h2>
+      <p>Bravo Madeline, tu as terminé les dix fiches. Toute la bande (chats et capybara réunis) est fière de toi — le CM1 n'a qu'à bien se tenir !</p>
       <button class="modal-close" id="finaleCloseBtn" type="button">Retourner voir le ciel</button>
     </div>
   </div>
@@ -872,6 +873,7 @@ function coinRowSvg(coins){
 }
 
 const OPT_TYPE = [ {v:'d',l:'Déclarative'}, {v:'i',l:'Interrogative'}, {v:'m',l:'Impérative'}, {v:'e',l:'Exclamative'} ];
+const OPT_PONCT = [ {v:'pt',l:'.'}, {v:'pi',l:'?'}, {v:'pe',l:'!'} ];
 const OPT_FORME = [ {v:'aff',l:'Affirmative'}, {v:'neg',l:'Négative'} ];
 const OPT_CMP = [ {v:'lt',l:'<'}, {v:'gt',l:'>'}, {v:'eq',l:'='} ];
 const OPT_RULE = [ {v:'num',l:'numérateur commun'}, {v:'den',l:'dénominateur commun'} ];
@@ -890,7 +892,8 @@ null,
 '<rect x="6" y="19" width="36" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="2.4"/><line x1="13" y1="19" x2="13" y2="24" stroke="currentColor" stroke-width="2"/><line x1="20" y1="19" x2="20" y2="27" stroke="currentColor" stroke-width="2"/><line x1="27" y1="19" x2="27" y2="24" stroke="currentColor" stroke-width="2"/><line x1="34" y1="19" x2="34" y2="27" stroke="currentColor" stroke-width="2"/>',
 '<line x1="24" y1="9" x2="24" y2="34" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><line x1="10" y1="15" x2="38" y2="15" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M10 15 L5 27 A7 7 0 0 0 15 27 Z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M38 15 L33 27 A7 7 0 0 0 43 27 Z" fill="none" stroke="currentColor" stroke-width="2"/><rect x="17" y="35" width="14" height="4" rx="1" fill="currentColor"/>',
 '<path d="M14 8 L34 8 L29.5 39 Q24 43 18.5 39 Z" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"/><path d="M18.7 25 L29.3 25 L27 38 Q24 40.5 21 38 Z" fill="currentColor" opacity=".38"/><line x1="16.3" y1="16" x2="31.7" y2="16" stroke="currentColor" stroke-width="1.6" opacity=".55"/>',
-'<path d="M8 14 Q24 8 24 14 Q24 8 40 14 L40 36 Q24 30 24 36 Q24 30 8 36 Z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><path d="M18 24 L23 29 L32 18" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>'
+'<path d="M8 14 Q24 8 24 14 Q24 8 40 14 L40 36 Q24 30 24 36 Q24 30 8 36 Z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><path d="M18 24 L23 29 L32 18" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>',
+'<circle cx="10" cy="33" r="3.4" fill="currentColor"/><path d="M19.5 17.5 a4.6 4.3 0 1 1 7.8 3 c-2.1 1.8-2.9 2.9-2.9 5.2" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><circle cx="24.3" cy="33" r="3.4" fill="currentColor"/><line x1="38" y1="14" x2="37.2" y2="27" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/><circle cx="37" cy="33" r="3.4" fill="currentColor"/>'
 ];
 function badgeSvg(n){ return '<svg viewBox="0 0 48 48">'+BADGES[n]+'</svg>'; }
 
@@ -1012,6 +1015,19 @@ const CATS = {
       ficheDone:["Fiche terminée, et personne n'a eu besoin de s'énerver. Exactement comme j'aime.","Bravo, toutes les révisions de la semaine sont cochées !","Tu termines cette fiche avec un calme qui forcerait presque mon admiration.","Devoirs révisés, mission accomplie, je retourne à ma sieste l'esprit tranquille.","Fiche bouclée sans un seul coup de stress, championne.","Toutes les matières de la semaine, révisées d'une traite. Chapeau, ou plutôt, chapeau de paille sur mon nez.","Tu sors de cette fiche prête pour tes devoirs, et moi je suis prêt pour un bon bain.","Bravo, grande réviseuse de la semaine ! Même les canards de ma mare applaudiraient.","Une fiche de plus dans ton beau parcours vers le CM1, révisée dans le calme absolu.","Mission de la semaine accomplie. Je savais que tu y arriverais, je ne m'inquiète jamais, de toute façon."],
       reflections:["Mon secret pour une dictée réussie : je relis chaque mot à voix haute, lettre par lettre, avant même de l'écrire.","Vrai ou faux : je suis le rongeur le plus grand du monde. Vrai ! Mais je n'ai jamais rongé un seul cahier, promis.","Pour écrire un grand nombre en lettres, je repère d'abord les espaces : elles séparent les classes (mille, millions, milliards).","« Mille » ne prend JAMAIS de -s. Même si j'en avais mille, je dirais toujours « mille », pas « milles ».","J'adore me prélasser dans l'eau chaude pendant des heures. Un peu comme un exercice de calcul, en fait : ni trop vite, ni trop lentement.","Astuce grammaire : pour trouver le type d'une phrase, je regarde toujours la ponctuation de fin en premier. Un gros indice, presque toujours juste.","Mes petites oreilles n'entendent pas grand-chose de loin, mais je n'ai jamais raté une table de multiplication pour autant.","La table de 5 se termine toujours par 0 ou 5. Aussi régulier que mes heures de sieste.","« Million » et « milliard » sont des mots comme les autres : ils prennent un -s au pluriel (deux millions, trois milliards), contrairement à « mille ».","Je m'entends avec tous les autres animaux de la mare, même les plus grognons. Un peu comme les devoirs : il y en a pour tous les goûts, et on finit toujours par s'entendre avec eux.","Pour une phrase impérative, le verbe n'a pas besoin de sujet : « Range ta chambre ! » Personne n'a besoin de dire « tu » pour comprendre.","Un jour, j'ai essayé de dire le virelangue de la semaine à un ami flamand rose. Résultat : deux minutes de fou rire, zéro réussite.","Je ne me presse jamais, jamais, jamais. Résultat : je me trompe moins souvent qu'on ne le croit.","Mon nez est plat, large, et je m'en sers pour à peu près tout, même pour pousser mes affaires de devoirs vers toi. Allez, au travail !"]
     }
+  },
+  virgule:{
+    name:'Virgule', fur:'#A9819F', belly:'#F5E8EF', accent:'var(--f10)', accessory:'speechbubble',
+    blurb:"Bonjour, bonjour ! Moi c'est Virgule, et sur scène comme dans la vie, je ne dis jamais une phrase sans y mettre le ton juste : une histoire à raconter, une question qui me démange, un cri d'enthousiasme, ou un ordre bien senti. Avec moi, chaque phrase porte un costume — à toi de deviner lequel !",
+    tip:"Mon secret de comédienne : je regarde toujours la ponctuation de la fin en premier — un point, un point d'interrogation, un point d'exclamation, ou rien de spécial devant un ordre. Elle me dit presque tout de suite quel ton prendre !",
+    pools:{
+      correctFirst:["Bravo, quelle réplique parfaite !","Miaou-gnifique, exactement le bon ton !","Standing ovation pour cette réponse !","Pile la bonne ponctuation, sans hésiter !","Tu as trouvé la bonne réplique du premier coup, bravo !","Rideau ! Cette réponse mérite des applaudissements.","Exact, tu as l'oreille d'une vraie comédienne !","Parfait, pas une virgule de travers !","Bravo, tu connais ton texte par cœur !","Miaou, quelle repartie brillante !","Juste, net, et avec le bon ton en plus !","Tu mérites le premier rôle avec une réponse pareille !"],
+      wrong:["Oh, le rideau est tombé un peu tôt sur celle-là ! Ce n'est pas grave, on la revoit avec Papa ou Maman.","Pas tout à fait la bonne réplique, mais quel bel élan de comédienne ! Un adulte t'aidera.","Raté de peu, mais même moi j'oublie parfois mon texte. On corrige ça avec Papa ou Maman.","Ce n'est pas la bonne ponctuation cette fois, rien de grave. À revoir avec un adulte.","Miaou, cette phrase m'a joué un tour à moi aussi la première fois ! Papa ou Maman t'expliquera.","Pas cette réplique-là, mais bel essai sur scène ! On revoit ça ensemble.","Petit trou de mémoire, ça arrive aux meilleures actrices. Un adulte t'aidera à ajuster.","Raté, mais avec un tel aplomb que je t'aurais applaudie quand même ! À corriger avec Papa ou Maman.","Pas gagné, mais ton énergie de comédienne était parfaite. On note ça pour la correction.","Oups, mauvais costume pour cette phrase ! Ce n'est pas grave, un adulte t'expliquera.","Pas la bonne réponse, mais quelle belle audition ! Papa ou Maman corrigera ça avec toi.","Ce ton ne collait pas tout à fait à la phrase, rien de dramatique. À revoir avec un adulte.","Raté cette fois, mais le spectacle continue ! On corrige ça avec Papa ou Maman.","Pas cette réplique, mais tu as osé monter sur scène, bravo pour ça. Un adulte t'aidera."],
+      exerciseDone:["Une scène de plus jouée à la perfection, ou presque !","Rideau sur cet exercice, bien joué !","Encore une réplique bien trouvée.","Tu progresses de scène en scène.","Miaou, quel talent qui s'affine !","Un exercice de plus dans ton grand carnet de comédienne.","Belle performance sur cet exercice !","Ça avance très bien, bravo artiste.","Un de plus, et toujours avec le bon ton.","Applaudissements pour cet exercice terminé !"],
+      ficheWelcome:["Bienvenue sur ma scène ! Aujourd'hui, on joue avec les types de phrases.","Miaou, sors ton meilleur ton d'actrice, le spectacle commence.","Quatre costumes de phrases t'attendent aujourd'hui : à toi de les reconnaître.","J'ai préparé plein de répliques rigolotes pour toi.","Prête à raconter, questionner, t'exclamer et donner des ordres ?","Cette fiche est mon théâtre préféré, plein de ponctuation à démasquer.","On lève le rideau : chaque phrase a son propre ton, trouve-le !","Installe-toi bien, aujourd'hui la ponctuation raconte toute l'histoire.","Prête à devenir une grande spécialiste des types de phrases ?","En scène ! On commence doucement, une phrase à la fois."],
+      ficheDone:["Rideau final, quelle belle représentation !","Bravo, tu connais maintenant tous les costumes de phrases par cœur !","Standing ovation, tu as tout déchiffré aujourd'hui !","Tu sors de scène avec les honneurs, bravo grande comédienne !","Miaou, plus une seule phrase ne peut te surprendre !","Fiche bouclée avec le sens du drame parfait !","Tu as trouvé le bon ton du début à la fin, chapeau !","Le public est debout, bravo pour cette fiche terminée !","Une fiche de plus dans ton grand répertoire, bravo !","Tu quittes la scène sous les applaudissements, bien mérité !"],
+      reflections:["Pour trouver le type d'une phrase, je regarde toujours sa ponctuation de fin en premier — c'est mon indice le plus sûr.","Une phrase déclarative raconte ou explique, tout simplement, et se termine par un point. Rien de plus discret qu'un point.","Une phrase interrogative pose une question. À l'oral, ma voix monte à la fin — essaie, tu sentiras la différence !","Une phrase exclamative, c'est mon type préféré : elle crie une émotion, et je ne me prive jamais de l'interpréter avec les moustaches qui tremblent.","Une phrase impérative donne un ordre ou un conseil, et son verbe n'a pas besoin de sujet — comme quand je dis « Ronronne ! » sans jamais préciser à qui je parle.","Un jour, sur scène, j'ai transformé toutes mes répliques déclaratives en exclamatives par erreur. Le public a adoré, mais ce n'était pas prévu !","Astuce de comédienne : je peux dire la même phrase avec quatre tons différents, et elle change presque de sens à chaque fois. Essaie avec « tu ranges ta chambre ».","Le point d'exclamation, c'est ma ponctuation fétiche. Je l'utiliserais bien à la fin de chaque phrase, mais il paraît que ce n'est pas très académique.","Je rêve parfois d'écrire une pièce de théâtre entièrement en phrases interrogatives. Personne ne répondrait à personne, ce serait chaotique et magnifique.","Mon secret pour ne jamais confondre exclamative et interrogative : je relis la phrase à voix haute. L'émotion ou la question s'entend tout de suite."]
+    }
   }
 };
 
@@ -1040,6 +1056,8 @@ function catAccessorySvg(type, accentExpr){
       return '<g class="cat-accessory"><rect x="117" y="119" width="17" height="14" rx="3" fill="'+accentExpr+'"/><path d="M134 123 L145 116" stroke="'+accentExpr+'" stroke-width="2.8" stroke-linecap="round"/><circle cx="146" cy="115" r="1.8" fill="'+accentExpr+'"/><path d="M118 120 Q111 116 115 109" fill="none" stroke="'+accentExpr+'" stroke-width="2.2" stroke-linecap="round"/></g>';
     case 'pencil':
       return '<g class="cat-accessory"><path d="M116 141 L136 115" stroke="'+accentExpr+'" stroke-width="7" stroke-linecap="round"/><path d="M136 115 L142 108 L146 114 L140 121 Z" fill="'+accentExpr+'"/><path d="M116 141 L120 144 L123 140 L119 137 Z" fill="rgba(255,255,255,.7)"/></g>';
+    case 'speechbubble':
+      return '<g class="cat-accessory"><rect x="113" y="106" width="34" height="23" rx="6" fill="'+accentExpr+'"/><path d="M121 129 L118 138 L129 129 Z" fill="'+accentExpr+'"/><line x1="130" y1="112" x2="130" y2="121" stroke="rgba(255,255,255,.85)" stroke-width="2.4" stroke-linecap="round"/><circle cx="130" cy="125" r="1.6" fill="rgba(255,255,255,.85)"/></g>';
     default: return '';
   }
 }
@@ -1089,6 +1107,7 @@ function catMarkup(catId){
     (acc==='scale' ? catAccessorySvg('scale', ax) : '')+
     (acc==='wateringcan' ? catAccessorySvg('wateringcan', ax) : '')+
     (acc==='pencil' ? catAccessorySvg('pencil', ax) : '')+
+    (acc==='speechbubble' ? catAccessorySvg('speechbubble', ax) : '')+
   '</g>';
 }
 function capybaraMarkup(catId){
@@ -2016,6 +2035,119 @@ const FICHES = [
     "Exercice 8 (tables de 2 et 3) : a) 14 — b) 18 — c) 18 — d) 24.",
     "Exercice 9 (tables de 4 et 5) : a) 24 — b) 36 — c) 35 — d) 40.",
     "Exercice 10 (entraînement supplémentaire) : a) l'attention — b) six cent dix mille — c) interrogative — d) 28."
+  ]
+},
+{
+  id:10, color:'f10', badge:10, cat:'virgule', title:"Les types de phrases",
+  eyebrow:"Grammaire", desc:"Reconnaître une phrase déclarative, interrogative, exclamative ou impérative, choisir la bonne ponctuation, et savoir passer de l'une à l'autre.",
+  lesson:[
+    {k:'note', text:"Il existe quatre types de phrases. On les reconnaît surtout à leur ponctuation de fin, et à ce qu'elles cherchent à faire : raconter, questionner, s'exclamer, ou donner un ordre."},
+    {k:'rule', tag:'Type de phrase', title:'Déclarative', desc:"Elle raconte, explique ou donne une information. Elle se termine par un point.", ex:"Madeline retrouve ses amies à la récréation."},
+    {k:'rule', tag:'Type de phrase', title:'Interrogative', desc:"Elle pose une question. Elle se termine par un point d'interrogation.", ex:"As-tu rangé ton cahier ?"},
+    {k:'rule', tag:'Type de phrase', title:'Exclamative', desc:"Elle exprime une émotion forte (surprise, joie, colère...). Elle se termine par un point d'exclamation.", ex:"Quelle belle rentrée !"},
+    {k:'rule', tag:'Type de phrase', title:'Impérative (ou injonctive)', desc:"Elle donne un ordre, un conseil ou une consigne. Le verbe n'a pas de sujet exprimé.", ex:"Range ton cartable."},
+    {k:'tip', text:"Astuce : pour trouver le type d'une phrase, je regarde d'abord sa ponctuation de fin — c'est souvent un gros indice. Puis je vérifie : elle raconte (déclarative), elle questionne (interrogative), elle s'exclame (exclamative), ou elle donne un ordre sans sujet (impérative) ?"},
+    {k:'table', headers:['Type','Ponctuation','Exemple'], rows:[
+      ['Déclarative','.','Madeline aime lire.'],
+      ['Interrogative','?','Aimes-tu lire ?'],
+      ['Exclamative','!','Comme cette histoire est belle !'],
+      ['Impérative','. ou !','Lis ce livre.']
+    ]},
+    {k:'tag', text:"Comment transformer une phrase"},
+    {k:'steps', title:"Passer d'une déclarative à une interrogative", steps:[
+      "Je pars de la phrase déclarative : « Tu as fini tes devoirs. »",
+      "1re façon : j'ajoute « Est-ce que » devant, et un point d'interrogation à la fin → « Est-ce que tu as fini tes devoirs ? »",
+      "2e façon : j'inverse le sujet et le verbe, avec un tiret entre eux → « As-tu fini tes devoirs ? »",
+      "3e façon (surtout à l'oral) : je garde le même ordre des mots, ma voix monte à la fin, et j'ajoute un point d'interrogation → « Tu as fini tes devoirs ? »"
+    ]},
+    {k:'tip', text:"Pour transformer une phrase en impérative, j'enlève le sujet (tu, nous, vous) et je garde juste le verbe conjugué. Attention : pour les verbes en -ER, le « tu » perd son -s → « tu ranges » devient « Range ! », pas « Ranges ! »."},
+    {k:'tag', text:"Attention aux pièges !"},
+    {k:'tip', text:"« Quelle belle journée ! » commence comme une question (« Quelle... »), mais ce n'est pas une interrogative : elle ne pose pas de question, elle s'exclame. Elle se termine par un point d'exclamation, donc c'est une EXCLAMATIVE."},
+    {k:'tip', text:"Dans une phrase impérative, il n'y a jamais de sujet écrit devant le verbe : on dit « Range ta chambre » et non « Tu ranges ta chambre » (déclarative) ni « Ranges-tu ta chambre ? » (interrogative)."}
+  ],
+  exercises:[
+    {num:1, titre:"Quel est le type de la phrase ?", etoiles:1, consigne:"Choisis le bon type pour chaque phrase.", items:[
+      {id:'f10e1a', t:tmpl("a) « Madeline range ses affaires avant de partir. » {0}"), parts:[mcq(OPT_TYPE,'d')]},
+      {id:'f10e1b', t:tmpl("b) « Quelle heure est-il ? » {0}"), parts:[mcq(OPT_TYPE,'i')]},
+      {id:'f10e1c', t:tmpl("c) « Comme ce gâteau est délicieux ! » {0}"), parts:[mcq(OPT_TYPE,'e')]},
+      {id:'f10e1d', t:tmpl("d) « Ferme la porte, s'il te plaît. » {0}"), parts:[mcq(OPT_TYPE,'m')]},
+      {id:'f10e1e', t:tmpl("e) « Les vacances commencent bientôt. » {0}"), parts:[mcq(OPT_TYPE,'d')]}
+    ]},
+    {num:2, titre:"Quelle ponctuation choisir ?", etoiles:1, consigne:"Complète chaque phrase avec le bon signe de ponctuation.", items:[
+      {id:'f10e2a', t:tmpl("a) Veux-tu venir jouer avec moi {0}"), parts:[mcq(OPT_PONCT,'pi')]},
+      {id:'f10e2b', t:tmpl("b) Le soleil brille aujourd'hui{0}"), parts:[mcq(OPT_PONCT,'pt')]},
+      {id:'f10e2c', t:tmpl("c) Quelle surprise incroyable{0}"), parts:[mcq(OPT_PONCT,'pe')]},
+      {id:'f10e2d', t:tmpl("d) As-tu pensé à prendre ton parapluie{0}"), parts:[mcq(OPT_PONCT,'pi')]}
+    ]},
+    {num:3, titre:"Reconnaître à l'écrit", etoiles:1, consigne:"Choisis la phrase demandée.", items:[
+      {id:'f10e3a', t:tmpl("a) Laquelle est une phrase déclarative ? {0}"), parts:[mcq([{v:'a',l:'Le chat dort sur le canapé.'},{v:'b',l:'Le chat dort-il sur le canapé ?'},{v:'c',l:'Quel chat somnolent !'},{v:'d',l:'Laisse dormir le chat.'}],'a')]},
+      {id:'f10e3b', t:tmpl("b) Laquelle est une phrase interrogative ? {0}"), parts:[mcq([{v:'a',l:'Le train arrive en retard.'},{v:'b',l:'Le train arrive-t-il en retard ?'},{v:'c',l:'Quel retard incroyable !'},{v:'d',l:'Dépêche-toi, le train arrive.'}],'b')]},
+      {id:'f10e3c', t:tmpl("c) Laquelle est une phrase exclamative ? {0}"), parts:[mcq([{v:'a',l:'Cette histoire est passionnante.'},{v:'b',l:'Cette histoire est-elle passionnante ?'},{v:'c',l:'Comme cette histoire est passionnante !'},{v:'d',l:'Raconte-moi cette histoire.'}],'c')]},
+      {id:'f10e3d', t:tmpl("d) Laquelle est une phrase impérative ? {0}"), parts:[mcq([{v:'a',l:'Tu écoutes la maîtresse.'},{v:'b',l:'Écoutes-tu la maîtresse ?'},{v:'c',l:'Quelle maîtresse patiente !'},{v:'d',l:'Écoute la maîtresse.'}],'d')]}
+    ]},
+    {num:4, titre:"Vrai ou faux ?", etoiles:2, consigne:"", items:[
+      {id:'f10e4a', t:tmpl("a) Une phrase interrogative se termine toujours par un point d'interrogation. {0}"), parts:[mcq(OPT_VRAIFAUX,'v')]},
+      {id:'f10e4b', t:tmpl("b) Dans une phrase impérative, le sujet est toujours écrit avant le verbe. {0}"), parts:[mcq(OPT_VRAIFAUX,'f')]},
+      {id:'f10e4c', t:tmpl("c) « Range ta chambre ! » est une phrase déclarative. {0}"), parts:[mcq(OPT_VRAIFAUX,'f')]},
+      {id:'f10e4d', t:tmpl("d) « Est-ce que tu viens ? » est une phrase interrogative. {0}"), parts:[mcq(OPT_VRAIFAUX,'v')]},
+      {id:'f10e4e', t:tmpl("e) Toutes les phrases qui commencent par « Quel » ou « Quelle » sont des questions. {0}"), parts:[mcq(OPT_VRAIFAUX,'f')]}
+    ]},
+    {num:5, titre:"Transforme en interrogative", etoiles:2, consigne:"Choisis la bonne transformation.", items:[
+      {id:'f10e5a', t:tmpl("a) « Tu aimes le chocolat. » Sa version interrogative : {0}"), parts:[mcq([{v:'a',l:'Tu aimes le chocolat.'},{v:'b',l:'Aimes-tu le chocolat ?'},{v:'c',l:'Quel chocolat délicieux !'},{v:'d',l:'Mange du chocolat.'}],'b')]},
+      {id:'f10e5b', t:tmpl("b) « Elle habite à Paris. » Sa version interrogative : {0}"), parts:[mcq([{v:'a',l:'Habite-t-elle à Paris ?'},{v:'b',l:'Elle habite à Paris.'},{v:'c',l:'Comme Paris est loin !'},{v:'d',l:'Habite à Paris.'}],'a')]},
+      {id:'f10e5c', t:tmpl("c) « Vous avez terminé vos devoirs. » Sa version interrogative : {0}"), parts:[mcq([{v:'a',l:'Avez-vous terminé vos devoirs ?'},{v:'b',l:'Terminez vos devoirs.'},{v:'c',l:'Vous avez terminé vos devoirs.'},{v:'d',l:'Quels devoirs interminables !'}],'a')]},
+      {id:'f10e5d', t:tmpl("d) « Il fait beau aujourd'hui. » Sa version interrogative : {0}"), parts:[mcq([{v:'a',l:"Il fait beau aujourd'hui."},{v:'b',l:"Fait-il beau aujourd'hui ?"},{v:'c',l:'Quel beau temps !'},{v:'d',l:'Profite du beau temps.'}],'b')]}
+    ]},
+    {num:6, titre:"Transforme en exclamative", etoiles:2, consigne:"Choisis la bonne transformation.", items:[
+      {id:'f10e6a', t:tmpl("a) « Ce paysage est beau. » Sa version exclamative : {0}"), parts:[mcq([{v:'a',l:'Ce paysage est-il beau ?'},{v:'b',l:'Comme ce paysage est beau !'},{v:'c',l:'Regarde ce paysage.'},{v:'d',l:'Ce paysage est beau.'}],'b')]},
+      {id:'f10e6b', t:tmpl("b) « Ce film est drôle. » Sa version exclamative : {0}"), parts:[mcq([{v:'a',l:'Que ce film est drôle !'},{v:'b',l:'Ce film est-il drôle ?'},{v:'c',l:'Regarde ce film.'},{v:'d',l:'Ce film est drôle.'}],'a')]},
+      {id:'f10e6c', t:tmpl("c) « Cette nouvelle est incroyable. » Sa version exclamative : {0}"), parts:[mcq([{v:'a',l:'Cette nouvelle est incroyable.'},{v:'b',l:'Cette nouvelle est-elle incroyable ?'},{v:'c',l:'Quelle nouvelle incroyable !'},{v:'d',l:'Annonce cette nouvelle.'}],'c')]},
+      {id:'f10e6d', t:tmpl("d) « Ce gâteau est délicieux. » Sa version exclamative : {0}"), parts:[mcq([{v:'a',l:'Ce gâteau est-il délicieux ?'},{v:'b',l:'Mange ce gâteau.'},{v:'c',l:'Ce gâteau est délicieux.'},{v:'d',l:'Comme ce gâteau est délicieux !'}],'d')]}
+    ]},
+    {num:7, titre:"Transforme en impérative", etoiles:2, consigne:"Choisis la bonne transformation.", items:[
+      {id:'f10e7a', t:tmpl("a) « Tu ranges ta chambre. » Sa version impérative : {0}"), parts:[mcq([{v:'a',l:'Tu ranges ta chambre.'},{v:'b',l:'Ranges-tu ta chambre ?'},{v:'c',l:'Range ta chambre.'},{v:'d',l:'Quelle chambre bien rangée !'}],'c')]},
+      {id:'f10e7b', t:tmpl("b) « Tu fais tes devoirs. » Sa version impérative : {0}"), parts:[mcq([{v:'a',l:'Fais tes devoirs.'},{v:'b',l:'Fais-tu tes devoirs ?'},{v:'c',l:'Tu fais tes devoirs.'},{v:'d',l:'Quels devoirs interminables !'}],'a')]},
+      {id:'f10e7c', t:tmpl("c) « Tu es sage. » Sa version impérative : {0}"), parts:[mcq([{v:'a',l:'Es-tu sage ?'},{v:'b',l:'Tu es sage.'},{v:'c',l:'Sois sage.'},{v:'d',l:'Quelle sagesse !'}],'c')]},
+      {id:'f10e7d', t:tmpl("d) « Tu manges ta soupe. » Sa version impérative : {0}"), parts:[mcq([{v:'a',l:'Tu manges ta soupe.'},{v:'b',l:'Manges-tu ta soupe ?'},{v:'c',l:'Quelle bonne soupe !'},{v:'d',l:'Mange ta soupe.'}],'d')]}
+    ]},
+    {num:8, titre:"Piège : exclamative ou interrogative ?", etoiles:3, consigne:"Certaines phrases commencent pareil, mais n'ont pas le même type !", items:[
+      {id:'f10e8a', t:tmpl("a) « Quelle heure est-il ? » {0}"), parts:[mcq(OPT_TYPE,'i')]},
+      {id:'f10e8b', t:tmpl("b) « Quelle belle surprise ! » {0}"), parts:[mcq(OPT_TYPE,'e')]},
+      {id:'f10e8c', t:tmpl("c) « Comme tu as grandi ! » {0}"), parts:[mcq(OPT_TYPE,'e')]},
+      {id:'f10e8d', t:tmpl("d) « Combien de bonbons veux-tu ? » {0}"), parts:[mcq(OPT_TYPE,'i')]}
+    ]},
+    {num:9, titre:"Défi : le type ET la ponctuation", etoiles:3, consigne:"Complète la ponctuation, puis trouve le type de la phrase.", items:[
+      {id:'f10e9a', t:tmpl("a) « Madeline adore lire{0} » C'est une phrase {1}"), parts:[mcq(OPT_PONCT,'pt'), mcq(OPT_TYPE,'d')]},
+      {id:'f10e9b', t:tmpl("b) « As-tu vu ce film{0} » C'est une phrase {1}"), parts:[mcq(OPT_PONCT,'pi'), mcq(OPT_TYPE,'i')]},
+      {id:'f10e9c', t:tmpl("c) « Quelle belle journée{0} » C'est une phrase {1}"), parts:[mcq(OPT_PONCT,'pe'), mcq(OPT_TYPE,'e')]},
+      {id:'f10e9d', t:tmpl("d) « Le train part à huit heures{0} » C'est une phrase {1}"), parts:[mcq(OPT_PONCT,'pt'), mcq(OPT_TYPE,'d')]}
+    ]},
+    {num:10, titre:"🔁 Entraînement supplémentaire", etoiles:2, consigne:"Encore un peu de tout, pour finir en beauté.", items:[
+      {id:'f10e10a', t:tmpl("a) « Ne cours pas dans le couloir. » {0}"), parts:[mcq(OPT_TYPE,'m')]},
+      {id:'f10e10b', t:tmpl("b) Quelle est la version interrogative de « Tu as soif. » ? {0}"), parts:[mcq([{v:'a',l:'Tu as soif.'},{v:'b',l:'As-tu soif ?'},{v:'c',l:'Quelle soif !'},{v:'d',l:"Bois de l'eau."}],'b')]},
+      {id:'f10e10c', t:tmpl("c) « Comme cette histoire est passionnante{0} »"), parts:[mcq(OPT_PONCT,'pe')]},
+      {id:'f10e10d', t:tmpl("d) Une phrase déclarative se termine toujours par un point. {0}"), parts:[mcq(OPT_VRAIFAUX,'v')]},
+      {id:'f10e10e', t:tmpl("e) Quelle est la version impérative de « Tu fermes la fenêtre. » ? {0}"), parts:[mcq([{v:'a',l:'Fermes-tu la fenêtre ?'},{v:'b',l:'Tu fermes la fenêtre.'},{v:'c',l:'Ferme la fenêtre.'},{v:'d',l:'Quelle fenêtre fermée !'}],'c')]}
+    ]},
+    {num:11, titre:"✍️ Invente tes phrases", etoiles:1, consigne:"Écris toi-même une phrase de chaque type, puis compare-la avec l'astuce de vérification.", items:[
+      {id:'f10e11a', t:tmpl("a) Écris une phrase déclarative sur la rentrée des classes. {0}"), parts:[write(null,"Ta phrase doit raconter ou expliquer quelque chose, et se terminer par un point.")]},
+      {id:'f10e11b', t:tmpl("b) Écris une phrase interrogative pour demander l'heure à quelqu'un. {0}"), parts:[write(null,"Ta phrase doit poser une question, et se terminer par un point d'interrogation ( ? ).")]},
+      {id:'f10e11c', t:tmpl("c) Écris une phrase exclamative pour exprimer une grande joie. {0}"), parts:[write(null,"Ta phrase doit exprimer une émotion forte, et se terminer par un point d'exclamation ( ! ).")]},
+      {id:'f10e11d', t:tmpl("d) Écris une phrase impérative pour donner un conseil à un ami. {0}"), parts:[write(null,"Ta phrase doit donner un ordre ou un conseil, sans sujet écrit devant le verbe (exemple : « Fais attention ! » et non « Tu fais attention »).")]}
+    ]}
+  ],
+  corrige:[
+    "Exercice 1 (types, reconnaître) : a) déclarative — b) interrogative — c) exclamative — d) impérative — e) déclarative.",
+    "Exercice 2 (ponctuation) : a) point d'interrogation ( ? ) — b) point ( . ) — c) point d'exclamation ( ! ) — d) point d'interrogation ( ? ).",
+    "Exercice 3 (reconnaître à l'écrit) : a) Le chat dort sur le canapé. — b) Le train arrive-t-il en retard ? — c) Comme cette histoire est passionnante ! — d) Écoute la maîtresse.",
+    "Exercice 4 (vrai ou faux) : a) Vrai — b) Faux — c) Faux — d) Vrai — e) Faux.",
+    "Exercice 5 (vers l'interrogative) : a) Aimes-tu le chocolat ? — b) Habite-t-elle à Paris ? — c) Avez-vous terminé vos devoirs ? — d) Fait-il beau aujourd'hui ?",
+    "Exercice 6 (vers l'exclamative) : a) Comme ce paysage est beau ! — b) Que ce film est drôle ! — c) Quelle nouvelle incroyable ! — d) Comme ce gâteau est délicieux !",
+    "Exercice 7 (vers l'impérative) : a) Range ta chambre. — b) Fais tes devoirs. — c) Sois sage. — d) Mange ta soupe.",
+    "Exercice 8 (piège exclamative/interrogative) : a) interrogative — b) exclamative — c) exclamative — d) interrogative.",
+    "Exercice 9 (type et ponctuation) : a) point, déclarative — b) point d'interrogation, interrogative — c) point d'exclamation, exclamative — d) point, déclarative.",
+    "Exercice 10 (entraînement supplémentaire) : a) impérative — b) As-tu soif ? — c) point d'exclamation ( ! ) — d) Vrai — e) Ferme la fenêtre.",
+    "Exercice 11 (invente tes phrases) : pas de correction unique possible — vérifie que chaque phrase a la ponctuation et la construction attendues pour son type."
   ]
 }
 ];
@@ -3288,13 +3420,13 @@ function renderParentsHome(){
   const body = document.getElementById('parentsBodyHome');
   body.innerHTML =
     mistakesRecapHtml()+
-    '<p>Les neuf fiches couvrent chacune un point à consolider avant le CM1 : rendre la monnaie, lire l’heure, la multiplication, la conjugaison, le compas, les longueurs, les masses, les contenances (liquides) et la révision des devoirs de la semaine en cours (mots à réviser, dictée, nombres, grammaire, tables… selon ce qui est donné en classe). Chaque fiche commence par une leçon courte (« Je retiens »), puis des exercices du plus facile (★☆☆) au plus difficile (★★★).</p>'+
+    '<p>Les dix fiches couvrent chacune un point à consolider avant le CM1 : rendre la monnaie, lire l’heure, la multiplication, la conjugaison, le compas, les longueurs, les masses, les contenances (liquides), les types de phrases et la révision des devoirs de la semaine en cours (mots à réviser, dictée, nombres, grammaire, tables… selon ce qui est donné en classe). Chaque fiche commence par une leçon courte (« Je retiens »), puis des exercices du plus facile (★☆☆) au plus difficile (★★★).</p>'+
     '<p><strong>Conseils :</strong> une fiche par jour suffit (15 minutes) ; laissez Madeline chercher seule après avoir relu « Je retiens » à voix haute ; si les deux derniers exercices d’une fiche restent difficiles, ce n’est pas grave — ils sont volontairement un peu au-dessus du niveau strict.</p>'+
     '<p><strong>Deux mécaniques particulières :</strong> la fiche « Le compas » demande un vrai compas et une feuille de papier — l’énoncé est dans l’application, le tracé (et parfois la mesure au fil d’une règle) se fait à la main, et Madeline coche elle-même si c’est réussi après avoir comparé avec le modèle affiché ; ses derniers exercices font découvrir, cercle après cercle, ce qui se passe quand deux cercles se touchent ou se croisent. Les fiches « Les longueurs », « Les masses » et « Les contenances » commencent chacune par une méthode pas à pas, puis un exercice où Madeline construit elle-même le tableau de conversion (en rangeant les unités dans le bon ordre), avant de le remplir avec de vraies conversions.</p>'+
     '<p><strong>Dans cette version interactive</strong>, en dehors des séances avec vous, chaque question ne se joue qu’une fois : une réponse fausse ne peut pas être retentée, Madeline est prévenue qu’elle la reverra avec vous. Le récapitulatif ci-dessus liste tout ce qu’il reste à corriger, avec une recommandation par fiche ; chaque fiche se termine désormais par un exercice « 🔁 Entraînement supplémentaire » aux questions inédites, pensé pour rejouer sur les points ratés sans jamais retomber sur une question déjà vue. Le corrigé complet de chaque fiche reste aussi disponible dans l’encadré grisé, en bas de chaque fiche.</p>'+
     '<p><strong>Quand vous travaillez avec elle</strong>, activez le « 👪 Parent » en haut de l’écran (avec le code ci-dessous) pour que Madeline puisse corriger une erreur tout de suite, sans attendre : les questions déjà ratées se rouvrent, et les nouvelles erreurs ne se verrouillent plus tant que le mode est actif.</p>'+
     '<p><strong>Programme de référence :</strong> cycle 2, arrêté du 22 octobre 2024 (JO du 25/10/2024, BO n°41 du 31/10/2024, NOR MENE2415135A), applicable depuis la rentrée 2025.</p>'+
-    '<p>Bon courage à Madeline, et bravo d’avance pour les neuf étoiles !</p>'+
+    '<p>Bon courage à Madeline, et bravo d’avance pour les dix étoiles !</p>'+
     parentPinBoxHtml()+
     parentRequestBoxHtml();
 }
