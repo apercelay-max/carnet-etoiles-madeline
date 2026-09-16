@@ -1,6 +1,6 @@
 # Carnet d'Étoiles de Madeline
 
-Page de révisions interactive et animée pour Madeline (CE2 → CM1) : neuf fiches — rendre la monnaie, lire l'heure, la multiplication, la conjugaison, le compas, les longueurs, les masses, les contenances, et la révision des devoirs de la semaine en cours — chacune avec sa mascotte (un chat, sauf Fripouille le capybara sur la fiche « Devoirs »), sa leçon et ses exercices du plus facile au plus difficile.
+Page de révisions interactive et animée pour Madeline (CE2 → CM1) : dix fiches — rendre la monnaie, lire l'heure, la multiplication, la conjugaison, le compas, les longueurs, les masses, les contenances, les types de phrases, et la révision des devoirs de la semaine en cours — chacune avec sa mascotte (un chat, sauf Fripouille le capybara sur la fiche « Devoirs »), sa leçon et ses exercices du plus facile au plus difficile.
 
 La fiche « Devoirs » change de contenu au fil des semaines, selon ce qui est donné en classe.
 
