@@ -33,6 +33,7 @@
   --f8:#1F84A3; --f8-soft:#D6EBF1;
   --f9:#77883A; --f9-soft:#E6EAD3;
   --f10:#95447C; --f10-soft:#F4DCEA;
+  --f11:#7A5C3E; --f11-soft:#EFE3D6;
   --cat-outline:#332640;
   --card-ink:#332640; --card-ink-soft:#5B4B68; --card-chip-bg:#F6EEDF;
   --font-display:'Delius','Segoe Print','Bradley Hand',cursive;
@@ -59,7 +60,7 @@
     --shadow: 0 10px 30px -8px rgba(0,0,0,.6);
     --shadow-sm: 0 4px 14px -6px rgba(0,0,0,.55);
     --f1-soft:#4A3A22; --f2-soft:#4A3427; --f3-soft:#452A35;
-    --f4-soft:#392946; --f5-soft:#2C2A49; --f6-soft:#212C48; --f7-soft:#1E3A30; --f8-soft:#1B3640; --f9-soft:#33401E; --f10-soft:#452A3E;
+    --f4-soft:#392946; --f5-soft:#2C2A49; --f6-soft:#212C48; --f7-soft:#1E3A30; --f8-soft:#1B3640; --f9-soft:#33401E; --f10-soft:#452A3E; --f11-soft:#3E3226;
   }
 }
 :root[data-theme="dark"]{
@@ -70,7 +71,7 @@
   --star-color:#F0C15A;
   --shadow: 0 10px 30px -8px rgba(0,0,0,.6); --shadow-sm: 0 4px 14px -6px rgba(0,0,0,.55);
   --f1-soft:#4A3A22; --f2-soft:#4A3427; --f3-soft:#452A35;
-  --f4-soft:#392946; --f5-soft:#2C2A49; --f6-soft:#212C48; --f7-soft:#1E3A30; --f8-soft:#1B3640; --f9-soft:#33401E; --f10-soft:#452A3E;
+  --f4-soft:#392946; --f5-soft:#2C2A49; --f6-soft:#212C48; --f7-soft:#1E3A30; --f8-soft:#1B3640; --f9-soft:#33401E; --f10-soft:#452A3E; --f11-soft:#3E3226;
 }
 
 /* ============ RESET / BASE ============ */
@@ -667,7 +668,7 @@ img,svg{ display:block; max-width:100%; }
           <div class="cat-slot hc-right"><svg class="cat-svg" id="heroCatRight" viewBox="0 0 160 160"></svg></div>
         </div>
         <h1>Le carnet d'étoiles</h1>
-        <p>Nougat, Mistigri, Croquette, Prof Ronron, Bidouille, Nouille, Praline, Goutte, Virgule et le petit nouveau Fripouille (un capybara, pas un chat, mais chut, il s'est incrusté quand même) t'attendent pour allumer dix étoiles avant la rentrée en CM1&nbsp;! Chaque île a sa propre mascotte, avec ses conseils et ses petites manies. Choisis une île de ciel pour commencer.</p>
+        <p>Nougat, Mistigri, Croquette, Prof Ronron, Bidouille, Nouille, Praline, Goutte, Virgule, Tic-Tac et le petit nouveau Fripouille (un capybara, pas un chat, mais chut, il s'est incrusté quand même) t'attendent pour allumer onze étoiles avant la rentrée en CM1&nbsp;! Chaque île a sa propre mascotte, avec ses conseils et ses petites manies. Choisis une île de ciel pour commencer.</p>
         <div class="speech" id="heroSpeech" aria-live="polite"></div>
       </div>
       <div class="map-wrap">
@@ -707,8 +708,8 @@ img,svg{ display:block; max-width:100%; }
         <circle cx="50" cy="42" r="32" fill="var(--star-color)" stroke="#332640" stroke-width="2"/>
         <path d="M50 22l6.5 14.3 15.5 1.6-11.7 10.6 3.4 15.5L50 55.9 36.3 64l3.4-15.5-11.7-10.6 15.5-1.6z" fill="var(--paper-card)"/>
       </svg>
-      <h2>Dix étoiles allumées !</h2>
-      <p>Bravo Madeline, tu as terminé les dix fiches. Toute la bande (chats et capybara réunis) est fière de toi — le CM1 n'a qu'à bien se tenir !</p>
+      <h2>Onze étoiles allumées !</h2>
+      <p>Bravo Madeline, tu as terminé les onze fiches. Toute la bande (chats et capybara réunis) est fière de toi — le CM1 n'a qu'à bien se tenir !</p>
       <button class="modal-close" id="finaleCloseBtn" type="button">Retourner voir le ciel</button>
     </div>
   </div>
@@ -893,7 +894,8 @@ null,
 '<line x1="24" y1="9" x2="24" y2="34" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><line x1="10" y1="15" x2="38" y2="15" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M10 15 L5 27 A7 7 0 0 0 15 27 Z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M38 15 L33 27 A7 7 0 0 0 43 27 Z" fill="none" stroke="currentColor" stroke-width="2"/><rect x="17" y="35" width="14" height="4" rx="1" fill="currentColor"/>',
 '<path d="M14 8 L34 8 L29.5 39 Q24 43 18.5 39 Z" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"/><path d="M18.7 25 L29.3 25 L27 38 Q24 40.5 21 38 Z" fill="currentColor" opacity=".38"/><line x1="16.3" y1="16" x2="31.7" y2="16" stroke="currentColor" stroke-width="1.6" opacity=".55"/>',
 '<path d="M8 14 Q24 8 24 14 Q24 8 40 14 L40 36 Q24 30 24 36 Q24 30 8 36 Z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><path d="M18 24 L23 29 L32 18" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>',
-'<circle cx="10" cy="33" r="3.4" fill="currentColor"/><path d="M19.5 17.5 a4.6 4.3 0 1 1 7.8 3 c-2.1 1.8-2.9 2.9-2.9 5.2" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><circle cx="24.3" cy="33" r="3.4" fill="currentColor"/><line x1="38" y1="14" x2="37.2" y2="27" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/><circle cx="37" cy="33" r="3.4" fill="currentColor"/>'
+'<circle cx="10" cy="33" r="3.4" fill="currentColor"/><path d="M19.5 17.5 a4.6 4.3 0 1 1 7.8 3 c-2.1 1.8-2.9 2.9-2.9 5.2" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><circle cx="24.3" cy="33" r="3.4" fill="currentColor"/><line x1="38" y1="14" x2="37.2" y2="27" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/><circle cx="37" cy="33" r="3.4" fill="currentColor"/>',
+'<path d="M27 6 L13 26 H23 L21 42 L35 20 H25 Z" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"/>'
 ];
 function badgeSvg(n){ return '<svg viewBox="0 0 48 48">'+BADGES[n]+'</svg>'; }
 
@@ -1027,6 +1029,19 @@ const CATS = {
       ficheWelcome:["Bienvenue sur ma scène ! Aujourd'hui, on joue avec les types de phrases.","Miaou, sors ton meilleur ton d'actrice, le spectacle commence.","Quatre costumes de phrases t'attendent aujourd'hui : à toi de les reconnaître.","J'ai préparé plein de répliques rigolotes pour toi.","Prête à raconter, questionner, t'exclamer et donner des ordres ?","Cette fiche est mon théâtre préféré, plein de ponctuation à démasquer.","On lève le rideau : chaque phrase a son propre ton, trouve-le !","Installe-toi bien, aujourd'hui la ponctuation raconte toute l'histoire.","Prête à devenir une grande spécialiste des types de phrases ?","En scène ! On commence doucement, une phrase à la fois."],
       ficheDone:["Rideau final, quelle belle représentation !","Bravo, tu connais maintenant tous les costumes de phrases par cœur !","Standing ovation, tu as tout déchiffré aujourd'hui !","Tu sors de scène avec les honneurs, bravo grande comédienne !","Miaou, plus une seule phrase ne peut te surprendre !","Fiche bouclée avec le sens du drame parfait !","Tu as trouvé le bon ton du début à la fin, chapeau !","Le public est debout, bravo pour cette fiche terminée !","Une fiche de plus dans ton grand répertoire, bravo !","Tu quittes la scène sous les applaudissements, bien mérité !"],
       reflections:["Pour trouver le type d'une phrase, je regarde toujours sa ponctuation de fin en premier — c'est mon indice le plus sûr.","Une phrase déclarative raconte ou explique, tout simplement, et se termine par un point. Rien de plus discret qu'un point.","Une phrase interrogative pose une question. À l'oral, ma voix monte à la fin — essaie, tu sentiras la différence !","Une phrase exclamative, c'est mon type préféré : elle crie une émotion, et je ne me prive jamais de l'interpréter avec les moustaches qui tremblent.","Une phrase impérative donne un ordre ou un conseil, et son verbe n'a pas besoin de sujet — comme quand je dis « Ronronne ! » sans jamais préciser à qui je parle.","Un jour, sur scène, j'ai transformé toutes mes répliques déclaratives en exclamatives par erreur. Le public a adoré, mais ce n'était pas prévu !","Astuce de comédienne : je peux dire la même phrase avec quatre tons différents, et elle change presque de sens à chaque fois. Essaie avec « tu ranges ta chambre ».","Le point d'exclamation, c'est ma ponctuation fétiche. Je l'utiliserais bien à la fin de chaque phrase, mais il paraît que ce n'est pas très académique.","Je rêve parfois d'écrire une pièce de théâtre entièrement en phrases interrogatives. Personne ne répondrait à personne, ce serait chaotique et magnifique.","Mon secret pour ne jamais confondre exclamative et interrogative : je relis la phrase à voix haute. L'émotion ou la question s'entend tout de suite."]
+    }
+  },
+  tictac:{
+    name:'Tic-Tac', fur:'#A08466', belly:'#F4EADB', accent:'var(--f11)', accessory:'yarn',
+    blurb:"Salut, salut ! Moi c'est Tic-Tac, et je suis le chat le plus rapide de la maison : quand il faut calculer, je n'ai besoin ni de crayon, ni de papier, ni de calculette — juste de mes moustaches et de quelques astuces bien rodées. Avec moi, tu vas voir que calculer dans sa tête, c'est un jeu de malin !",
+    tip:"Mon secret de champion : je ne calcule jamais « bêtement ». Pour ajouter 9, j'ajoute 10 et j'enlève 1. Pour multiplier par 5, je multiplie par 10 et je prends la moitié. Les astuces, c'est mon carburant !",
+    pools:{
+      correctFirst:["Tic-tac, réponse pile à l'heure !","Rapide comme l'éclair, bravo !","Miaou, calculé dans la tête en un clin d'œil !","Pas besoin de crayon, tu as tout dans les moustaches !","Exact, et en un temps record !","Bravo, ton cerveau fait des étincelles !","Réponse juste, sans même compter sur tes doigts !","Tu calcules presque aussi vite que moi, respect !","Top chrono, parfait !","Quelle vitesse et quelle précision, bravo !","Juste du premier coup, quel réflexe !","Miaou-gnifique, ta tête calcule à toute allure !"],
+      wrong:["Oups, le chrono a sonné trop tôt ! Ce n'est pas grave, on revoit ça avec Papa ou Maman.","Pas le bon résultat cette fois, mais bel effort ! Un adulte t'aidera à trouver l'astuce.","Raté de peu, même moi je me trompe parfois quand je vais trop vite. À revoir avec Papa ou Maman.","Pas tout à fait, mais tu as osé calculer de tête, et c'est déjà bien. On corrige avec un adulte.","Miaou, ce calcul m'a joué un tour à moi aussi ! Papa ou Maman t'expliquera l'astuce.","Petite erreur de calcul, rien de grave. On la reprend ensemble avec un adulte.","Ce n'est pas la bonne réponse, mais ne t'inquiète pas : l'entraînement rend rapide ! Demande à Papa ou Maman."],
+      exerciseDone:["Un exercice de plus calculé de tête !","Tic-tac, encore un de terminé !","Belle série, ta tête chauffe bien.","Un exercice de plus dans ton sac d'astuces.","Bravo, tu deviens de plus en plus rapide !","Encore un sprint réussi, championne.","Ça calcule dur, et c'est très bien joué.","Exercice bouclé, chrono presque battu !","Tu progresses à chaque exercice, bravo !","Un de plus, et toujours plein d'énergie !"],
+      ficheWelcome:["Prête pour le calcul mental ? Pas de crayon, pas de papier, juste ta tête !","Aujourd'hui, on s'entraîne à calculer vite et bien, comme des chats de course.","Miaou, échauffe tes neurones : on va jongler avec les nombres !","J'ai plein d'astuces à te montrer pour calculer sans poser l'opération.","Tic-tac, le chrono est lancé (mais tu peux prendre ton temps, promis) !","Cette fiche, c'est ma salle de sport : ici, on muscle son cerveau."],
+      ficheDone:["Tic-tac, fiche terminée : tu es une vraie championne du calcul mental !","Bravo, tu calcules maintenant à la vitesse d'un chat qui a vu une souris !","Toutes les astuces sont dans ta tête, bravo !","Fiche bouclée avec brio, mes moustaches applaudissent !","Tu sors de cette fiche avec un cerveau tout musclé, chapeau !","Top chrono pour cette fiche, bravo, championne !"],
+      reflections:["Pour ajouter 9, j'ajoute 10 et j'enlève 1. Pour ajouter 11, j'ajoute 10 et j'ajoute 1. Facile !","Pour trouver le double d'un nombre, je l'ajoute à lui-même. Pour trouver sa moitié, je partage en deux parts égales.","Multiplier par 10, c'est décaler chaque chiffre d'un rang vers la gauche : 45 × 10 = 450.","Pour multiplier par 5, je multiplie par 10 et je prends la moitié. 5 × 18, c'est la moitié de 180, donc 90 !","Les compléments à 100 sont des amis fidèles : 25 et 75, 40 et 60, 10 et 90. Apprends-les par cœur !","Pour multiplier par 4, je double, puis je double encore. 4 × 15 : 15 → 30 → 60."]
     }
   }
 };
@@ -2148,6 +2163,141 @@ const FICHES = [
     "Exercice 9 (type et ponctuation) : a) point, déclarative — b) point d'interrogation, interrogative — c) point d'exclamation, exclamative — d) point, déclarative.",
     "Exercice 10 (entraînement supplémentaire) : a) impérative — b) As-tu soif ? — c) point d'exclamation ( ! ) — d) Vrai — e) Ferme la fenêtre.",
     "Exercice 11 (invente tes phrases) : pas de correction unique possible — vérifie que chaque phrase a la ponctuation et la construction attendues pour son type."
+  ]
+},
+{
+  id:11, color:'f11', badge:11, cat:'tictac', title:"Le calcul mental",
+  eyebrow:"Calcul", desc:"Calculer de tête, vite et juste : compléments, doubles et moitiés, ajouter 9 ou 11, multiplier par 10, 100, 5 ou 4, les fractions très simples (moitié et quart).",
+  lesson:[
+    {k:'note', text:"Calculer de tête, c'est calculer sans poser l'opération et sans calculette. Ce n'est pas de la magie : c'est surtout connaître quelques astuces et quelques résultats par cœur !"},
+    {k:'rule', tag:'Astuce', title:'Les compléments', desc:"Pour arriver à 10 ou à 100, je cherche ce qui manque. Je connais par cœur les compléments à 10 (3 et 7, 4 et 6...) et à 100 (25 et 75, 40 et 60...).", ex:"35 + 65 = 100"},
+    {k:'rule', tag:'Astuce', title:'Doubles et moitiés', desc:"Le double, c'est le nombre ajouté à lui-même. La moitié, c'est le partage en deux parts égales.", ex:"Double de 35 = 70 ; moitié de 48 = 24"},
+    {k:'rule', tag:'Astuce', title:'Ajouter ou retirer 9, 11, 19', desc:"Je passe par 10 (ou par 20), puis je corrige.", ex:"46 + 9 → 46 + 10 − 1 = 55"},
+    {k:'rule', tag:'Astuce', title:'Multiplier par 10, 100, 1000', desc:"Chaque chiffre se décale d'un rang (deux rangs, trois rangs) vers la gauche : j'ajoute un, deux ou trois zéros.", ex:"45 × 100 = 4 500"},
+    {k:'rule', tag:'Astuce', title:'Multiplier par 4, 5 ou 20', desc:"×4 : je double deux fois. ×5 : je multiplie par 10, puis je prends la moitié. ×20 : je double, puis je multiplie par 10.", ex:"5 × 18 → 180, puis la moitié = 90"},
+    {k:'rule', tag:'Astuce', title:'Décomposer', desc:"Je découpe un nombre en dizaines et en unités pour calculer par petites étapes.", ex:"38 + 27 → 38 + 20 = 58, puis 58 + 7 = 65"},
+    {k:'rule', tag:'Astuce', title:'Les fractions (très simples)', desc:"Une fraction, c'est une part d'un tout coupé en parts égales. 1/2, c'est une part sur deux : la moitié. 1/4, c'est une part sur quatre : le quart. Pour trouver la moitié, je partage en 2 ; pour trouver le quart, je prends la moitié de la moitié.", ex:"1/2 de 10 = 5 ; 1/4 de 8 = 2"},
+    {k:'table', headers:['Astuce','Exemple'], rows:[
+      ['Ajouter 9','46 + 9 = 46 + 10 − 1 = 55'],
+      ['Ajouter 11','37 + 11 = 37 + 10 + 1 = 48'],
+      ['× 5','5 × 24 : 10 × 24 = 240, la moitié = 120'],
+      ['× 4','4 × 15 = double de double = 60'],
+      ['Compléments à 100','82 + 18 = 100'],
+      ['Moitié (1/2)','1/2 de 20 = 10'],
+      ['Quart (1/4)','1/4 de 20 = 5 (la moitié de la moitié)']
+    ]},
+    {k:'note', text:"Cette fiche grandit avec toi : de nouveaux exercices, un peu plus difficiles, s'ajouteront au fil des semaines. Reviens la voir régulièrement pour t'entraîner !"},
+    {k:'tip', text:"Le plus important : je fais toujours le calcul dans ma tête, étape par étape. Si je me trompe, ce n'est pas grave — je recommence avec une autre astuce !"}
+  ],
+  exercises:[
+    {num:1, titre:"Compléments à 10 et à 100", etoiles:1, consigne:"Trouve le nombre qui manque pour arriver au total.", items:[
+      {id:'f11e1a', t:tmpl("a) 7 + {0} = 10"), parts:[fill(3)]},
+      {id:'f11e1b', t:tmpl("b) 6 + {0} = 10"), parts:[fill(4)]},
+      {id:'f11e1c', t:tmpl("c) 60 + {0} = 100"), parts:[fill(40)]},
+      {id:'f11e1d', t:tmpl("d) 35 + {0} = 100"), parts:[fill(65)]},
+      {id:'f11e1e', t:tmpl("e) 82 + {0} = 100"), parts:[fill(18)]}
+    ]},
+    {num:2, titre:"Doubles et moitiés", etoiles:1, consigne:"", items:[
+      {id:'f11e2a', t:tmpl("a) Le double de 35 : {0}"), parts:[fill(70)]},
+      {id:'f11e2b', t:tmpl("b) Le double de 250 : {0}"), parts:[fill(500)]},
+      {id:'f11e2c', t:tmpl("c) La moitié de 48 : {0}"), parts:[fill(24)]},
+      {id:'f11e2d', t:tmpl("d) La moitié de 90 : {0}"), parts:[fill(45)]},
+      {id:'f11e2e', t:tmpl("e) La moitié de 300 : {0}"), parts:[fill(150)]}
+    ]},
+    {num:3, titre:"Dizaines et centaines rondes", etoiles:1, consigne:"", items:[
+      {id:'f11e3a', t:tmpl("a) 46 + 30 = {0}"), parts:[fill(76)]},
+      {id:'f11e3b', t:tmpl("b) 250 + 400 = {0}"), parts:[fill(650)]},
+      {id:'f11e3c', t:tmpl("c) 780 − 50 = {0}"), parts:[fill(730)]},
+      {id:'f11e3d', t:tmpl("d) 900 − 300 = {0}"), parts:[fill(600)]},
+      {id:'f11e3e', t:tmpl("e) 120 + 80 = {0}"), parts:[fill(200)]}
+    ]},
+    {num:4, titre:"Ajouter et retirer 9, 11 ou 19", etoiles:2, consigne:"Astuce : passe par 10 (ou 20), puis corrige !", items:[
+      {id:'f11e4a', t:tmpl("a) 46 + 9 = {0}"), parts:[fill(55)]},
+      {id:'f11e4b', t:tmpl("b) 37 + 11 = {0}"), parts:[fill(48)]},
+      {id:'f11e4c', t:tmpl("c) 64 − 9 = {0}"), parts:[fill(55)]},
+      {id:'f11e4d', t:tmpl("d) 83 − 11 = {0}"), parts:[fill(72)]},
+      {id:'f11e4e', t:tmpl("e) 58 + 19 = {0}"), parts:[fill(77)]}
+    ]},
+    {num:5, titre:"Multiplier par 10, 100 et 1000", etoiles:2, consigne:"", items:[
+      {id:'f11e5a', t:tmpl("a) 45 × 10 = {0}"), parts:[fill(450)]},
+      {id:'f11e5b', t:tmpl("b) 8 × 100 = {0}"), parts:[fill(800)]},
+      {id:'f11e5c', t:tmpl("c) 36 × 1000 = {0}"), parts:[fill(36000)]},
+      {id:'f11e5d', t:tmpl("d) 70 × 10 = {0}"), parts:[fill(700)]},
+      {id:'f11e5e', t:tmpl("e) 12 × 100 = {0}"), parts:[fill(1200)]}
+    ]},
+    {num:6, titre:"Multiplications avec les tables", etoiles:2, consigne:"Pense à tes tables de multiplication !", items:[
+      {id:'f11e6a', t:tmpl("a) 6 × 7 = {0}"), parts:[fill(42)]},
+      {id:'f11e6b', t:tmpl("b) 8 × 8 = {0}"), parts:[fill(64)]},
+      {id:'f11e6c', t:tmpl("c) 5 × 9 = {0}"), parts:[fill(45)]},
+      {id:'f11e6d', t:tmpl("d) 9 × 4 = {0}"), parts:[fill(36)]},
+      {id:'f11e6e', t:tmpl("e) 7 × 7 = {0}"), parts:[fill(49)]}
+    ]},
+    {num:7, titre:"Multiplier par 4, 5 et 20", etoiles:2, consigne:"Pour ×4 : double, puis double encore. Pour ×5 : ×10, puis moitié. Pour ×20 : ×2, puis ×10.", items:[
+      {id:'f11e7a', t:tmpl("a) 4 × 15 = {0}"), parts:[fill(60)]},
+      {id:'f11e7b', t:tmpl("b) 5 × 18 = {0}"), parts:[fill(90)]},
+      {id:'f11e7c', t:tmpl("c) 20 × 6 = {0}"), parts:[fill(120)]},
+      {id:'f11e7d', t:tmpl("d) 5 × 24 = {0}"), parts:[fill(120)]},
+      {id:'f11e7e', t:tmpl("e) 4 × 25 = {0}"), parts:[fill(100)]}
+    ]},
+    {num:8, titre:"Vrai ou faux ?", etoiles:2, consigne:"Réponds le plus vite possible, sans poser le calcul !", items:[
+      {id:'f11e8a', t:tmpl("a) 8 × 7 = 56. {0}"), parts:[mcq(OPT_VRAIFAUX,'v')]},
+      {id:'f11e8b', t:tmpl("b) 45 + 38 = 83. {0}"), parts:[mcq(OPT_VRAIFAUX,'v')]},
+      {id:'f11e8c', t:tmpl("c) 100 − 47 = 63. {0}"), parts:[mcq(OPT_VRAIFAUX,'f')]},
+      {id:'f11e8d', t:tmpl("d) 9 × 6 = 56. {0}"), parts:[mcq(OPT_VRAIFAUX,'f')]},
+      {id:'f11e8e', t:tmpl("e) La moitié de 130 est 65. {0}"), parts:[mcq(OPT_VRAIFAUX,'v')]},
+      {id:'f11e8f', t:tmpl("f) 25 × 4 = 100. {0}"), parts:[mcq(OPT_VRAIFAUX,'v')]}
+    ]},
+    {num:9, titre:"Additions et soustractions à décomposer", etoiles:3, consigne:"Astuce : décompose les nombres, par exemple 38 + 27 = 38 + 20 + 7.", items:[
+      {id:'f11e9a', t:tmpl("a) 38 + 27 = {0}"), parts:[fill(65)]},
+      {id:'f11e9b', t:tmpl("b) 46 + 38 = {0}"), parts:[fill(84)]},
+      {id:'f11e9c', t:tmpl("c) 75 + 48 = {0}"), parts:[fill(123)]},
+      {id:'f11e9d', t:tmpl("d) 100 − 36 = {0}"), parts:[fill(64)]},
+      {id:'f11e9e', t:tmpl("e) 72 − 28 = {0}"), parts:[fill(44)]},
+      {id:'f11e9f', t:tmpl("f) 1000 − 250 = {0}"), parts:[fill(750)]}
+    ]},
+    {num:10, titre:"Problèmes de tête", etoiles:3, consigne:"Calcule dans ta tête, sans écrire l'opération.", items:[
+      {id:'f11e10a', t:tmpl("a) Madeline a 8 paquets de 5 stickers. Combien de stickers a-t-elle en tout ? {0}"), parts:[fill(40)]},
+      {id:'f11e10b', t:tmpl("b) Il y a 100 bonbons dans un bocal. Madeline en mange 35. Combien en reste-t-il ? {0}"), parts:[fill(65)]},
+      {id:'f11e10c', t:tmpl("c) Une pizza est coupée en 8 parts. Combien de parts y a-t-il dans 3 pizzas ? {0}"), parts:[fill(24)]},
+      {id:'f11e10d', t:tmpl("d) Un cahier coûte 4 € et un stylo coûte 9 €. Combien coûtent-ils ensemble ? {0} €"), parts:[fill(13)]}
+    ]},
+    {num:11, titre:"Les fractions : moitié et quart", etoiles:1, consigne:"Une fraction, c'est une part d'un tout coupé en parts égales.", items:[
+      {id:'f11e11a', t:tmpl("a) Une pizza est coupée en 2 parts égales. Une part, c'est {0} de la pizza."), parts:[mcq([{v:'a',l:'1/2'},{v:'b',l:'1/4'},{v:'c',l:'2/1'},{v:'d',l:'1/3'}],'a')]},
+      {id:'f11e11b', t:tmpl("b) Un gâteau est coupé en 4 parts égales. Une part, c'est {0} du gâteau."), parts:[mcq([{v:'a',l:'1/2'},{v:'b',l:'1/4'},{v:'c',l:'4/1'},{v:'d',l:'1/3'}],'b')]},
+      {id:'f11e11c', t:tmpl("c) La moitié de 10 : {0}"), parts:[fill(5)]},
+      {id:'f11e11d', t:tmpl("d) La moitié de 16 : {0}"), parts:[fill(8)]},
+      {id:'f11e11e', t:tmpl("e) Le quart de 8 (la moitié de la moitié) : {0}"), parts:[fill(2)]}
+    ]},
+    {num:12, titre:"Fractions : plus loin", etoiles:2, consigne:"", items:[
+      {id:'f11e12a', t:tmpl("a) 1/2 de 24 = {0}"), parts:[fill(12)]},
+      {id:'f11e12b', t:tmpl("b) 1/4 de 20 = {0}"), parts:[fill(5)]},
+      {id:'f11e12c', t:tmpl("c) 1/2 de 50 = {0}"), parts:[fill(25)]},
+      {id:'f11e12d', t:tmpl("d) Madeline a 18 billes et en donne la moitié à son frère. Combien en donne-t-elle ? {0}"), parts:[fill(9)]},
+      {id:'f11e12e', t:tmpl("e) Un ruban de 12 cm est coupé en 4 morceaux égaux. Chaque morceau, c'est 1/4 du ruban. Combien mesure un morceau ? {0} cm"), parts:[fill(3)]}
+    ]},
+    {num:13, titre:"🔁 Entraînement supplémentaire", etoiles:2, consigne:"Encore un peu de calcul mental, avec de nouveaux nombres.", items:[
+      {id:'f11e13a', t:tmpl("a) Le double de 45 : {0}"), parts:[fill(90)]},
+      {id:'f11e13b', t:tmpl("b) 57 + 9 = {0}"), parts:[fill(66)]},
+      {id:'f11e13c', t:tmpl("c) 6 × 100 = {0}"), parts:[fill(600)]},
+      {id:'f11e13d', t:tmpl("d) 6 × 9 = {0}"), parts:[fill(54)]},
+      {id:'f11e13e', t:tmpl("e) 73 + 27 = {0}"), parts:[fill(100)]},
+      {id:'f11e13f', t:tmpl("f) 5 × 14 = {0}"), parts:[fill(70)]}
+    ]}
+  ],
+  corrige:[
+    "Exercice 1 (compléments) : a) 3 — b) 4 — c) 40 — d) 65 — e) 18.",
+    "Exercice 2 (doubles et moitiés) : a) 70 — b) 500 — c) 24 — d) 45 — e) 150.",
+    "Exercice 3 (dizaines et centaines rondes) : a) 76 — b) 650 — c) 730 — d) 600 — e) 200.",
+    "Exercice 4 (9, 11, 19) : a) 55 — b) 48 — c) 55 — d) 72 — e) 77.",
+    "Exercice 5 (× 10, 100, 1000) : a) 450 — b) 800 — c) 36 000 — d) 700 — e) 1 200.",
+    "Exercice 6 (multiplications) : a) 42 — b) 64 — c) 45 — d) 36 — e) 49.",
+    "Exercice 7 (× 4, 5, 20) : a) 60 — b) 90 — c) 120 — d) 120 — e) 100.",
+    "Exercice 8 (vrai ou faux) : a) Vrai — b) Vrai — c) Faux (100 − 47 = 53) — d) Faux (9 × 6 = 54) — e) Vrai — f) Vrai.",
+    "Exercice 9 (décomposer) : a) 65 — b) 84 — c) 123 — d) 64 — e) 44 — f) 750.",
+    "Exercice 10 (problèmes) : a) 40 stickers — b) 65 bonbons — c) 24 parts — d) 13 €.",
+    "Exercice 11 (fractions) : a) 1/2 — b) 1/4 — c) 5 — d) 8 — e) 2.",
+    "Exercice 12 (fractions, plus loin) : a) 12 — b) 5 — c) 25 — d) 9 billes — e) 3 cm.",
+    "Exercice 13 (entraînement supplémentaire) : a) 90 — b) 66 — c) 600 — d) 54 — e) 100 — f) 70."
   ]
 }
 ];
@@ -3420,13 +3570,13 @@ function renderParentsHome(){
   const body = document.getElementById('parentsBodyHome');
   body.innerHTML =
     mistakesRecapHtml()+
-    '<p>Les dix fiches couvrent chacune un point à consolider avant le CM1 : rendre la monnaie, lire l’heure, la multiplication, la conjugaison, le compas, les longueurs, les masses, les contenances (liquides), les types de phrases et la révision des devoirs de la semaine en cours (mots à réviser, dictée, nombres, grammaire, tables… selon ce qui est donné en classe). Chaque fiche commence par une leçon courte (« Je retiens »), puis des exercices du plus facile (★☆☆) au plus difficile (★★★).</p>'+
+    '<p>Les onze fiches couvrent chacune un point à consolider avant le CM1 : rendre la monnaie, lire l’heure, la multiplication, la conjugaison, le compas, les longueurs, les masses, les contenances (liquides), les types de phrases, le calcul mental et la révision des devoirs de la semaine en cours (mots à réviser, dictée, nombres, grammaire, tables… selon ce qui est donné en classe). Chaque fiche commence par une leçon courte (« Je retiens »), puis des exercices du plus facile (★☆☆) au plus difficile (★★★).</p>'+
     '<p><strong>Conseils :</strong> une fiche par jour suffit (15 minutes) ; laissez Madeline chercher seule après avoir relu « Je retiens » à voix haute ; si les deux derniers exercices d’une fiche restent difficiles, ce n’est pas grave — ils sont volontairement un peu au-dessus du niveau strict.</p>'+
     '<p><strong>Deux mécaniques particulières :</strong> la fiche « Le compas » demande un vrai compas et une feuille de papier — l’énoncé est dans l’application, le tracé (et parfois la mesure au fil d’une règle) se fait à la main, et Madeline coche elle-même si c’est réussi après avoir comparé avec le modèle affiché ; ses derniers exercices font découvrir, cercle après cercle, ce qui se passe quand deux cercles se touchent ou se croisent. Les fiches « Les longueurs », « Les masses » et « Les contenances » commencent chacune par une méthode pas à pas, puis un exercice où Madeline construit elle-même le tableau de conversion (en rangeant les unités dans le bon ordre), avant de le remplir avec de vraies conversions.</p>'+
     '<p><strong>Dans cette version interactive</strong>, en dehors des séances avec vous, chaque question ne se joue qu’une fois : une réponse fausse ne peut pas être retentée, Madeline est prévenue qu’elle la reverra avec vous. Le récapitulatif ci-dessus liste tout ce qu’il reste à corriger, avec une recommandation par fiche ; chaque fiche se termine désormais par un exercice « 🔁 Entraînement supplémentaire » aux questions inédites, pensé pour rejouer sur les points ratés sans jamais retomber sur une question déjà vue. Le corrigé complet de chaque fiche reste aussi disponible dans l’encadré grisé, en bas de chaque fiche.</p>'+
     '<p><strong>Quand vous travaillez avec elle</strong>, activez le « 👪 Parent » en haut de l’écran (avec le code ci-dessous) pour que Madeline puisse corriger une erreur tout de suite, sans attendre : les questions déjà ratées se rouvrent, et les nouvelles erreurs ne se verrouillent plus tant que le mode est actif.</p>'+
     '<p><strong>Programme de référence :</strong> cycle 2, arrêté du 22 octobre 2024 (JO du 25/10/2024, BO n°41 du 31/10/2024, NOR MENE2415135A), applicable depuis la rentrée 2025.</p>'+
-    '<p>Bon courage à Madeline, et bravo d’avance pour les dix étoiles !</p>'+
+    '<p>Bon courage à Madeline, et bravo d’avance pour les onze étoiles !</p>'+
     parentPinBoxHtml()+
     parentRequestBoxHtml();
 }
