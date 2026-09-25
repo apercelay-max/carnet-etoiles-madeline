@@ -34,6 +34,7 @@
   --f9:#77883A; --f9-soft:#E6EAD3;
   --f10:#95447C; --f10-soft:#F4DCEA;
   --f11:#7A5C3E; --f11-soft:#EFE3D6;
+  --f12:#B23A2E; --f12-soft:#F8DDD6;
   --cat-outline:#332640;
   --card-ink:#332640; --card-ink-soft:#5B4B68; --card-chip-bg:#F6EEDF;
   --font-display:'Delius','Segoe Print','Bradley Hand',cursive;
@@ -60,7 +61,7 @@
     --shadow: 0 10px 30px -8px rgba(0,0,0,.6);
     --shadow-sm: 0 4px 14px -6px rgba(0,0,0,.55);
     --f1-soft:#4A3A22; --f2-soft:#4A3427; --f3-soft:#452A35;
-    --f4-soft:#392946; --f5-soft:#2C2A49; --f6-soft:#212C48; --f7-soft:#1E3A30; --f8-soft:#1B3640; --f9-soft:#33401E; --f10-soft:#452A3E; --f11-soft:#3E3226;
+    --f4-soft:#392946; --f5-soft:#2C2A49; --f6-soft:#212C48; --f7-soft:#1E3A30; --f8-soft:#1B3640; --f9-soft:#33401E; --f10-soft:#452A3E; --f11-soft:#3E3226; --f12-soft:#4A2823;
   }
 }
 :root[data-theme="dark"]{
@@ -71,7 +72,7 @@
   --star-color:#F0C15A;
   --shadow: 0 10px 30px -8px rgba(0,0,0,.6); --shadow-sm: 0 4px 14px -6px rgba(0,0,0,.55);
   --f1-soft:#4A3A22; --f2-soft:#4A3427; --f3-soft:#452A35;
-  --f4-soft:#392946; --f5-soft:#2C2A49; --f6-soft:#212C48; --f7-soft:#1E3A30; --f8-soft:#1B3640; --f9-soft:#33401E; --f10-soft:#452A3E; --f11-soft:#3E3226;
+  --f4-soft:#392946; --f5-soft:#2C2A49; --f6-soft:#212C48; --f7-soft:#1E3A30; --f8-soft:#1B3640; --f9-soft:#33401E; --f10-soft:#452A3E; --f11-soft:#3E3226; --f12-soft:#4A2823;
 }
 
 /* ============ RESET / BASE ============ */
@@ -471,6 +472,10 @@ img,svg{ display:block; max-width:100%; }
 .item-prompt{ margin:0 0 .5rem; font-size:1.05rem; line-height:1.7; white-space:pre-line; }
 .item-figure{ display:flex; justify-content:center; margin:.2rem 0 .7rem; }
 .item-figure svg{ max-width:100%; height:auto; }
+.es-clock{ display:inline-block; }
+.es-pic{ font-size:4rem; line-height:1.1; text-align:center; }
+.es-say{ font-size:.9rem; line-height:1; padding:.15rem .4rem; margin-left:.25rem; border-radius:8px; border:1.5px solid var(--line); background:var(--paper-card-2,var(--paper)); color:var(--ink); cursor:pointer; vertical-align:middle; }
+.es-say:hover{ border-color:var(--accent); }
 .opt-btn .clock-face, .opt-btn svg{ display:block; margin:0 auto; pointer-events:none; }
 .item-feedback{ font-size:.9rem; font-weight:700; min-height:1.2em; margin-top:.3rem; }
 .item-feedback.good{ color:var(--good); }
@@ -668,7 +673,7 @@ img,svg{ display:block; max-width:100%; }
           <div class="cat-slot hc-right"><svg class="cat-svg" id="heroCatRight" viewBox="0 0 160 160"></svg></div>
         </div>
         <h1>Le carnet d'étoiles</h1>
-        <p>Nougat, Mistigri, Croquette, Prof Ronron, Bidouille, Nouille, Praline, Goutte, Virgule, Tic-Tac et le petit nouveau Fripouille (un capybara, pas un chat, mais chut, il s'est incrusté quand même) t'attendent pour allumer onze étoiles avant la rentrée en CM1&nbsp;! Chaque île a sa propre mascotte, avec ses conseils et ses petites manies. Choisis une île de ciel pour commencer.</p>
+        <p>Nougat, Mistigri, Croquette, Prof Ronron, Bidouille, Nouille, Praline, Goutte, Virgule, Tic-Tac, Churro (le chat qui parle espagnol) et le petit nouveau Fripouille (un capybara, pas un chat, mais chut, il s'est incrusté quand même) t'attendent pour allumer douze étoiles avant la rentrée en CM1&nbsp;! Chaque île a sa propre mascotte, avec ses conseils et ses petites manies. Choisis une île de ciel pour commencer.</p>
         <div class="speech" id="heroSpeech" aria-live="polite"></div>
       </div>
       <div class="map-wrap">
@@ -708,8 +713,8 @@ img,svg{ display:block; max-width:100%; }
         <circle cx="50" cy="42" r="32" fill="var(--star-color)" stroke="#332640" stroke-width="2"/>
         <path d="M50 22l6.5 14.3 15.5 1.6-11.7 10.6 3.4 15.5L50 55.9 36.3 64l3.4-15.5-11.7-10.6 15.5-1.6z" fill="var(--paper-card)"/>
       </svg>
-      <h2>Onze étoiles allumées !</h2>
-      <p>Bravo Madeline, tu as terminé les onze fiches. Toute la bande (chats et capybara réunis) est fière de toi — le CM1 n'a qu'à bien se tenir !</p>
+      <h2>Douze étoiles allumées !</h2>
+      <p>Bravo Madeline, tu as terminé les douze fiches. Toute la bande (chats et capybara réunis) est fière de toi — le CM1 n'a qu'à bien se tenir !</p>
       <button class="modal-close" id="finaleCloseBtn" type="button">Retourner voir le ciel</button>
     </div>
   </div>
@@ -895,7 +900,8 @@ null,
 '<path d="M14 8 L34 8 L29.5 39 Q24 43 18.5 39 Z" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"/><path d="M18.7 25 L29.3 25 L27 38 Q24 40.5 21 38 Z" fill="currentColor" opacity=".38"/><line x1="16.3" y1="16" x2="31.7" y2="16" stroke="currentColor" stroke-width="1.6" opacity=".55"/>',
 '<path d="M8 14 Q24 8 24 14 Q24 8 40 14 L40 36 Q24 30 24 36 Q24 30 8 36 Z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><path d="M18 24 L23 29 L32 18" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>',
 '<circle cx="10" cy="33" r="3.4" fill="currentColor"/><path d="M19.5 17.5 a4.6 4.3 0 1 1 7.8 3 c-2.1 1.8-2.9 2.9-2.9 5.2" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><circle cx="24.3" cy="33" r="3.4" fill="currentColor"/><line x1="38" y1="14" x2="37.2" y2="27" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/><circle cx="37" cy="33" r="3.4" fill="currentColor"/>',
-'<path d="M27 6 L13 26 H23 L21 42 L35 20 H25 Z" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"/>'
+'<path d="M27 6 L13 26 H23 L21 42 L35 20 H25 Z" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"/>',
+'<path d="M8 8 H40 V32 H26 L16 42 V32 H8 Z" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"/><circle cx="19" cy="14" r="1.8" fill="currentColor"/><line x1="19" y1="18" x2="19" y2="26" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><line x1="29" y1="14" x2="29" y2="22" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><circle cx="29" cy="26.5" r="1.8" fill="currentColor"/>'
 ];
 function badgeSvg(n){ return '<svg viewBox="0 0 48 48">'+BADGES[n]+'</svg>'; }
 
@@ -1042,6 +1048,19 @@ const CATS = {
       ficheWelcome:["Prête pour le calcul mental ? Pas de crayon, pas de papier, juste ta tête !","Aujourd'hui, on s'entraîne à calculer vite et bien, comme des chats de course.","Miaou, échauffe tes neurones : on va jongler avec les nombres !","J'ai plein d'astuces à te montrer pour calculer sans poser l'opération.","Tic-tac, le chrono est lancé (mais tu peux prendre ton temps, promis) !","Cette fiche, c'est ma salle de sport : ici, on muscle son cerveau."],
       ficheDone:["Tic-tac, fiche terminée : tu es une vraie championne du calcul mental !","Bravo, tu calcules maintenant à la vitesse d'un chat qui a vu une souris !","Toutes les astuces sont dans ta tête, bravo !","Fiche bouclée avec brio, mes moustaches applaudissent !","Tu sors de cette fiche avec un cerveau tout musclé, chapeau !","Top chrono pour cette fiche, bravo, championne !"],
       reflections:["Pour ajouter 9, j'ajoute 10 et j'enlève 1. Pour ajouter 11, j'ajoute 10 et j'ajoute 1. Facile !","Pour trouver le double d'un nombre, je l'ajoute à lui-même. Pour trouver sa moitié, je partage en deux parts égales.","Multiplier par 10, c'est décaler chaque chiffre d'un rang vers la gauche : 45 × 10 = 450.","Pour multiplier par 5, je multiplie par 10 et je prends la moitié. 5 × 18, c'est la moitié de 180, donc 90 !","Les compléments à 100 sont des amis fidèles : 25 et 75, 40 et 60, 10 et 90. Apprends-les par cœur !","Pour multiplier par 4, je double, puis je double encore. 4 × 15 : 15 → 30 → 60."]
+    }
+  },
+  churro:{
+    name:'Churro', fur:'#D9A441', belly:'#FBEBC8', accent:'var(--f12)', accessory:'bib',
+    blurb:"¡Hola, hola! Me llamo Churro y soy un gato de Madrid. Hablo español todo el día, ¡y hoy hablamos juntos! Vamos a aprender los animales, los colores, los números y los días de la semana. ¡Vamos!",
+    tip:"Mi secreto: digo cada palabra en voz alta, mirando la imagen. ¡Es muy fácil!",
+    pools:{
+      correctFirst:["¡Muy bien, Madeline!","¡Olé! ¡Perfecto!","¡Genial! ¡A la primera!","¡Excelente! Hablas español como una española.","¡Exacto!","¡Fantástico! ¡Te doy un churro!","¡Sí, sí, sí! ¡Correcto!","¡Estupendo! Sigue así.","¡Bravo! Mis bigotes aplauden.","¡Qué bien! ¡Muy bien!"],
+      wrong:["¡Ay, ay, ay! No pasa nada. Pregunta a Papá o a Mamá.","Casi, casi… Papá o Mamá te ayudan a recordar esta palabra.","¡Vaya! Otra vez, con Papá o con Mamá.","¡Uy! No es esa. Mírala con un adulto.","No pasa nada, ¡ánimo! Papá o Mamá te lo explican.","¡Ay! Casi. Relee la lección y pregunta a un adulto.","Mmm, no. Pero lo intentas, ¡y eso es genial! Corrígelo con un adulto.","Un error pequeño, ¡no es grave! Papá o Mamá te ayudan.","¡Ay! Esa no era. Lo apuntamos para corregirlo con un adulto.","¡Ánimo, Madeline! La próxima vez, seguro. Míralo con un adulto."],
+      exerciseDone:["¡Un ejercicio más!","¡Muy bien! Otro ejercicio terminado.","¡Olé! Ya está.","¡Sigue así!","¡Qué rápido!","¡Buen trabajo!","¡Otro más! ¡Y sin errores de bigotes!","¡Vas muy bien!","¡Fantástico, ejercicio terminado!","¡Ya casi!"],
+      ficheWelcome:["¡Hola, Madeline! ¿Qué tal?","¡Bienvenida! Hoy hablamos español.","¡Vamos! Mira la imagen y busca la palabra.","¡Hola! Pulsa 🔊 para escuchar las palabras.","Hoy: animales, números, días, meses… ¡y mucho más!","¡Qué alegría verte!","¿Lista para aprender español?","¡Empezamos!"],
+      ficheDone:["¡Felicidades, Madeline! Has terminado la ficha de español.","¡Olé, olé, olé! ¡Lo has hecho genial!","¡Muchas gracias y hasta luego!","¡Enhorabuena! Ya hablas español.","¡Fantástico! Eres una campeona.","¡Excelente trabajo! ¡Adiós!","¡Bravo! Tu carnet de español está completo."],
+      reflections:["Los días y los meses se escriben sin mayúscula: lunes, marzo.","Para contar más de treinta: treinta y uno, cuarenta y dos.","La «h» no suena: hola se dice «ola».","La «ñ» suena «gn»: España. ¡Repite tres veces!","Muchas palabras se parecen al francés: elefante, animal, chocolate.","Pregunto «¿Cómo te llamas?» y contestas «Me llamo…».","Lunes es la Luna, martes es Marte, jueves es Júpiter.","¿Ves el «¿» al revés? Avisa de que viene una pregunta.","La «v» suena como una «b»: vaca, «baca».","La «z» suena como «th» en inglés: zeta."]
     }
   }
 };
@@ -1283,6 +1302,310 @@ function burstBig(mood){
   const w = window.innerWidth;
   for(let i=0;i<5;i++){ burstAt(w*(i+1)/6, 40, mood, 22); }
 }
+
+/* ============ ESPAGNOL : AIDES ============ */
+const ES_L = 'abcdefghijkl';
+function esPic(e){ return /^<svg/.test(e) ? '<span class="es-clock">'+e+'</span>' : '<span class="es-pic" aria-hidden="true">'+e+'</span>'; }
+function esClock(h,m){ return clockFace(h,m,120); }
+function esSay(w){ return '<button type="button" class="es-say" data-say="'+w+'" aria-label="Écouter '+w+'">🔊</button>'; }
+/* queue=true : on ajoute à la suite sans couper ce qui est en cours ; auto=true : lecture automatique, coupée par le bouton son */
+function esVoice(){
+  const voices = window.speechSynthesis.getVoices ? window.speechSynthesis.getVoices() : [];
+  const es = voices.filter(x=>/^es/i.test(x.lang));
+  const pref = /monica|mónica|helena|elvira|marisol|paulina|lucia|lucía|laura|female|femenin/i;
+  return es.find(x=>/^es[-_]ES/i.test(x.lang) && pref.test(x.name)) || es.find(x=>pref.test(x.name)) || es.find(x=>/^es[-_]ES/i.test(x.lang)) || es[0] || null;
+}
+/* light=true : voix légère et aiguë de Churro */
+function speakEs(text, queue, auto, light){
+  try{
+    if(!('speechSynthesis' in window)) return;
+    if(auto && muted) return;
+    const ss = window.speechSynthesis;
+    if(!queue) ss.cancel();
+    text = String(text).replace(/[\u{1F300}-\u{1FAFF}\u2600-\u27BF]/gu,'').trim();
+    if(!text) return;
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'es-ES';
+    u.rate = light ? 1.0 : 0.8;
+    u.pitch = light ? 1.8 : 1.0;
+    u.volume = light ? 0.9 : 1;
+    const v = esVoice();
+    if(v) u.voice = v;
+    ss.speak(u);
+  }catch(e){}
+}
+document.addEventListener('click', function(ev){
+  const b = ev.target.closest ? ev.target.closest('.es-say') : null;
+  if(b){ ev.preventDefault(); speakEs(b.getAttribute('data-say')); }
+});
+/* Tableau de vocabulaire : lignes [emoji, espagnol, français] */
+function esVocab(rows){
+  return {k:'table', headers:['Espagnol','Français'], rows: rows.map(r=>[ (r[0]?r[0]+' ':'')+'<strong>'+r[1]+'</strong> '+esSay(r[1]), r[2] ]) };
+}
+/* Génère les items d'un exercice.
+   ['pic'|null, consigne, bonne réponse, [3 mauvaises], position 0-3]  -> QCM (image facultative)
+   ['F', consigne avec {0}, nombre attendu, emoji facultatif]          -> réponse numérique
+   ['T', consigne avec {0}, mot attendu]                                -> mot à écrire
+   ['VF', affirmation, 'v'|'f']                                         -> vrai ou faux */
+/* Réponses qui ne sont pas de l'espagnol : elles ne sont pas prononcées à voix haute */
+const ES_NO_SAY = new Set(['au revoir',"s'il te plaît",'le soir ou la nuit',"Comment tu t'appelles ?",'mercredi','samedi','août','automne','jeudi','à tout à l\'heure','la tête','il fait chaud','et demie','moins le quart','le soir, la nuit','27','ñ','h','ne se prononce pas (« ola »)','comme « gn » dans montagne','avec un son rauque au fond de la gorge','comme un « y »']);
+function esRows(num, rows){
+  return rows.map((r,i)=>{
+    const it = esRow(num, rows, r, i);
+    if(r[0]==='F'){ it.say = r[1].split(' =')[0]; }
+    else if(r[0]==='T'){ it.say = r[2]; }
+    else if(r[0]!=='VF' && !ES_NO_SAY.has(r[2])){ it.say = r[2]; }
+    return it;
+  });
+}
+function esRow(num, rows, r, i){
+  const id = 'f12e'+num+ES_L[i], pre = ES_L[i]+') ';
+  if(r[0]==='F'){ const it = {id:id, t:tmpl(pre+r[1]), parts:[fill(r[2])]}; if(r[3]) it.figure = esPic(r[3]); return it; }
+  if(r[0]==='T'){ return {id:id, t:tmpl(pre+r[1]), parts:[textPart(r[2])]}; }
+  if(r[0]==='VF'){ return {id:id, t:tmpl(pre+r[1]+' {0}'), parts:[mcq(OPT_VRAIFAUX, r[2])]}; }
+  const words = r[3].slice(); words.splice(r[4], 0, r[2]);
+  const it = {id:id, t:tmpl(pre+r[1]+' {0}'), parts:[mcq(words.map((w,k)=>({v:ES_L[k], l:w})), ES_L[r[4]])]};
+  if(r[0]) it.figure = esPic(r[0]);
+  return it;
+}
+function esCorrige(exs){
+  return exs.map(ex=>{
+    const bits = ex.items.map(it=>{
+      if(it.custom==='order') return 'ordre : '+it.order.join(it.orderSep||' → ');
+      const p = it.parts[0];
+      const a = p.kind==='mcq' ? p.options.find(o=>o.v===p.answer).l : displayExpected(p);
+      return it.t[0].charAt(0)+') '+a;
+    });
+    return 'Exercice '+ex.num+' ('+ex.titre.replace(/^🔁 /,'')+') : '+bits.join(' — ')+'.';
+  });
+}
+const ES_PQ = 'Quel est ce mot en espagnol ?';
+const ES_EX = [
+  {num:1, titre:"Les animaux", etoiles:1, consigne:"Regarde l'image et choisis le bon mot en espagnol.", items: esRows(1, [
+    ['🐶', ES_PQ, 'perro', ['gato','caballo','cerdo'], 2],
+    ['🐱', ES_PQ, 'gato', ['perro','conejo','pez'], 0],
+    ['🐦', ES_PQ, 'pájaro', ['pez','pato','mono'], 3],
+    ['🐟', ES_PQ, 'pez', ['pájaro','vaca','tortuga'], 1],
+    ['🐴', ES_PQ, 'caballo', ['cerdo','conejo','perro'], 0],
+    ['🐢', ES_PQ, 'tortuga', ['elefante','pez','león'], 2],
+    ['🐘', ES_PQ, 'elefante', ['león','mono','vaca'], 1],
+    ['🦁', ES_PQ, 'león', ['gato','elefante','cerdo'], 3]
+  ])},
+  {num:2, titre:"Les couleurs", etoiles:1, consigne:"De quelle couleur est ce rond ?", items: esRows(2, [
+    ['🔴', 'Cette couleur, en espagnol :', 'rojo', ['azul','verde','negro'], 1],
+    ['🔵', 'Cette couleur, en espagnol :', 'azul', ['rojo','amarillo','blanco'], 0],
+    ['🟢', 'Cette couleur, en espagnol :', 'verde', ['morado','azul','marrón'], 2],
+    ['🟡', 'Cette couleur, en espagnol :', 'amarillo', ['naranja','blanco','rojo'], 3],
+    ['🟠', 'Cette couleur, en espagnol :', 'naranja', ['amarillo','rojo','marrón'], 1],
+    ['🟣', 'Cette couleur, en espagnol :', 'morado', ['negro','azul','verde'], 0],
+    ['🟤', 'Cette couleur, en espagnol :', 'marrón', ['negro','morado','naranja'], 2],
+    ['⚫', 'Cette couleur, en espagnol :', 'negro', ['blanco','marrón','azul'], 3]
+  ])},
+  {num:3, titre:"Ça se mange !", etoiles:1, consigne:"Regarde l'image et choisis le bon mot.", items: esRows(3, [
+    ['🍎', ES_PQ, 'manzana', ['plátano','fresa','uva'], 0],
+    ['🍌', ES_PQ, 'plátano', ['manzana','sandía','uva'], 2],
+    ['🍓', ES_PQ, 'fresa', ['uva','manzana','queso'], 1],
+    ['🍇', ES_PQ, 'uva', ['fresa','huevo','pan'], 3],
+    ['🍉', ES_PQ, 'sandía', ['plátano','uva','leche'], 1],
+    ['🍞', ES_PQ, 'pan', ['queso','huevo','helado'], 0],
+    ['🥛', ES_PQ, 'leche', ['huevo','pan','helado'], 3],
+    ['🧀', ES_PQ, 'queso', ['leche','fresa','pan'], 2],
+    ['🥚', ES_PQ, 'huevo', ['queso','helado','manzana'], 1],
+    ['🍦', ES_PQ, 'helado', ['leche','pan','uva'], 0]
+  ])},
+  {num:4, titre:"La maison, l'école et dehors", etoiles:1, consigne:"Regarde l'image et choisis le bon mot.", items: esRows(4, [
+    ['📖', ES_PQ, 'libro', ['lápiz','mochila','reloj'], 1],
+    ['✏️', ES_PQ, 'lápiz', ['libro','tijeras','flor'], 0],
+    ['🎒', ES_PQ, 'mochila', ['coche','libro','casa'], 3],
+    ['✂️', ES_PQ, 'tijeras', ['lápiz','reloj','árbol'], 2],
+    ['⏰', ES_PQ, 'reloj', ['libro','flor','coche'], 1],
+    ['🏠', ES_PQ, 'casa', ['coche','árbol','mochila'], 0],
+    ['🚗', ES_PQ, 'coche', ['bicicleta','casa','reloj'], 2],
+    ['🚲', ES_PQ, 'bicicleta', ['coche','flor','árbol'], 3],
+    ['🌳', ES_PQ, 'árbol', ['flor','casa','libro'], 1],
+    ['🌸', ES_PQ, 'flor', ['árbol','lápiz','tijeras'], 0]
+  ])},
+  {num:5, titre:"Les salutations", etoiles:1, consigne:"Choisis la bonne réponse.", items: esRows(5, [
+    [null, 'Comment dit-on « merci » en espagnol ?', 'gracias', ['adiós','hola','por favor'], 2],
+    [null, '« Adiós » veut dire :', 'au revoir', ['bonjour','merci',"s'il te plaît"], 0],
+    [null, '« Por favor » veut dire :', "s'il te plaît", ['merci','au revoir','bonjour'], 1],
+    [null, '« Buenas noches » se dit :', 'le soir ou la nuit', ['le matin','à midi','au petit-déjeuner'], 3],
+    [null, '« ¿Cómo te llamas? » veut dire :', "Comment tu t'appelles ?", ['Quel âge as-tu ?','Comment vas-tu ?','Où habites-tu ?'], 0],
+    [null, 'Pour dire « Je m\'appelle Madeline », on dit :', 'Me llamo Madeline', ['Gracias Madeline','Adiós Madeline','Buenos días Madeline'], 2],
+    [null, 'Pour demander « Ça va ? », on dit :', '¿Qué tal?', ['¿Cómo te llamas?','Muchas gracias','Hasta luego'], 1]
+  ])},
+  {num:6, titre:"Les jours de la semaine", etoiles:1, consigne:"Attention : en espagnol, la semaine commence le lundi (lunes).", items: esRows(6, [
+    [null, 'Comment dit-on « lundi » en espagnol ?', 'lunes', ['martes','domingo','jueves'], 1],
+    [null, 'Quel jour vient juste après « martes » ?', 'miércoles', ['jueves','lunes','viernes'], 0],
+    [null, 'Quel jour vient juste avant « viernes » ?', 'jueves', ['sábado','miércoles','domingo'], 2],
+    [null, '« Miércoles » veut dire en français :', 'mercredi', ['mardi','jeudi','vendredi'], 3],
+    [null, '« Sábado » veut dire en français :', 'samedi', ['dimanche','vendredi','lundi'], 1],
+    [null, 'Le week-end, ce sont les deux jours :', 'sábado y domingo', ['viernes y sábado','lunes y martes','jueves y viernes'], 0],
+    [null, 'Le premier jour de la semaine en espagnol est :', 'lunes', ['domingo','sábado','martes'], 2]
+  ])},
+  {num:7, titre:"Jeu : la semaine dans l'ordre", etoiles:1, consigne:"", items:[
+    {id:'f12e7a', custom:'order', orderPrompt:"Range les jours de la semaine dans l'ordre, du lundi au dimanche :", orderSep:' → ', chips:['jueves','lunes','domingo','martes','sábado','miércoles','viernes'], order:['lunes','martes','miércoles','jueves','viernes','sábado','domingo']}
+  ]},
+  {num:8, titre:"Les mois de l'année", etoiles:2, consigne:"", items: esRows(8, [
+    [null, 'Comment dit-on « mars » en espagnol ?', 'marzo', ['mayo','junio','abril'], 1],
+    [null, 'Comment dit-on « avril » en espagnol ?', 'abril', ['agosto','mayo','marzo'], 0],
+    [null, 'Comment dit-on « décembre » en espagnol ?', 'diciembre', ['noviembre','septiembre','octubre'], 3],
+    [null, 'Quel mois vient juste après « junio » ?', 'julio', ['agosto','mayo','septiembre'], 2],
+    [null, 'Quel mois vient juste avant « octubre » ?', 'septiembre', ['noviembre','agosto','julio'], 1],
+    [null, '« Agosto » veut dire en français :', 'août', ['avril','juin','juillet'], 0],
+    [null, 'Le premier mois de l\'année est :', 'enero', ['febrero','diciembre','marzo'], 2],
+    [null, 'Le mois de Noël (la Navidad) est :', 'diciembre', ['enero','noviembre','febrero'], 3]
+  ])},
+  {num:9, titre:"Jeu : les mois dans l'ordre", etoiles:2, consigne:"", items:[
+    {id:'f12e9a', custom:'order', orderPrompt:"Range ces six mois dans l'ordre de l'année :", orderSep:' → ', chips:['mayo','agosto','marzo','julio','abril','junio'], order:['marzo','abril','mayo','junio','julio','agosto']}
+  ]},
+  {num:10, titre:"Les quatre saisons", etoiles:1, consigne:"", items: esRows(10, [
+    ['🌸', 'La saison des fleurs, c\'est :', 'la primavera', ['el verano','el otoño','el invierno'], 0],
+    ['☀️', 'La saison chaude, c\'est :', 'el verano', ['la primavera','el otoño','el invierno'], 2],
+    ['🍂', 'La saison des feuilles mortes, c\'est :', 'el otoño', ['el invierno','el verano','la primavera'], 1],
+    ['❄️', 'La saison de la neige, c\'est :', 'el invierno', ['el verano','la primavera','el otoño'], 3],
+    [null, 'Quelle saison est « julio » ?', 'el verano', ['el invierno','el otoño','la primavera'], 1],
+    [null, 'Quelle saison est « enero » ?', 'el invierno', ['el verano','la primavera','el otoño'], 0],
+    [null, '« Otoño » veut dire en français :', 'automne', ['printemps','été','hiver'], 2]
+  ])},
+  {num:11, titre:"Les nombres de 0 à 20", etoiles:2, consigne:"", items: esRows(11, [
+    ['⭐⭐⭐', 'Combien d\'étoiles ? En espagnol :', 'tres', ['dos','cuatro','seis'], 1],
+    ['⭐⭐⭐⭐⭐', 'Combien d\'étoiles ? En espagnol :', 'cinco', ['cuatro','seis','siete'], 0],
+    ['⭐⭐⭐⭐⭐⭐⭐', 'Combien d\'étoiles ? En espagnol :', 'siete', ['seis','ocho','nueve'], 3],
+    ['⭐⭐⭐⭐⭐⭐⭐⭐', 'Combien d\'étoiles ? En espagnol :', 'ocho', ['siete','diez','nueve'], 2],
+    [null, '9 s\'écrit en espagnol :', 'nueve', ['ocho','diez','cinco'], 1],
+    [null, '15 s\'écrit en espagnol :', 'quince', ['catorce','cincuenta','cinco'], 0],
+    ['F', 'siete = {0}', 7],
+    ['F', 'doce = {0}', 12],
+    ['F', 'dieciséis = {0}', 16],
+    ['F', 'veinte = {0}', 20]
+  ])},
+  {num:12, titre:"Les dizaines jusqu'à cent", etoiles:2, consigne:"Astuce : à partir de 31, on dit la dizaine puis « y » (et) puis l'unité : treinta y uno = 31.", items: esRows(12, [
+    ['F', 'treinta = {0}', 30],
+    ['F', 'cuarenta = {0}', 40],
+    ['F', 'cincuenta = {0}', 50],
+    ['F', 'ochenta = {0}', 80],
+    ['F', 'cien = {0}', 100],
+    ['F', 'treinta y cinco = {0}', 35],
+    ['F', 'cuarenta y dos = {0}', 42],
+    [null, '60 s\'écrit en espagnol :', 'sesenta', ['setenta','seis','cincuenta'], 2],
+    [null, '90 s\'écrit en espagnol :', 'noventa', ['nueve','ochenta','novecientos'], 0],
+    [null, 'Calcul : « dos + tres » font :', 'cinco', ['cuatro','seis','siete'], 3]
+  ])},
+  {num:13, titre:"L'alphabet et les sons", etoiles:2, consigne:"Pense à ce que tu as appris sur l'alphabet espagnol.", items: esRows(13, [
+    [null, 'Combien de lettres compte l\'alphabet espagnol ?', '27', ['26','28','25'], 1],
+    [null, 'Quelle lettre existe en espagnol mais pas en français ?', 'ñ', ['ç','ß','œ'], 0],
+    [null, 'Quelle lettre est muette (on ne l\'entend pas) ?', 'h', ['j','v','ñ'], 2],
+    [null, 'Dans « hola », le h :', 'ne se prononce pas (« ola »)', ['se prononce fort','se prononce comme un « r »','se prononce comme un « k »'], 3],
+    [null, 'Dans « España », la lettre ñ se prononce :', 'comme « gn » dans montagne', ['comme « n » dans nuit','comme « m » dans maman','comme « ni » dans nid'], 0],
+    [null, 'Dans « jueves », la lettre j (la « jota ») se prononce :', 'avec un son rauque au fond de la gorge', ['comme le « j » français de « jour »','comme un « d »','comme un « t »'], 1],
+    [null, 'Dans « llamo », le « ll » se prononce à peu près :', 'comme un « y »', ['comme un « l »','comme un « ll » de « ville »','comme un « r »'], 2],
+    [null, 'La lettre « x » s\'appelle en espagnol :', 'equis', ['zeta','jota','hache'], 1]
+  ]).concat([
+    {id:'f12e13i', custom:'order', orderPrompt:"Range ces quatre lettres dans l'ordre de l'alphabet espagnol :", orderSep:' → ', chips:['o','ñ','m','n'], order:['m','n','ñ','o']}
+  ])},
+  {num:14, titre:"Vrai ou faux ?", etoiles:2, consigne:"Réponds vite, sans regarder la leçon !", items: esRows(14, [
+    ['VF', '« gato » veut dire « chat ».', 'v'],
+    ['VF', '« martes » veut dire « mercredi ».', 'f'],
+    ['VF', 'En espagnol, les jours et les mois s\'écrivent sans majuscule.', 'v'],
+    ['VF', '« verano » veut dire « automne ».', 'f'],
+    ['VF', '« veinte » veut dire « 20 ».', 'v'],
+    ['VF', '« siete » veut dire « 8 ».', 'f'],
+    ['VF', 'Dans « hola », on prononce très fort le h.', 'f'],
+    ['VF', '« invierno » veut dire « hiver ».', 'v']
+  ])},
+  {num:15, titre:"Défi : écris en espagnol", etoiles:3, consigne:"Écris le mot en espagnol, en minuscules (tu peux te passer des accents).", items: esRows(15, [
+    ['T', 'chat = {0}', 'gato'],
+    ['T', 'chien = {0}', 'perro'],
+    ['T', 'lundi = {0}', 'lunes'],
+    ['T', 'rouge = {0}', 'rojo'],
+    ['T', 'cinq = {0}', 'cinco'],
+    ['T', 'été = {0}', 'verano'],
+    ['T', 'pomme = {0}', 'manzana'],
+    ['T', 'merci = {0}', 'gracias']
+  ])},
+  {num:16, titre:"Défi : petites phrases", etoiles:3, consigne:"Un peu plus difficile : réfléchis bien !", items: esRows(16, [
+    [null, '« Buenos días, ¿cómo te llamas? » — Ta réponse :', 'Me llamo Madeline', ['Adiós, Madeline','Gracias, Madeline','Por favor, Madeline'], 2],
+    [null, 'Complète : « Hoy es ___ » (aujourd\'hui, c\'est jeudi) :', 'jueves', ['martes','sábado','viernes'], 0],
+    [null, 'Complète : « Estamos en ___ » (nous sommes en août) :', 'agosto', ['abril','mayo','julio'], 3],
+    [null, 'Complète : « En ___ hace calor » (en été il fait chaud) :', 'verano', ['invierno','otoño','primavera'], 1],
+    [null, 'Laquelle de ces suites de nombres est dans le bon ordre ?', 'uno, dos, tres, cuatro', ['dos, uno, tres, cuatro','uno, tres, dos, cuatro','cuatro, tres, dos, uno'], 0],
+    [null, '« Hasta luego » veut dire :', 'à tout à l\'heure', ['bonne nuit','merci beaucoup','bienvenue'], 2],
+    ['🐱⚫', 'Un chat noir, en espagnol :', 'un gato negro', ['un perro blanco','un pájaro verde','un pez rojo'], 1]
+  ])},
+  {num:17, titre:"La famille", etoiles:1, consigne:"Regarde l'image ou lis la question, puis choisis le bon mot.", items: esRows(17, [
+    ['👩', ES_PQ, 'madre', ['padre','abuela','hermana'], 0],
+    ['👨', ES_PQ, 'padre', ['madre','abuelo','bebé'], 2],
+    ['👵', ES_PQ, 'abuela', ['abuelo','madre','hermana'], 1],
+    ['👴', ES_PQ, 'abuelo', ['abuela','padre','hermano'], 3],
+    ['👶', ES_PQ, 'bebé', ['madre','hermano','abuelo'], 0],
+    [null, 'Comment dit-on « la famille » en espagnol ?', 'la familia', ['la abuela','la madre','la hermana'], 2],
+    [null, 'Ton frère, en espagnol :', 'el hermano', ['el abuelo','el padre','el primo'], 1],
+    [null, 'Ta sœur, en espagnol :', 'la hermana', ['la madre','la abuela','la tía'], 3]
+  ])},
+  {num:18, titre:"Le corps", etoiles:1, consigne:"Regarde l'image et choisis le bon mot.", items: esRows(18, [
+    ['👁️', ES_PQ, 'ojo', ['oreja','boca','nariz'], 2],
+    ['👃', ES_PQ, 'nariz', ['ojo','boca','mano'], 0],
+    ['👄', ES_PQ, 'boca', ['nariz','diente','oreja'], 3],
+    ['👂', ES_PQ, 'oreja', ['ojo','brazo','pie'], 1],
+    ['✋', ES_PQ, 'mano', ['pie','brazo','pierna'], 0],
+    ['🦶', ES_PQ, 'pie', ['mano','pierna','diente'], 2],
+    ['🦷', ES_PQ, 'diente', ['boca','lengua','oreja'], 1],
+    ['💪', ES_PQ, 'brazo', ['pierna','mano','cabeza'], 3],
+    ['🦵', ES_PQ, 'pierna', ['brazo','pie','nariz'], 0],
+    [null, '« La cabeza » veut dire :', 'la tête', ['la main','le pied','la jambe'], 1]
+  ])},
+  {num:19, titre:"Les vêtements", etoiles:1, consigne:"Regarde l'image et choisis le bon mot.", items: esRows(19, [
+    ['👕', ES_PQ, 'camiseta', ['pantalón','vestido','abrigo'], 1],
+    ['👖', ES_PQ, 'pantalón', ['camiseta','zapatos','bufanda'], 0],
+    ['👗', ES_PQ, 'vestido', ['abrigo','camiseta','sombrero'], 3],
+    ['👟', ES_PQ, 'zapatos', ['calcetines','guantes','gafas'], 2],
+    ['🧦', ES_PQ, 'calcetines', ['zapatos','guantes','pantalón'], 0],
+    ['🧥', ES_PQ, 'abrigo', ['vestido','bufanda','camiseta'], 1],
+    ['👒', ES_PQ, 'sombrero', ['gafas','guantes','abrigo'], 3],
+    ['👓', ES_PQ, 'gafas', ['sombrero','zapatos','bufanda'], 2],
+    ['🧤', ES_PQ, 'guantes', ['calcetines','gafas','abrigo'], 0],
+    ['🧣', ES_PQ, 'bufanda', ['guantes','vestido','sombrero'], 1]
+  ])},
+  {num:20, titre:"La météo", etoiles:2, consigne:"Regarde l'image : quel temps fait-il ?", items: esRows(20, [
+    ['☀️', '¿Qué tiempo hace?', 'hace sol', ['llueve','hace frío','nieva'], 1],
+    ['🥵', '¿Qué tiempo hace?', 'hace calor', ['hace frío','hace viento','llueve'], 0],
+    ['🥶', '¿Qué tiempo hace?', 'hace frío', ['hace calor','hace sol','está nublado'], 2],
+    ['💨', '¿Qué tiempo hace?', 'hace viento', ['llueve','hace sol','hay niebla'], 3],
+    ['☁️', '¿Qué tiempo hace?', 'está nublado', ['hace sol','llueve','hace calor'], 0],
+    ['🌧️', '¿Qué tiempo hace?', 'llueve', ['nieva','hace viento','hay tormenta'], 2],
+    ['❄️', '¿Qué tiempo hace?', 'nieva', ['llueve','hace frío','hay niebla'], 1],
+    ['⛈️', '¿Qué tiempo hace?', 'hay tormenta', ['llueve','hace viento','nieva'], 0],
+    [null, '« Hace calor » veut dire :', 'il fait chaud', ['il fait froid','il pleut','il neige'], 3],
+    [null, 'Pour demander « Quel temps fait-il ? », on dit :', '¿Qué tiempo hace?', ['¿Qué hora es?','¿Cómo te llamas?','¿Qué tal?'], 1]
+  ])},
+  {num:21, titre:"L'heure", etoiles:2, consigne:"Regarde l'horloge (la petite aiguille montre les heures, la grande les minutes).", items: esRows(21, [
+    [esClock(1,0), '¿Qué hora es?', 'Es la una', ['Son las dos','Son las doce','Son las tres'], 0],
+    [esClock(2,0), '¿Qué hora es?', 'Son las dos', ['Es la una','Son las tres','Son las cinco'], 1],
+    [esClock(5,0), '¿Qué hora es?', 'Son las cinco', ['Son las cuatro','Son las seis','Son las diez'], 2],
+    [esClock(8,0), '¿Qué hora es?', 'Son las ocho', ['Son las siete','Son las nueve','Son las seis'], 0],
+    [esClock(3,15), '¿Qué hora es?', 'Son las tres y cuarto', ['Son las tres y media','Son las cuatro menos cuarto','Son las tres'], 1],
+    [esClock(5,30), '¿Qué hora es?', 'Son las cinco y media', ['Son las cinco y cuarto','Son las seis menos cuarto','Son las cuatro y media'], 2],
+    [esClock(6,45), '¿Qué hora es?', 'Son las siete menos cuarto', ['Son las seis y cuarto','Son las seis y media','Son las siete y cuarto'], 3],
+    [esClock(12,0), '¿Qué hora es? (midi)', 'Es mediodía', ['Es medianoche','Es la una','Son las doce y media'], 0],
+    [null, 'Pour demander l\'heure, on dit :', '¿Qué hora es?', ['¿Qué tiempo hace?','¿Cómo estás?','¿Dónde vives?'], 1],
+    [null, '« Y media » veut dire :', 'et demie', ['et quart','moins le quart','pile'], 2],
+    [null, '« Menos cuarto » veut dire :', 'moins le quart', ['et quart','et demie','pile'], 0],
+    [null, '« Por la noche » veut dire :', 'le soir, la nuit', ['le matin','l\'après-midi','à midi'], 3]
+  ])},
+  {num:22, titre:"🔁 Entraînement supplémentaire", etoiles:2, consigne:"Encore un peu d'espagnol, avec de nouveaux mots.", items: esRows(22, [
+    ['🐮', ES_PQ, 'vaca', ['cerdo','caballo','oveja'], 1],
+    ['🐰', ES_PQ, 'conejo', ['gato','perro','ratón'], 0],
+    ['🐷', ES_PQ, 'cerdo', ['vaca','oveja','conejo'], 2],
+    ['🐑', ES_PQ, 'oveja', ['vaca','cerdo','mono'], 3],
+    [null, '« Jueves » veut dire en français :', 'jeudi', ['mardi','mercredi','vendredi'], 1],
+    [null, 'Comment dit-on « juin » en espagnol ?', 'junio', ['julio','mayo','marzo'], 0],
+    ['F', 'catorce = {0}', 14],
+    ['F', 'sesenta = {0}', 60],
+    ['VF', '« primavera » veut dire « printemps ».', 'v'],
+    ['T', 'bleu = {0}', 'azul']
+  ])}
+];
 
 /* ============ FICHES DATA ============ */
 const FICHES = [
@@ -2299,6 +2622,100 @@ const FICHES = [
     "Exercice 12 (fractions, plus loin) : a) 12 — b) 5 — c) 25 — d) 9 billes — e) 3 cm.",
     "Exercice 13 (entraînement supplémentaire) : a) 90 — b) 66 — c) 600 — d) 54 — e) 100 — f) 70."
   ]
+},
+{
+  id:12, color:'f12', badge:12, cat:'churro', title:"L'espagnol : ¡Hola!",
+  eyebrow:"Espagnol", desc:"Apprendre l'espagnol en s'amusant : deviner le mot sur l'image, les salutations, la famille, le corps, les vêtements, la météo, l'heure, les jours, les mois, les saisons, les nombres jusqu'à cent et l'alphabet.",
+  lesson:[
+    {k:'note', text:"¡Hola, Madeline ! L'espagnol s'écrit presque comme il se prononce, et beaucoup de mots ressemblent au français. Appuie sur le petit haut-parleur 🔊 pour entendre un mot (selon ton appareil, le son peut ne pas être disponible)."},
+    {k:'tag', text:'Les salutations'},
+    esVocab([
+      ['👋','hola','bonjour / salut'],
+      ['☀️','buenos días','bonjour (le matin)'],
+      ['🌤️','buenas tardes','bon après-midi'],
+      ['🌙','buenas noches','bonsoir / bonne nuit'],
+      ['🙋','adiós','au revoir'],
+      ['⏳','hasta luego','à tout à l\'heure'],
+      ['🙏','gracias','merci'],
+      ['🤝','por favor','s\'il te plaît'],
+      ['😊','¿qué tal?','ça va ?'],
+      ['👍','muy bien','très bien'],
+      ['❓','¿cómo te llamas?','comment tu t\'appelles ?'],
+      ['💬','me llamo Madeline','je m\'appelle Madeline']
+    ]),
+    {k:'note', text:"En espagnol, une question commence par « ¿ » à l'envers et se termine par « ? ». Une exclamation commence par « ¡ » et se termine par « ! »."},
+    {k:'tag', text:"L'alphabet (el alfabeto)"},
+    {k:'note', text:"L'alphabet espagnol a 27 lettres : les mêmes qu'en français, plus la lettre « ñ » (eñe)."},
+    {k:'table', headers:['Lettre','Se dit','Lettre','Se dit','Lettre','Se dit'], rows:[
+      ['A a','a','J j','jota','R r','erre'],
+      ['B b','be','K k','ka','S s','ese'],
+      ['C c','ce','L l','ele','T t','te'],
+      ['D d','de','M m','eme','U u','u'],
+      ['E e','e','N n','ene','V v','uve'],
+      ['F f','efe','Ñ ñ','eñe','W w','uve doble'],
+      ['G g','ge','O o','o','X x','equis'],
+      ['H h','hache','P p','pe','Y y','i griega'],
+      ['I i','i','Q q','cu','Z z','zeta']
+    ]},
+    {k:'rule', tag:'Les sons', title:'La lettre H est muette', desc:"On ne prononce jamais le h en espagnol.", ex:"hola → « ola »"},
+    {k:'rule', tag:'Les sons', title:'La lettre Ñ', desc:"Elle se prononce « gn », comme dans « montagne ».", ex:"España → « Espagna »"},
+    {k:'rule', tag:'Les sons', title:'La lettre J (la jota)', desc:"Elle se prononce avec un son rauque au fond de la gorge, plus fort que le « j » français. Le « g » devant e ou i se prononce pareil.", ex:"jueves, gente"},
+    {k:'rule', tag:'Les sons', title:'LL et V', desc:"« ll » se prononce à peu près comme un « y » (llamo → « yamo »). Le « v » se prononce comme un « b ».", ex:"llamo, vaca"},
+    {k:'rule', tag:'Les sons', title:'Z et C (en Espagne)', desc:"Le « z », et le « c » devant e ou i, se prononcent avec la langue entre les dents, comme le « th » anglais de « thing ».", ex:"zeta, cinco"},
+    {k:'tag', text:'Les animaux (los animales)'},
+    esVocab([['🐶','perro','chien'],['🐱','gato','chat'],['🐦','pájaro','oiseau'],['🐟','pez','poisson'],['🐴','caballo','cheval'],['🐮','vaca','vache'],['🐷','cerdo','cochon'],['🐑','oveja','mouton'],['🐰','conejo','lapin'],['🐢','tortuga','tortue'],['🐘','elefante','éléphant'],['🦁','león','lion'],['🐵','mono','singe'],['🦆','pato','canard']]),
+    {k:'tag', text:'Les couleurs (los colores)'},
+    esVocab([['🔴','rojo','rouge'],['🔵','azul','bleu'],['🟢','verde','vert'],['🟡','amarillo','jaune'],['🟠','naranja','orange'],['🟣','morado','violet'],['🟤','marrón','marron'],['⚫','negro','noir'],['⚪','blanco','blanc']]),
+    {k:'note', text:"Astuce : en espagnol, l'adjectif de couleur se place après le nom : « un gato negro » (un chat noir)."},
+    {k:'tag', text:'La nourriture (la comida)'},
+    esVocab([['🍎','manzana','pomme'],['🍌','plátano','banane'],['🍓','fresa','fraise'],['🍇','uva','raisin'],['🍉','sandía','pastèque'],['🍞','pan','pain'],['🥛','leche','lait'],['🧀','queso','fromage'],['🥚','huevo','œuf'],['🍦','helado','glace']]),
+    {k:'tag', text:'La maison, l\'école et dehors'},
+    esVocab([['📖','libro','livre'],['✏️','lápiz','crayon'],['🎒','mochila','cartable / sac à dos'],['✂️','tijeras','ciseaux'],['⏰','reloj','horloge / montre'],['🏠','casa','maison'],['🚗','coche','voiture'],['🚲','bicicleta','vélo'],['🌳','árbol','arbre'],['🌸','flor','fleur']]),
+    {k:'tag', text:'La famille (la familia)'},
+    esVocab([['👨‍👩‍👧‍👦','la familia','la famille'],['👩','la madre (mamá)','la mère (maman)'],['👨','el padre (papá)','le père (papa)'],['👦','el hermano','le frère'],['👧','la hermana','la sœur'],['👵','la abuela','la grand-mère'],['👴','el abuelo','le grand-père'],['👶','el bebé','le bébé'],['🧑','el tío / la tía','l\'oncle / la tante'],['👫','el primo / la prima','le cousin / la cousine']]),
+    {k:'note', text:"« el » et « la » veulent dire « le » et « la ». Pour un garçon ou un homme, on dit souvent -o (hermano, abuelo, primo) ; pour une fille ou une femme, -a (hermana, abuela, prima)."},
+    {k:'tag', text:'Le corps (el cuerpo)'},
+    esVocab([['🙂','la cabeza','la tête'],['👁️','el ojo','l\'œil'],['👃','la nariz','le nez'],['👄','la boca','la bouche'],['👂','la oreja','l\'oreille'],['🦷','el diente','la dent'],['👅','la lengua','la langue'],['💪','el brazo','le bras'],['✋','la mano','la main'],['🦵','la pierna','la jambe'],['🦶','el pie','le pied']]),
+    {k:'note', text:"Attention : « los ojos » (les yeux) prend un -s au pluriel, comme en français : un ojo, dos ojos."},
+    {k:'tag', text:'Les vêtements (la ropa)'},
+    esVocab([['👕','la camiseta','le t-shirt'],['👖','el pantalón','le pantalon'],['👗','el vestido','la robe'],['👟','los zapatos','les chaussures'],['🧦','los calcetines','les chaussettes'],['🧥','el abrigo','le manteau'],['👒','el sombrero','le chapeau'],['👓','las gafas','les lunettes'],['🧤','los guantes','les gants'],['🧣','la bufanda','l\'écharpe']]),
+    {k:'tag', text:'La météo (el tiempo)'},
+    {k:'note', text:"Pour demander le temps qu'il fait : « ¿Qué tiempo hace? » Pour répondre, on dit « hace » (il fait) ou « hay » (il y a)."},
+    esVocab([['☀️','hace sol','il y a du soleil'],['🥵','hace calor','il fait chaud'],['🥶','hace frío','il fait froid'],['💨','hace viento','il y a du vent'],['☁️','está nublado','le ciel est nuageux'],['🌧️','llueve','il pleut'],['❄️','nieva','il neige'],['⛈️','hay tormenta','il y a de l\'orage'],['🌫️','hay niebla','il y a du brouillard']]),
+    {k:'tag', text:"L'heure (la hora)"},
+    {k:'note', text:"Pour demander l'heure : « ¿Qué hora es? » Pour répondre, on dit « Es la… » pour une heure, et « Son las… » pour les autres heures."},
+    esVocab([['🕐','Es la una','Il est une heure'],['🕑','Son las dos','Il est deux heures'],['🕒','Son las tres','Il est trois heures'],['🕓','Son las cuatro','Il est quatre heures'],['🕔','Son las cinco','Il est cinq heures'],['🕠','Son las cinco y media','Il est cinq heures et demie'],['🕒','Son las tres y cuarto','Il est trois heures et quart'],['🕖','Son las siete menos cuarto','Il est sept heures moins le quart'],['🌞','Es mediodía','Il est midi'],['🌛','Es medianoche','Il est minuit']]),
+    {k:'rule', tag:'Astuce', title:'Y et menos', desc:"« y » (et) ajoute des minutes : « y cuarto » = et quart, « y media » = et demie. « menos » (moins) en enlève : « menos cuarto » = moins le quart.", ex:"Son las ocho y media = 8 h 30"},
+    {k:'note', text:"Pour dire à quel moment de la journée : por la mañana (le matin), por la tarde (l'après-midi), por la noche (le soir, la nuit)."},
+    {k:'tag', text:'Les jours de la semaine (los días de la semana)'},
+    esVocab([['','lunes','lundi'],['','martes','mardi'],['','miércoles','mercredi'],['','jueves','jeudi'],['','viernes','vendredi'],['','sábado','samedi'],['','domingo','dimanche']]),
+    {k:'note', text:"Deux règles : en espagnol, la semaine commence le lundi, et les jours s'écrivent sans majuscule. Astuce : lunes = la Lune, martes = Mars, miércoles = Mercure, jueves = Jupiter, viernes = Vénus."},
+    {k:'tag', text:"Les mois de l'année (los meses)"},
+    esVocab([['','enero','janvier'],['','febrero','février'],['','marzo','mars'],['','abril','avril'],['','mayo','mai'],['','junio','juin'],['','julio','juillet'],['','agosto','août'],['','septiembre','septembre'],['','octubre','octobre'],['','noviembre','novembre'],['','diciembre','décembre']]),
+    {k:'note', text:"Les mois s'écrivent aussi sans majuscule : « marzo », « agosto »."},
+    {k:'tag', text:'Les quatre saisons (las estaciones)'},
+    esVocab([['🌸','la primavera','le printemps'],['☀️','el verano','l\'été'],['🍂','el otoño','l\'automne'],['❄️','el invierno','l\'hiver']]),
+    {k:'tag', text:'Les nombres (los números)'},
+    {k:'table', headers:['Nombre','Espagnol','Nombre','Espagnol','Nombre','Espagnol'], rows:[
+      ['0','cero','7','siete','14','catorce'],
+      ['1','uno','8','ocho','15','quince'],
+      ['2','dos','9','nueve','16','dieciséis'],
+      ['3','tres','10','diez','17','diecisiete'],
+      ['4','cuatro','11','once','18','dieciocho'],
+      ['5','cinco','12','doce','19','diecinueve'],
+      ['6','seis','13','trece','20','veinte']
+    ]},
+    {k:'table', headers:['Nombre','Espagnol','Nombre','Espagnol'], rows:[
+      ['30','treinta','70','setenta'],
+      ['40','cuarenta','80','ochenta'],
+      ['50','cincuenta','90','noventa'],
+      ['60','sesenta','100','cien']
+    ]},
+    {k:'note', text:"Pour dire 31, 42, 58…, on dit la dizaine, puis « y » (et), puis l'unité : treinta y uno (31), cuarenta y dos (42), cincuenta y ocho (58)."},
+    {k:'tip', text:"Pour apprendre : je regarde l'image, je dis le mot à voix haute, puis je le cache et je le redis. Si je me trompe, ce n'est pas grave : ¡otra vez, otra vez ! (encore une fois !)"}
+  ],
+  exercises: ES_EX,
+  corrige: esCorrige(ES_EX)
 }
 ];
 
@@ -2507,6 +2924,10 @@ function scheduleBubbleHide(bubble, text){
     bubbleHideTimer = null;
   }, duration);
 }
+/* Churro parle espagnol : ses bulles sont aussi lues à voix haute (à la suite de la réponse annoncée) */
+function churroSpeak(text){
+  if(activeCatId==='churro' && currentFicheId!=null) speakEs(text, true, true, true);
+}
 function say(text, mood){
   const bubble = document.getElementById('catBubble');
   bubble.textContent = text;
@@ -2514,6 +2935,7 @@ function say(text, mood){
   bubble.classList.add('show');
   scheduleBubbleHide(bubble, text);
   catReact(mood);
+  churroSpeak(text);
   const heroSpeech = document.getElementById('heroSpeech');
   if(heroSpeech && document.getElementById('view-map').classList.contains('active')){
     heroSpeech.textContent = '“'+text+'”';
@@ -2531,6 +2953,7 @@ function sayConseil(text){
     setTimeout(()=>c.classList.remove('wink','purr'), 950);
   });
   playPurr();
+  churroSpeak(text);
   const heroSpeech = document.getElementById('heroSpeech');
   if(heroSpeech && document.getElementById('view-map').classList.contains('active')){
     heroSpeech.textContent = '“'+text+'”';
@@ -3247,6 +3670,7 @@ function handleOptClick(btn){
     return; // mode parent : pas de verrouillage, elle rechoisit tout de suite
   }
   markPart(itemId, idx, correct, btn.dataset.val);
+  if(ref.def.say) speakEs(ref.def.say, false, true); /* annonce la bonne réponse à voix haute */
   const group = btn.closest('.mcq-group');
   group.querySelectorAll('.opt-btn').forEach(b=>{ b.disabled=true; if(b!==btn) b.classList.add('dim'); });
   if(correct){ btn.classList.add('correct'); burstNear(btn,'good',10); }
@@ -3282,6 +3706,7 @@ function handleVerifyClick(btn){
   });
   if(!anyChecked) return;
   if(anyWrongRetry){ reactMascot(itemId, false); return; }
+  if(ref.def.say) speakEs(ref.def.say, false, true); /* annonce la bonne réponse à voix haute */
   if(allOk) burstNear(btn,'good',14);
   reactMascot(itemId, allOk);
   refreshItemFeedback(itemId);
@@ -3570,13 +3995,13 @@ function renderParentsHome(){
   const body = document.getElementById('parentsBodyHome');
   body.innerHTML =
     mistakesRecapHtml()+
-    '<p>Les onze fiches couvrent chacune un point à consolider avant le CM1 : rendre la monnaie, lire l’heure, la multiplication, la conjugaison, le compas, les longueurs, les masses, les contenances (liquides), les types de phrases, le calcul mental et la révision des devoirs de la semaine en cours (mots à réviser, dictée, nombres, grammaire, tables… selon ce qui est donné en classe). Chaque fiche commence par une leçon courte (« Je retiens »), puis des exercices du plus facile (★☆☆) au plus difficile (★★★).</p>'+
+    '<p>Les douze fiches couvrent chacune un point à consolider avant le CM1 : rendre la monnaie, lire l’heure, la multiplication, la conjugaison, le compas, les longueurs, les masses, les contenances (liquides), les types de phrases, le calcul mental, l’espagnol (images à deviner en QCM, salutations, jours, mois, saisons, nombres, alphabet, famille, corps, vêtements, météo, heure) et la révision des devoirs de la semaine en cours (mots à réviser, dictée, nombres, grammaire, tables… selon ce qui est donné en classe). Chaque fiche commence par une leçon courte (« Je retiens »), puis des exercices du plus facile (★☆☆) au plus difficile (★★★).</p>'+
     '<p><strong>Conseils :</strong> une fiche par jour suffit (15 minutes) ; laissez Madeline chercher seule après avoir relu « Je retiens » à voix haute ; si les deux derniers exercices d’une fiche restent difficiles, ce n’est pas grave — ils sont volontairement un peu au-dessus du niveau strict.</p>'+
     '<p><strong>Deux mécaniques particulières :</strong> la fiche « Le compas » demande un vrai compas et une feuille de papier — l’énoncé est dans l’application, le tracé (et parfois la mesure au fil d’une règle) se fait à la main, et Madeline coche elle-même si c’est réussi après avoir comparé avec le modèle affiché ; ses derniers exercices font découvrir, cercle après cercle, ce qui se passe quand deux cercles se touchent ou se croisent. Les fiches « Les longueurs », « Les masses » et « Les contenances » commencent chacune par une méthode pas à pas, puis un exercice où Madeline construit elle-même le tableau de conversion (en rangeant les unités dans le bon ordre), avant de le remplir avec de vraies conversions.</p>'+
     '<p><strong>Dans cette version interactive</strong>, en dehors des séances avec vous, chaque question ne se joue qu’une fois : une réponse fausse ne peut pas être retentée, Madeline est prévenue qu’elle la reverra avec vous. Le récapitulatif ci-dessus liste tout ce qu’il reste à corriger, avec une recommandation par fiche ; chaque fiche se termine désormais par un exercice « 🔁 Entraînement supplémentaire » aux questions inédites, pensé pour rejouer sur les points ratés sans jamais retomber sur une question déjà vue. Le corrigé complet de chaque fiche reste aussi disponible dans l’encadré grisé, en bas de chaque fiche.</p>'+
     '<p><strong>Quand vous travaillez avec elle</strong>, activez le « 👪 Parent » en haut de l’écran (avec le code ci-dessous) pour que Madeline puisse corriger une erreur tout de suite, sans attendre : les questions déjà ratées se rouvrent, et les nouvelles erreurs ne se verrouillent plus tant que le mode est actif.</p>'+
     '<p><strong>Programme de référence :</strong> cycle 2, arrêté du 22 octobre 2024 (JO du 25/10/2024, BO n°41 du 31/10/2024, NOR MENE2415135A), applicable depuis la rentrée 2025.</p>'+
-    '<p>Bon courage à Madeline, et bravo d’avance pour les onze étoiles !</p>'+
+    '<p>Bon courage à Madeline, et bravo d’avance pour les douze étoiles !</p>'+
     parentPinBoxHtml()+
     parentRequestBoxHtml();
 }
