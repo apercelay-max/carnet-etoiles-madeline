@@ -817,6 +817,17 @@ function clockFace(h, m, size){
     '<circle cx="50" cy="50" r="3.4" fill="var(--accent,var(--ink))"/>'+
   '</svg>';
 }
+
+/* Carré (ou bande) partagé en parts égales, certaines parts coloriées : sert aux fractions. */
+function fracSquare(cols, rows, shaded){
+  const cw = 28, ch = 28, w = cols*cw, h = rows*ch;
+  let g = '';
+  for(let r=0;r<rows;r++) for(let c=0;c<cols;c++){
+    const on = shaded.indexOf(r*cols+c)>=0;
+    g += '<rect x="'+(c*cw)+'" y="'+(r*ch)+'" width="'+cw+'" height="'+ch+'" fill="'+(on?'#4a4a4a':'#fff')+'" stroke="#222" stroke-width="1.5"/>';
+  }
+  return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 '+(w+4)+' '+(h+4)+'" width="'+(w+4)+'" height="'+(h+4)+'" role="img" aria-label="Figure partagée en '+(cols*rows)+' parts égales, '+shaded.length+' coloriées">'+g+'</svg>';
+}
 function circleRadiusSvg(label, size){
   size = size||120;
   return '<svg viewBox="0 0 100 100" width="'+size+'" height="'+size+'" role="img" aria-label="cercle">'+
@@ -878,6 +889,9 @@ function coinRowSvg(coins){
   return out;
 }
 
+const OPT_TEMPS = [ {v:'p',l:'Passé'}, {v:'r',l:'Présent'}, {v:'f',l:'Futur'} ];
+function optFr(list, ans){ return {o:list.map((l,i)=>({v:String.fromCharCode(97+i),l:l})), a:String.fromCharCode(97+list.indexOf(ans))}; }
+function fracMcq(list, ans){ const r=optFr(list,ans); return mcq(r.o,r.a); }
 const OPT_TYPE = [ {v:'d',l:'Déclarative'}, {v:'i',l:'Interrogative'}, {v:'m',l:'Impérative'}, {v:'e',l:'Exclamative'} ];
 const OPT_PONCT = [ {v:'pt',l:'.'}, {v:'pi',l:'?'}, {v:'pe',l:'!'} ];
 const OPT_FORME = [ {v:'aff',l:'Affirmative'}, {v:'neg',l:'Négative'} ];
@@ -2261,9 +2275,9 @@ const FICHES = [
 },
 {
   id:9, color:'f9', badge:9, cat:'fripouille', rotating:true, title:"Réviser ses devoirs de la semaine",
-  eyebrow:"Devoirs", desc:"Le virelangue à dompter, la dictée « La rentrée des classes (2) », les nombres en lettres jusqu'au milliard, les types de phrases et les tables de multiplication de 2 à 5.",
+  eyebrow:"Devoirs", desc:"Le virelangue à dompter, la dictée « La rentrée des classes (2) », les nombres en lettres jusqu'au milliard, les types de phrases, les tables de multiplication de 2 à 5, le verbe (infinitif, passé, présent, futur), les fractions avec les carrés, les nombres en lettres jusqu'à soixante, et du calcul mental.",
   lesson:[
-    {k:'note', text:"Cette fiche change chaque semaine selon les devoirs en cours ! Cette fois-ci, cinq choses à réviser : un virelangue à dompter, la dictée « La rentrée des classes (2) », les nombres en lettres jusqu'au milliard, les types de phrases, et les tables de multiplication de 2 à 5."},
+    {k:'note', text:"Cette fiche change chaque semaine selon les devoirs en cours ! Cette fois-ci, cinq choses à réviser : un virelangue à dompter, la dictée « La rentrée des classes (2) », les nombres en lettres jusqu'au milliard, les types de phrases, et les tables de multiplication de 2 à 5. Il y a aussi de nouvelles leçons : le verbe (infinitif, passé, présent, futur), les fractions avec les carrés, les nombres en lettres de 0 à 60, et le calcul mental."},
     {k:'rule', tag:'Virelangue de la semaine', title:"Attention aux langues qui fourchent !", desc:"Répète-le à voix haute, doucement d'abord, puis de plus en plus vite.", ex:"Flavien fait faire à Fabien fourbe et fautif force farces fausses et fantasques."},
     {k:'tip', text:"Défi supplémentaire : essaie de le dire à voix haute à quelqu'un. Même sans appareil dentaire, ce virelangue n'est vraiment pas facile !"},
     {k:'table', headers:['Noms','Verbes','Adjectifs','Mots invariables'], rows:[
@@ -2301,6 +2315,27 @@ const FICHES = [
       ['8','16','24','32','40'],
       ['9','18','27','36','45'],
       ['10','20','30','40','50']
+    ]},
+    {k:'rule', tag:'Le verbe', title:"L'infinitif", desc:"C'est la forme non conjuguée du verbe, celle du dictionnaire. Je la reconnais à sa terminaison : -er, -ir, -oir ou -re. L'infinitif d'un verbe ne change jamais (il est invariable).", ex:"manger, finir, prendre"},
+    {k:'rule', tag:'Le verbe', title:"Le passé, le présent et le futur", desc:"Une action peut se passer à différents moments. Au passé, l'action est terminée ; au présent, elle se passe maintenant ; au futur, elle n'a pas encore eu lieu.", ex:"Hier, j'ai fait un gâteau. / Aujourd'hui, je fais un gâteau. / Demain, je ferai un gâteau."},
+    {k:'table', headers:['Passé','Présent','Futur'], rows:[
+      ['hier, la veille, avant-hier','aujourd\'hui, maintenant','demain, après-demain'],
+      ['la semaine dernière','en ce moment','la semaine prochaine'],
+      ['autrefois, jadis','actuellement','lundi prochain']
+    ]},
+    {k:'tip', text:"Le verbe est souvent accompagné d'un indicateur de temps (hier, maintenant, demain...). Je le cherche dans la phrase : il m'aide à savoir si l'action est passée, présente ou future."},
+    {k:'rule', tag:'Les fractions', title:"Lire une fraction avec un carré", desc:"Le carré est coupé en parts égales. Le nombre du bas dit combien il y a de parts en tout ; le nombre du haut dit combien de parts sont coloriées.", ex:"Un carré coupé en 8 parts dont 3 sont coloriées : 3/8."},
+    {k:'tip', text:"Attention : les parts doivent être égales, même si elles n'ont pas la même forme (des triangles, des rectangles...). Plusieurs fractions peuvent représenter la même partie : 1/2 = 2/4 = 4/8 = 8/16. Si je coupe chaque part en deux, le haut et le bas doublent."},
+    {k:'table', headers:['0 à 9','11 à 16','Les dizaines'], rows:[
+      ['zéro, un, deux, trois, quatre, cinq, six, sept, huit, neuf','onze, douze, treize, quatorze, quinze, seize','dix, vingt, trente, quarante, cinquante, soixante']
+    ]},
+    {k:'tip', text:"Les nombres en lettres : on relie chaque mot par un trait d'union (vingt-deux, soixante-quinze). On met un -s à « vingt » et « cent » quand ils sont multipliés et qu'il n'y a rien après : quatre-vingts (4 × 20) mais quatre-vingt-deux. Et « mille » ne prend jamais de s."},
+    {k:'tip', text:"Calcul mental, mes astuces. Retirer 7 : je retire 10, puis j'ajoute 3 (42 − 7 → 42 − 10 = 32, puis 32 + 3 = 35). Ajouter 8 : j'ajoute 10, puis je retire 2. Une division, c'est une table à l'envers : 24 ÷ 2, je cherche « 2 × ? = 24 ». Diviser par 2, c'est prendre la moitié."},
+    {k:'table', headers:['Je calcule...','Je pense à...','Exemple'], rows:[
+      ['5 × 4','4 × 5 = la moitié de 4 × 10','20'],
+      ['42 − 7','42 − 10 + 3','35'],
+      ['24 ÷ 2','la moitié de 24','12'],
+      ['30 ÷ 5','5 × ? = 30','6']
     ]}
   ],
   exercises:[
@@ -2355,11 +2390,87 @@ const FICHES = [
       {id:'f9e9c', t:tmpl("c) 5 × 7 = {0}"), parts:[mcq([{v:'a',l:'30'},{v:'b',l:'35'},{v:'c',l:'40'},{v:'d',l:'12'}],'b')]},
       {id:'f9e9d', t:tmpl("d) 5 × 8 = {0}"), parts:[mcq([{v:'a',l:'35'},{v:'b',l:'40'},{v:'c',l:'45'},{v:'d',l:'13'}],'b')]}
     ]},
-    {num:10, titre:"🔁 Entraînement supplémentaire", etoiles:2, consigne:"Encore un peu de tout, pour finir en beauté.", items:[
-      {id:'f9e10a', t:tmpl("a) {0}"), parts:[mcq([{v:'a',l:"l'attension"},{v:'b',l:"l'attention"},{v:'c',l:"l'atttention"},{v:'d',l:"l'attantion"}],'b')]},
-      {id:'f9e10b', t:tmpl("b) Comment écrit-on 610 000 en lettres ? {0}"), parts:[mcq([{v:'a',l:'six cent dix mille'},{v:'b',l:'six cents dix mille'},{v:'c',l:'six cent dix milles'},{v:'d',l:'soixante-dix mille'}],'a')]},
-      {id:'f9e10c', t:tmpl("c) « Est-ce que la récréation est bientôt finie ? » {0}"), parts:[mcq(OPT_TYPE,'i')]},
-      {id:'f9e10d', t:tmpl("d) 4 × 7 = {0}"), parts:[mcq([{v:'a',l:'26'},{v:'b',l:'28'},{v:'c',l:'30'},{v:'d',l:'24'}],'b')]}
+    {num:10, titre:"Le verbe : l'infinitif", etoiles:1, consigne:"L'infinitif est la forme non conjuguée du verbe, celle du dictionnaire.", items:[
+      {id:'f9e10a', t:tmpl("a) Quel mot est un verbe à l'infinitif ? {0}"), parts:[fracMcq(['mangé','manger','mange','mangeons'],'manger')]},
+      {id:'f9e10b', t:tmpl("b) Dans le dictionnaire, un verbe s'écrit à : {0}"), parts:[fracMcq(["l'infinitif",'le présent','le futur','le passé'],"l'infinitif")]},
+      {id:'f9e10c', t:tmpl("c) Quel est l'infinitif de « je prends » ? {0}"), parts:[fracMcq(['prendre','prendu','prenez','prener'],'prendre')]},
+      {id:'f9e10d', t:tmpl("d) Quelle terminaison n'est PAS celle d'un infinitif ? {0}"), parts:[fracMcq(['-er','-ir','-oir','-ez'],'-ez')]}
+    ]},
+    {num:11, titre:"Passé, présent ou futur ?", etoiles:1, consigne:"Choisis le moment de l'action.", items:[
+      {id:'f9e11a', t:tmpl("a) « Hier, j'ai fait un gâteau. » {0}"), parts:[mcq(OPT_TEMPS,'p')]},
+      {id:'f9e11b', t:tmpl("b) « Aujourd'hui, je fais un gâteau. » {0}"), parts:[mcq(OPT_TEMPS,'r')]},
+      {id:'f9e11c', t:tmpl("c) « Demain, je ferai un gâteau. » {0}"), parts:[mcq(OPT_TEMPS,'f')]},
+      {id:'f9e11d', t:tmpl("d) « La semaine dernière, nous avons joué dehors. » {0}"), parts:[mcq(OPT_TEMPS,'p')]}
+    ]},
+    {num:12, titre:"Les indicateurs de temps", etoiles:2, consigne:"Chaque mot ou groupe de mots indique un moment : passé, présent ou futur.", items:[
+      {id:'f9e12a', t:tmpl("a) « autrefois » {0}"), parts:[mcq(OPT_TEMPS,'p')]},
+      {id:'f9e12b', t:tmpl("b) « actuellement » {0}"), parts:[mcq(OPT_TEMPS,'r')]},
+      {id:'f9e12c', t:tmpl("c) « lundi prochain » {0}"), parts:[mcq(OPT_TEMPS,'f')]},
+      {id:'f9e12d', t:tmpl("d) « après-demain » {0}"), parts:[mcq(OPT_TEMPS,'f')]},
+      {id:'f9e12e', t:tmpl("e) « la veille » {0}"), parts:[mcq(OPT_TEMPS,'p')]},
+      {id:'f9e12f', t:tmpl("f) « en ce moment » {0}"), parts:[mcq(OPT_TEMPS,'r')]}
+    ]},
+    {num:13, titre:"Les fractions : quelle partie est coloriée ?", etoiles:2, consigne:"Compte les parts coloriées, puis le nombre de parts en tout.", items:[
+      {id:'f9e13a', figure:fracSquare(2,1,[0]), t:tmpl("a) Quelle fraction est coloriée ? {0}"), parts:[fracMcq(['1/2','1/4','2/1','1/3'],'1/2')]},
+      {id:'f9e13b', figure:fracSquare(2,2,[1,2]), t:tmpl("b) Quelle fraction est coloriée ? {0}"), parts:[fracMcq(['1/4','2/4','3/4','2/2'],'2/4')]},
+      {id:'f9e13c', figure:fracSquare(4,1,[0,1,2]), t:tmpl("c) Quelle fraction est coloriée ? {0}"), parts:[fracMcq(['1/4','2/4','3/4','3/3'],'3/4')]},
+      {id:'f9e13d', figure:fracSquare(4,2,[0,2,5]), t:tmpl("d) Quelle fraction est coloriée ? {0}"), parts:[fracMcq(['3/8','5/8','3/5','2/8'],'3/8')]},
+      {id:'f9e13e', figure:fracSquare(4,2,[0,1,2,3]), t:tmpl("e) Quelle fraction est coloriée ? {0}"), parts:[fracMcq(['4/8','4/4','8/4','1/4'],'4/8')]},
+      {id:'f9e13f', figure:fracSquare(4,4,[0,1,2,3,4,5,6,7]), t:tmpl("f) Quelle fraction est coloriée ? {0}"), parts:[fracMcq(['8/8','8/16','16/8','4/16'],'8/16')]}
+    ]},
+    {num:14, titre:"Les fractions : colorier et comparer", etoiles:3, consigne:"Imagine le carré partagé en parts égales.", items:[
+      {id:'f9e14a', t:tmpl("a) Un carré est partagé en 8 parts égales. Madeline en colorie 5. Quelle fraction est coloriée ? {0}"), parts:[frac(5,8)]},
+      {id:'f9e14b', t:tmpl("b) Un carré est partagé en 4 parts égales. Madeline en colorie 3. Quelle fraction est coloriée ? {0}"), parts:[frac(3,4)]},
+      {id:'f9e14c', t:tmpl("c) Un carré est partagé en 16 parts égales et 8 sont coloriées. Combien de parts ne sont pas coloriées ? {0}"), parts:[fill(8)]},
+      {id:'f9e14d', t:tmpl("d) 1/2 = ?/4 → {0}"), parts:[fill(2)]},
+      {id:'f9e14e', t:tmpl("e) 2/4 = ?/8 → {0}"), parts:[fill(4)]},
+      {id:'f9e14f', t:tmpl("f) 4/8 = 1/? → {0}"), parts:[fill(2)]}
+    ]},
+    {num:15, titre:"Les nombres en lettres : de 0 à 60 et au-delà", etoiles:2, consigne:"Une seule écriture est correcte.", items:[
+      {id:'f9e15a', t:tmpl("a) 12 s'écrit : {0}"), parts:[fracMcq(['dousse','douze','douzze','douse'],'douze')]},
+      {id:'f9e15b', t:tmpl("b) 16 s'écrit : {0}"), parts:[fracMcq(['seise','sèze','seize','saize'],'seize')]},
+      {id:'f9e15c', t:tmpl("c) 40 s'écrit : {0}"), parts:[fracMcq(['carante','quarante','quarente','quarant'],'quarante')]},
+      {id:'f9e15d', t:tmpl("d) 60 s'écrit : {0}"), parts:[fracMcq(['soissante','soixente','soixante','soixant'],'soixante')]},
+      {id:'f9e15e', t:tmpl("e) 80 (4 × 20, rien après) s'écrit : {0}"), parts:[fracMcq(['quatre-vingt','quatre-vingts','quatre vingts','quatres-vingts'],'quatre-vingts')]},
+      {id:'f9e15f', t:tmpl("f) 82 s'écrit : {0}"), parts:[fracMcq(['quatre-vingts-deux','quatre-vingt-deux','quatre-vingt deux','quatres-vingt-deux'],'quatre-vingt-deux')]}
+    ]},
+    {num:16, titre:"Calcul mental : additions et soustractions", etoiles:1, consigne:"Calcule de tête, sans poser l'opération.", items:[
+      {id:'f9e16a', t:tmpl("a) 42 − 7 = {0}"), parts:[fill(35)]},
+      {id:'f9e16b', t:tmpl("b) 35 + 8 = {0}"), parts:[fill(43)]},
+      {id:'f9e16c', t:tmpl("c) 50 − 8 = {0}"), parts:[fill(42)]},
+      {id:'f9e16d', t:tmpl("d) 25 + 9 = {0}"), parts:[fill(34)]},
+      {id:'f9e16e', t:tmpl("e) 100 − 30 = {0}"), parts:[fill(70)]},
+      {id:'f9e16f', t:tmpl("f) 63 − 5 = {0}"), parts:[fill(58)]}
+    ]},
+    {num:17, titre:"Calcul mental : multiplications", etoiles:1, consigne:"Les tables de 2 à 5, sans hésiter.", items:[
+      {id:'f9e17a', t:tmpl("a) 5 × 4 = {0}"), parts:[fill(20)]},
+      {id:'f9e17b', t:tmpl("b) 3 × 7 = {0}"), parts:[fill(21)]},
+      {id:'f9e17c', t:tmpl("c) 6 × 5 = {0}"), parts:[fill(30)]},
+      {id:'f9e17d', t:tmpl("d) 4 × 8 = {0}"), parts:[fill(32)]},
+      {id:'f9e17e', t:tmpl("e) 2 × 9 = {0}"), parts:[fill(18)]},
+      {id:'f9e17f', t:tmpl("f) 5 × 9 = {0}"), parts:[fill(45)]}
+    ]},
+    {num:18, titre:"Calcul mental : divisions", etoiles:2, consigne:"Une division, c'est une table à l'envers.", items:[
+      {id:'f9e18a', t:tmpl("a) 24 ÷ 2 = {0}"), parts:[fill(12)]},
+      {id:'f9e18b', t:tmpl("b) 20 ÷ 4 = {0}"), parts:[fill(5)]},
+      {id:'f9e18c', t:tmpl("c) 30 ÷ 5 = {0}"), parts:[fill(6)]},
+      {id:'f9e18d', t:tmpl("d) 18 ÷ 3 = {0}"), parts:[fill(6)]},
+      {id:'f9e18e', t:tmpl("e) 40 ÷ 2 = {0}"), parts:[fill(20)]},
+      {id:'f9e18f', t:tmpl("f) 36 ÷ 4 = {0}"), parts:[fill(9)]}
+    ]},
+    {num:19, titre:"Calcul mental : le défi mélangé", etoiles:3, consigne:"Additions, soustractions, multiplications et divisions mélangées : lis bien le signe !", items:[
+      {id:'f9e19a', t:tmpl("a) 7 × 5 = {0}"), parts:[fill(35)]},
+      {id:'f9e19b', t:tmpl("b) 48 − 9 = {0}"), parts:[fill(39)]},
+      {id:'f9e19c', t:tmpl("c) 16 ÷ 2 = {0}"), parts:[fill(8)]},
+      {id:'f9e19d', t:tmpl("d) 4 × 6 = {0}"), parts:[fill(24)]},
+      {id:'f9e19e', t:tmpl("e) 27 + 6 = {0}"), parts:[fill(33)]},
+      {id:'f9e19f', t:tmpl("f) 45 ÷ 5 = {0}"), parts:[fill(9)]}
+    ]},
+    {num:20, titre:"🔁 Entraînement supplémentaire", etoiles:2, consigne:"Encore un peu de tout, pour finir en beauté.", items:[
+      {id:'f9e20a', t:tmpl("a) {0}"), parts:[mcq([{v:'a',l:"l'attension"},{v:'b',l:"l'attention"},{v:'c',l:"l'atttention"},{v:'d',l:"l'attantion"}],'b')]},
+      {id:'f9e20b', t:tmpl("b) Comment écrit-on 610 000 en lettres ? {0}"), parts:[mcq([{v:'a',l:'six cent dix mille'},{v:'b',l:'six cents dix mille'},{v:'c',l:'six cent dix milles'},{v:'d',l:'soixante-dix mille'}],'a')]},
+      {id:'f9e20c', t:tmpl("c) « Est-ce que la récréation est bientôt finie ? » {0}"), parts:[mcq(OPT_TYPE,'i')]},
+      {id:'f9e20d', t:tmpl("d) 4 × 7 = {0}"), parts:[mcq([{v:'a',l:'26'},{v:'b',l:'28'},{v:'c',l:'30'},{v:'d',l:'24'}],'b')]}
     ]}
   ],
   corrige:[
@@ -2372,7 +2483,17 @@ const FICHES = [
     "Exercice 7 (types de phrases, à l'écrit) : a) As-tu fini tes devoirs ? — b) Quel beau classeur tout neuf ! — c) Range ton classeur. — d) Le classeur est sur la table.",
     "Exercice 8 (tables de 2 et 3) : a) 14 — b) 18 — c) 18 — d) 24.",
     "Exercice 9 (tables de 4 et 5) : a) 24 — b) 36 — c) 35 — d) 40.",
-    "Exercice 10 (entraînement supplémentaire) : a) l'attention — b) six cent dix mille — c) interrogative — d) 28."
+    "Exercice 10 (le verbe, infinitif) : a) manger — b) l'infinitif — c) prendre — d) -ez (ce n'est pas une terminaison d'infinitif).",
+    "Exercice 11 (passé, présent ou futur) : a) passé — b) présent — c) futur — d) passé.",
+    "Exercice 12 (indicateurs de temps) : a) passé — b) présent — c) futur — d) futur — e) passé — f) présent.",
+    "Exercice 13 (fractions, quelle partie est coloriée) : a) 1/2 — b) 2/4 — c) 3/4 — d) 3/8 — e) 4/8 — f) 8/16.",
+    "Exercice 14 (fractions, colorier et comparer) : a) 5/8 — b) 3/4 — c) 8 parts (16 − 8) — d) 1/2 = 2/4 — e) 2/4 = 4/8 — f) 4/8 = 1/2.",
+    "Exercice 15 (nombres en lettres) : a) douze — b) seize — c) quarante — d) soixante — e) quatre-vingts (4 × 20, rien après) — f) quatre-vingt-deux (pas de s, car il y a un nombre après).",
+    "Exercice 16 (calcul mental, + et −) : a) 35 — b) 43 — c) 42 — d) 34 — e) 70 — f) 58.",
+    "Exercice 17 (calcul mental, ×) : a) 20 — b) 21 — c) 30 — d) 32 — e) 18 — f) 45.",
+    "Exercice 18 (calcul mental, ÷) : a) 12 — b) 5 — c) 6 — d) 6 — e) 20 — f) 9.",
+    "Exercice 19 (le défi mélangé) : a) 35 — b) 39 — c) 8 — d) 24 — e) 33 — f) 9.",
+    "Exercice 20 (entraînement supplémentaire) : a) l'attention — b) six cent dix mille — c) interrogative — d) 28."
   ]
 },
 {
