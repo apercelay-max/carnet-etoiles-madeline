@@ -421,6 +421,18 @@ img,svg{ display:block; max-width:100%; }
 }
 .section-label:first-of-type{ margin-top:0; }
 
+.sommaire{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:.6rem; }
+.sommaire-btn{
+  display:flex; align-items:center; gap:.7rem; text-align:left; font:inherit; color:var(--ink); cursor:pointer;
+  background:var(--paper-card); border:2px solid var(--line); border-radius:var(--r-lg); padding:.7rem .9rem;
+  box-shadow:var(--shadow-sm); transition:transform .15s, border-color .15s;
+}
+.sommaire-btn:hover{ border-color:var(--accent); transform:translateY(-2px); }
+.sommaire-btn.active{ border-color:var(--accent); background:var(--accent-soft); }
+.sommaire-btn strong{ display:block; font-size:1rem; }
+.sommaire-btn small{ display:block; font-size:.78rem; color:var(--ink-faint); }
+.sommaire-emoji{ font-size:1.6rem; line-height:1; }
+.lesson-card[hidden], .exercise-card[hidden]{ display:none; }
 .lesson-card{
   position:relative; background:var(--paper-card); border:1px solid var(--line); border-radius:var(--r-lg);
   padding:1.1rem 1.2rem 1.2rem; margin-bottom:1rem; box-shadow:var(--shadow-sm);
@@ -2276,24 +2288,30 @@ const FICHES = [
 {
   id:9, color:'f9', badge:9, cat:'fripouille', rotating:true, title:"Réviser ses devoirs de la semaine",
   eyebrow:"Devoirs", desc:"Le verbe (infinitif, passé, présent, futur), les fractions avec les carrés, les nombres en lettres jusqu'à soixante, et du calcul mental simple.",
+  topics:[
+    {id:'verbe', emoji:'✏️', label:'Le verbe', sub:'infinitif, passé, présent, futur'},
+    {id:'fractions', emoji:'🍰', label:'Les fractions', sub:'avec les carrés'},
+    {id:'nombres', emoji:'🔢', label:'Les nombres en lettres', sub:'de 0 à 60 et au-delà'},
+    {id:'calcul', emoji:'🧠', label:'Le calcul mental', sub:'+, −, ×, ÷'}
+  ],
   lesson:[
     {k:'note', text:"Cette fiche change chaque semaine selon les devoirs en cours ! Cette fois-ci, quatre choses à réviser : le verbe (infinitif, passé, présent, futur), les fractions avec les carrés, les nombres en lettres de 0 à 60, et le calcul mental simple."},
-    {k:'rule', tag:'Le verbe', title:"L'infinitif", desc:"C'est la forme non conjuguée du verbe, celle du dictionnaire. Je la reconnais à sa terminaison : -er, -ir, -oir ou -re. L'infinitif d'un verbe ne change jamais (il est invariable).", ex:"manger, finir, prendre"},
-    {k:'rule', tag:'Le verbe', title:"Le passé, le présent et le futur", desc:"Une action peut se passer à différents moments. Au passé, l'action est terminée ; au présent, elle se passe maintenant ; au futur, elle n'a pas encore eu lieu.", ex:"Hier, j'ai fait un gâteau. / Aujourd'hui, je fais un gâteau. / Demain, je ferai un gâteau."},
-    {k:'table', headers:['Passé','Présent','Futur'], rows:[
+    {topic:'verbe', k:'rule', tag:'Le verbe', title:"L'infinitif", desc:"C'est la forme non conjuguée du verbe, celle du dictionnaire. Je la reconnais à sa terminaison : -er, -ir, -oir ou -re. L'infinitif d'un verbe ne change jamais (il est invariable).", ex:"manger, finir, prendre"},
+    {topic:'verbe', k:'rule', tag:'Le verbe', title:"Le passé, le présent et le futur", desc:"Une action peut se passer à différents moments. Au passé, l'action est terminée ; au présent, elle se passe maintenant ; au futur, elle n'a pas encore eu lieu.", ex:"Hier, j'ai fait un gâteau. / Aujourd'hui, je fais un gâteau. / Demain, je ferai un gâteau."},
+    {topic:'verbe', k:'table', headers:['Passé','Présent','Futur'], rows:[
       ['hier, la veille, avant-hier','aujourd\'hui, maintenant','demain, après-demain'],
       ['la semaine dernière','en ce moment','la semaine prochaine'],
       ['autrefois, jadis','actuellement','lundi prochain']
     ]},
-    {k:'tip', text:"Le verbe est souvent accompagné d'un indicateur de temps (hier, maintenant, demain...). Je le cherche dans la phrase : il m'aide à savoir si l'action est passée, présente ou future."},
-    {k:'rule', tag:'Les fractions', title:"Lire une fraction avec un carré", desc:"Le carré est coupé en parts égales. Le nombre du bas dit combien il y a de parts en tout ; le nombre du haut dit combien de parts sont coloriées.", ex:"Un carré coupé en 8 parts dont 3 sont coloriées : 3/8."},
-    {k:'tip', text:"Attention : les parts doivent être égales, même si elles n'ont pas la même forme (des triangles, des rectangles...). Plusieurs fractions peuvent représenter la même partie : 1/2 = 2/4 = 4/8 = 8/16. Si je coupe chaque part en deux, le haut et le bas doublent."},
-    {k:'table', headers:['0 à 9','11 à 16','Les dizaines'], rows:[
+    {topic:'verbe', k:'tip', text:"Le verbe est souvent accompagné d'un indicateur de temps (hier, maintenant, demain...). Je le cherche dans la phrase : il m'aide à savoir si l'action est passée, présente ou future."},
+    {topic:'fractions', k:'rule', tag:'Les fractions', title:"Lire une fraction avec un carré", desc:"Le carré est coupé en parts égales. Le nombre du bas dit combien il y a de parts en tout ; le nombre du haut dit combien de parts sont coloriées.", ex:"Un carré coupé en 8 parts dont 3 sont coloriées : 3/8."},
+    {topic:'fractions', k:'tip', text:"Attention : les parts doivent être égales, même si elles n'ont pas la même forme (des triangles, des rectangles...). Plusieurs fractions peuvent représenter la même partie : 1/2 = 2/4 = 4/8 = 8/16. Si je coupe chaque part en deux, le haut et le bas doublent."},
+    {topic:'nombres', k:'table', headers:['0 à 9','11 à 16','Les dizaines'], rows:[
       ['zéro, un, deux, trois, quatre, cinq, six, sept, huit, neuf','onze, douze, treize, quatorze, quinze, seize','dix, vingt, trente, quarante, cinquante, soixante']
     ]},
-    {k:'tip', text:"Les nombres en lettres : on relie chaque mot par un trait d'union (vingt-deux, soixante-quinze). On met un -s à « vingt » et « cent » quand ils sont multipliés et qu'il n'y a rien après : quatre-vingts (4 × 20) mais quatre-vingt-deux. Et « mille » ne prend jamais de s."},
-    {k:'tip', text:"Calcul mental, mes astuces. Retirer 7 : je retire 10, puis j'ajoute 3 (42 − 7 → 42 − 10 = 32, puis 32 + 3 = 35). Ajouter 8 : j'ajoute 10, puis je retire 2. Une division, c'est une table à l'envers : 24 ÷ 2, je cherche « 2 × ? = 24 ». Diviser par 2, c'est prendre la moitié."},
-    {k:'table', headers:['Je calcule...','Je pense à...','Exemple'], rows:[
+    {topic:'nombres', k:'tip', text:"Les nombres en lettres : on relie chaque mot par un trait d'union (vingt-deux, soixante-quinze). On met un -s à « vingt » et « cent » quand ils sont multipliés et qu'il n'y a rien après : quatre-vingts (4 × 20) mais quatre-vingt-deux. Et « mille » ne prend jamais de s."},
+    {topic:'calcul', k:'tip', text:"Calcul mental, mes astuces. Retirer 7 : je retire 10, puis j'ajoute 3 (42 − 7 → 42 − 10 = 32, puis 32 + 3 = 35). Ajouter 8 : j'ajoute 10, puis je retire 2. Une division, c'est une table à l'envers : 24 ÷ 2, je cherche « 2 × ? = 24 ». Diviser par 2, c'est prendre la moitié."},
+    {topic:'calcul', k:'table', headers:['Je calcule...','Je pense à...','Exemple'], rows:[
       ['5 × 4','4 × 5 = la moitié de 4 × 10','20'],
       ['42 − 7','42 − 10 + 3','35'],
       ['24 ÷ 2','la moitié de 24','12'],
@@ -2301,19 +2319,19 @@ const FICHES = [
     ]}
   ],
   exercises:[
-    {num:1, titre:"Le verbe : l'infinitif", etoiles:1, consigne:"L'infinitif est la forme non conjuguée du verbe, celle du dictionnaire.", items:[
+    {num:1, topic:'verbe', titre:"Le verbe : l'infinitif", etoiles:1, consigne:"L'infinitif est la forme non conjuguée du verbe, celle du dictionnaire.", items:[
       {id:'f9e1a', t:tmpl("a) Quel mot est un verbe à l'infinitif ? {0}"), parts:[fracMcq(['mangé','manger','mange','mangeons'],'manger')]},
       {id:'f9e1b', t:tmpl("b) Dans le dictionnaire, un verbe s'écrit à : {0}"), parts:[fracMcq(["l'infinitif",'le présent','le futur','le passé'],"l'infinitif")]},
       {id:'f9e1c', t:tmpl("c) Quel est l'infinitif de « je prends » ? {0}"), parts:[fracMcq(['prendre','prendu','prenez','prener'],'prendre')]},
       {id:'f9e1d', t:tmpl("d) Quelle terminaison n'est PAS celle d'un infinitif ? {0}"), parts:[fracMcq(['-er','-ir','-oir','-ez'],'-ez')]}
     ]},
-    {num:2, titre:"Passé, présent ou futur ?", etoiles:1, consigne:"Choisis le moment de l'action.", items:[
+    {num:2, topic:'verbe', titre:"Passé, présent ou futur ?", etoiles:1, consigne:"Choisis le moment de l'action.", items:[
       {id:'f9e2a', t:tmpl("a) « Hier, j'ai fait un gâteau. » {0}"), parts:[mcq(OPT_TEMPS,'p')]},
       {id:'f9e2b', t:tmpl("b) « Aujourd'hui, je fais un gâteau. » {0}"), parts:[mcq(OPT_TEMPS,'r')]},
       {id:'f9e2c', t:tmpl("c) « Demain, je ferai un gâteau. » {0}"), parts:[mcq(OPT_TEMPS,'f')]},
       {id:'f9e2d', t:tmpl("d) « La semaine dernière, nous avons joué dehors. » {0}"), parts:[mcq(OPT_TEMPS,'p')]}
     ]},
-    {num:3, titre:"Les indicateurs de temps", etoiles:2, consigne:"Chaque mot ou groupe de mots indique un moment : passé, présent ou futur.", items:[
+    {num:3, topic:'verbe', titre:"Les indicateurs de temps", etoiles:2, consigne:"Chaque mot ou groupe de mots indique un moment : passé, présent ou futur.", items:[
       {id:'f9e3a', t:tmpl("a) « autrefois » {0}"), parts:[mcq(OPT_TEMPS,'p')]},
       {id:'f9e3b', t:tmpl("b) « actuellement » {0}"), parts:[mcq(OPT_TEMPS,'r')]},
       {id:'f9e3c', t:tmpl("c) « lundi prochain » {0}"), parts:[mcq(OPT_TEMPS,'f')]},
@@ -2321,7 +2339,7 @@ const FICHES = [
       {id:'f9e3e', t:tmpl("e) « la veille » {0}"), parts:[mcq(OPT_TEMPS,'p')]},
       {id:'f9e3f', t:tmpl("f) « en ce moment » {0}"), parts:[mcq(OPT_TEMPS,'r')]}
     ]},
-    {num:4, titre:"Les fractions : quelle partie est coloriée ?", etoiles:2, consigne:"Compte les parts coloriées, puis le nombre de parts en tout.", items:[
+    {num:4, topic:'fractions', titre:"Les fractions : quelle partie est coloriée ?", etoiles:2, consigne:"Compte les parts coloriées, puis le nombre de parts en tout.", items:[
       {id:'f9e4a', figure:fracSquare(2,1,[0]), t:tmpl("a) Quelle fraction est coloriée ? {0}"), parts:[fracMcq(['1/2','1/4','2/1','1/3'],'1/2')]},
       {id:'f9e4b', figure:fracSquare(2,2,[1,2]), t:tmpl("b) Quelle fraction est coloriée ? {0}"), parts:[fracMcq(['1/4','2/4','3/4','2/2'],'2/4')]},
       {id:'f9e4c', figure:fracSquare(4,1,[0,1,2]), t:tmpl("c) Quelle fraction est coloriée ? {0}"), parts:[fracMcq(['1/4','2/4','3/4','3/3'],'3/4')]},
@@ -2329,7 +2347,7 @@ const FICHES = [
       {id:'f9e4e', figure:fracSquare(4,2,[0,1,2,3]), t:tmpl("e) Quelle fraction est coloriée ? {0}"), parts:[fracMcq(['4/8','4/4','8/4','1/4'],'4/8')]},
       {id:'f9e4f', figure:fracSquare(4,4,[0,1,2,3,4,5,6,7]), t:tmpl("f) Quelle fraction est coloriée ? {0}"), parts:[fracMcq(['8/8','8/16','16/8','4/16'],'8/16')]}
     ]},
-    {num:5, titre:"Les fractions : colorier et comparer", etoiles:3, consigne:"Imagine le carré partagé en parts égales.", items:[
+    {num:5, topic:'fractions', titre:"Les fractions : colorier et comparer", etoiles:3, consigne:"Imagine le carré partagé en parts égales.", items:[
       {id:'f9e5a', t:tmpl("a) Un carré est partagé en 8 parts égales. Madeline en colorie 5. Quelle fraction est coloriée ? {0}"), parts:[frac(5,8)]},
       {id:'f9e5b', t:tmpl("b) Un carré est partagé en 4 parts égales. Madeline en colorie 3. Quelle fraction est coloriée ? {0}"), parts:[frac(3,4)]},
       {id:'f9e5c', t:tmpl("c) Un carré est partagé en 16 parts égales et 8 sont coloriées. Combien de parts ne sont pas coloriées ? {0}"), parts:[fill(8)]},
@@ -2337,7 +2355,7 @@ const FICHES = [
       {id:'f9e5e', t:tmpl("e) 2/4 = ?/8 → {0}"), parts:[fill(4)]},
       {id:'f9e5f', t:tmpl("f) 4/8 = 1/? → {0}"), parts:[fill(2)]}
     ]},
-    {num:6, titre:"Les nombres en lettres : de 0 à 60 et au-delà", etoiles:2, consigne:"Une seule écriture est correcte.", items:[
+    {num:6, topic:'nombres', titre:"Les nombres en lettres : de 0 à 60 et au-delà", etoiles:2, consigne:"Une seule écriture est correcte.", items:[
       {id:'f9e6a', t:tmpl("a) 12 s'écrit : {0}"), parts:[fracMcq(['dousse','douze','douzze','douse'],'douze')]},
       {id:'f9e6b', t:tmpl("b) 16 s'écrit : {0}"), parts:[fracMcq(['seise','sèze','seize','saize'],'seize')]},
       {id:'f9e6c', t:tmpl("c) 40 s'écrit : {0}"), parts:[fracMcq(['carante','quarante','quarente','quarant'],'quarante')]},
@@ -2345,7 +2363,7 @@ const FICHES = [
       {id:'f9e6e', t:tmpl("e) 80 (4 × 20, rien après) s'écrit : {0}"), parts:[fracMcq(['quatre-vingt','quatre-vingts','quatre vingts','quatres-vingts'],'quatre-vingts')]},
       {id:'f9e6f', t:tmpl("f) 82 s'écrit : {0}"), parts:[fracMcq(['quatre-vingts-deux','quatre-vingt-deux','quatre-vingt deux','quatres-vingt-deux'],'quatre-vingt-deux')]}
     ]},
-    {num:7, titre:"Calcul mental : additions et soustractions", etoiles:1, consigne:"Calcule de tête, sans poser l'opération.", items:[
+    {num:7, topic:'calcul', titre:"Calcul mental : additions et soustractions", etoiles:1, consigne:"Calcule de tête, sans poser l'opération.", items:[
       {id:'f9e7a', t:tmpl("a) 42 − 7 = {0}"), parts:[fill(35)]},
       {id:'f9e7b', t:tmpl("b) 35 + 8 = {0}"), parts:[fill(43)]},
       {id:'f9e7c', t:tmpl("c) 50 − 8 = {0}"), parts:[fill(42)]},
@@ -2353,7 +2371,7 @@ const FICHES = [
       {id:'f9e7e', t:tmpl("e) 100 − 30 = {0}"), parts:[fill(70)]},
       {id:'f9e7f', t:tmpl("f) 63 − 5 = {0}"), parts:[fill(58)]}
     ]},
-    {num:8, titre:"Calcul mental : multiplications", etoiles:1, consigne:"Les tables de 2 à 5, sans hésiter.", items:[
+    {num:8, topic:'calcul', titre:"Calcul mental : multiplications", etoiles:1, consigne:"Les tables de 2 à 5, sans hésiter.", items:[
       {id:'f9e8a', t:tmpl("a) 5 × 4 = {0}"), parts:[fill(20)]},
       {id:'f9e8b', t:tmpl("b) 3 × 7 = {0}"), parts:[fill(21)]},
       {id:'f9e8c', t:tmpl("c) 6 × 5 = {0}"), parts:[fill(30)]},
@@ -2361,7 +2379,7 @@ const FICHES = [
       {id:'f9e8e', t:tmpl("e) 2 × 9 = {0}"), parts:[fill(18)]},
       {id:'f9e8f', t:tmpl("f) 5 × 9 = {0}"), parts:[fill(45)]}
     ]},
-    {num:9, titre:"Calcul mental : divisions", etoiles:2, consigne:"Une division, c'est une table à l'envers.", items:[
+    {num:9, topic:'calcul', titre:"Calcul mental : divisions", etoiles:2, consigne:"Une division, c'est une table à l'envers.", items:[
       {id:'f9e9a', t:tmpl("a) 24 ÷ 2 = {0}"), parts:[fill(12)]},
       {id:'f9e9b', t:tmpl("b) 20 ÷ 4 = {0}"), parts:[fill(5)]},
       {id:'f9e9c', t:tmpl("c) 30 ÷ 5 = {0}"), parts:[fill(6)]},
@@ -2369,7 +2387,7 @@ const FICHES = [
       {id:'f9e9e', t:tmpl("e) 40 ÷ 2 = {0}"), parts:[fill(20)]},
       {id:'f9e9f', t:tmpl("f) 36 ÷ 4 = {0}"), parts:[fill(9)]}
     ]},
-    {num:10, titre:"Calcul mental : le défi mélangé", etoiles:3, consigne:"Additions, soustractions, multiplications et divisions mélangées : lis bien le signe !", items:[
+    {num:10, topic:'calcul', titre:"Calcul mental : le défi mélangé", etoiles:3, consigne:"Additions, soustractions, multiplications et divisions mélangées : lis bien le signe !", items:[
       {id:'f9e10a', t:tmpl("a) 7 × 5 = {0}"), parts:[fill(35)]},
       {id:'f9e10b', t:tmpl("b) 48 − 9 = {0}"), parts:[fill(39)]},
       {id:'f9e10c', t:tmpl("c) 16 ÷ 2 = {0}"), parts:[fill(8)]},
@@ -3102,6 +3120,10 @@ function goToMap(){
 document.getElementById('backBtn').addEventListener('click', goToMap);
 
 function lessonBlockHtml(fiche, block){
+  const h = lessonBlockHtml0(fiche, block);
+  return block.topic ? h.replace('<div','<div data-topic="'+block.topic+'"') : h;
+}
+function lessonBlockHtml0(fiche, block){
   if(block.k==='rule'){
     return '<div class="lesson-card">'+(block.tag?'<span class="tagline">'+block.tag+'</span><br>':'')+
       '<h3 class="rule-title">'+block.title+'</h3><p class="rule-desc">'+block.desc+'</p>'+
@@ -3156,6 +3178,30 @@ function convRefHtml(fiche){
     '<div class="convref-body" hidden><div class="convref-scroll"><table>'+headRow+bodyRows+'</table></div></div>'+
   '</div>';
 }
+function sommaireHtml(fiche){
+  if(!fiche.topics) return '';
+  let h = '<div class="section-label">Sommaire — que veux-tu réviser ?</div><div class="sommaire" id="sommaire">';
+  h += '<button type="button" class="sommaire-btn active" data-topic="all"><span class="sommaire-emoji">📚</span><span><strong>Tout réviser</strong><small>toute la fiche</small></span></button>';
+  fiche.topics.forEach(t=>{
+    const n = fiche.exercises.filter(e=>e.topic===t.id).length;
+    h += '<button type="button" class="sommaire-btn" data-topic="'+t.id+'"><span class="sommaire-emoji">'+t.emoji+'</span><span><strong>'+t.label+'</strong><small>'+t.sub+' · '+n+' exercice'+(n>1?'s':'')+'</small></span></button>';
+  });
+  return h+'</div>';
+}
+function wireSommaire(fiche, page){
+  const box = page.querySelector('#sommaire');
+  if(!box) return;
+  box.addEventListener('click', ev=>{
+    const b = ev.target.closest('.sommaire-btn'); if(!b) return;
+    const t = b.dataset.topic;
+    box.querySelectorAll('.sommaire-btn').forEach(x=>x.classList.toggle('active', x===b));
+    page.querySelectorAll('.lesson-card, .exercise-card').forEach(c=>{
+      c.hidden = (t!=='all' && c.dataset.topic!==t);
+    });
+    const lbl = page.querySelectorAll('.section-label')[1];
+    if(lbl) lbl.scrollIntoView({behavior:'smooth', block:'start'});
+  });
+}
 function renderFiche(fiche){
   const page = document.getElementById('fichePage');
   page.style.setProperty('--accent','var(--'+fiche.color+')');
@@ -3169,13 +3215,14 @@ function renderFiche(fiche){
     '</div></div>';
   html += catIntroHtml(fiche);
   html += '<div class="completion-banner" id="completionBanner"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#fff9ef" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg><div><h3>Fiche terminée !</h3><div class="stars-row">'+starsRowHtml(stats.stars)+'</div></div></div>';
+  html += sommaireHtml(fiche);
   html += '<div class="section-label">Je retiens</div>';
   fiche.lesson.forEach(b=>{ html += lessonBlockHtml(fiche,b); });
   html += '<button class="mini-scroll-btn" id="scrollTopLessonBtn" type="button"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M12 19V5M5 12l7-7 7 7"/></svg>Revoir la leçon si besoin, à tout moment</button>';
   html += '<div class="section-label">Les exercices</div>';
   html += convRefHtml(fiche);
   fiche.exercises.forEach(ex=>{
-    html += '<div class="exercise-card" data-exnum="'+ex.num+'">'+
+    html += '<div class="exercise-card" data-exnum="'+ex.num+'"'+(ex.topic?' data-topic="'+ex.topic+'"':'')+'>'+
       '<div class="exercise-head"><h3>Exercice '+ex.num+' — '+ex.titre+'</h3><div class="stars-row">'+starsRowHtml(ex.etoiles)+'</div></div>'+
       (ex.consigne?'<p class="exercise-instr">'+ex.consigne+'</p>':'')+
       '<div class="exercise-items"></div>'+
@@ -3192,6 +3239,7 @@ function renderFiche(fiche){
     const container = cards[i].querySelector('.exercise-items');
     ex.items.forEach(item=>{ container.appendChild(renderItem(item)); });
   });
+  wireSommaire(fiche, page);
   document.getElementById('scrollTopLessonBtn').addEventListener('click', ()=>{
     page.querySelector('.section-label').scrollIntoView({behavior:'smooth', block:'start'});
   });
