@@ -732,7 +732,7 @@ img,svg{ display:block; max-width:100%; }
           <div class="cat-slot hc-right"><svg class="cat-svg" id="heroCatRight" viewBox="0 0 160 160"></svg></div>
         </div>
         <h1>Le carnet d'étoiles</h1>
-        <p>Nougat, Mistigri, Prof Ronron, Bidouille, Tic-Tac, Churro (le chat qui parle espagnol), Maraca (la chatte aux maracas, qui prépare l'évaluation d'espagnol du 20 octobre) et le petit nouveau Fripouille (un capybara, pas un chat, mais chut, il s'est incrusté quand même) t'attendent pour allumer huit étoiles avant la rentrée en CM1&nbsp;! Chaque île a sa propre mascotte, avec ses conseils et ses petites manies. Choisis une île de ciel pour commencer.</p>
+        <p>Nougat, Mistigri, Prof Ronron, Bidouille, Tic-Tac, Chiffron (le chat des nombres, pour les maths du cahier), Churro (le chat qui parle espagnol), Maraca (la chatte aux maracas, qui prépare l'évaluation d'espagnol du 20 octobre) et le petit nouveau Fripouille (un capybara, pas un chat, mais chut, il s'est incrusté quand même) t'attendent pour allumer neuf étoiles avant la rentrée en CM1&nbsp;! Chaque île a sa propre mascotte, avec ses conseils et ses petites manies. Choisis une île de ciel pour commencer.</p>
         <div class="speech" id="heroSpeech" aria-live="polite"></div>
       </div>
       <div class="map-wrap">
@@ -773,7 +773,7 @@ img,svg{ display:block; max-width:100%; }
         <path d="M50 22l6.5 14.3 15.5 1.6-11.7 10.6 3.4 15.5L50 55.9 36.3 64l3.4-15.5-11.7-10.6 15.5-1.6z" fill="var(--paper-card)"/>
       </svg>
       <h2>Huit étoiles allumées !</h2>
-      <p>Bravo Madeline, tu as terminé les huit fiches. Toute la bande (chats et capybara réunis) est fière de toi — le CM1 n'a qu'à bien se tenir !</p>
+      <p>Bravo Madeline, tu as terminé les neuf fiches. Toute la bande (chats et capybara réunis) est fière de toi — le CM1 n'a qu'à bien se tenir !</p>
       <button class="modal-close" id="finaleCloseBtn" type="button">Retourner voir le ciel</button>
     </div>
   </div>
@@ -2534,6 +2534,531 @@ const DV_LESSON = [
   {topic:'favourite', k:'tip', text:"De 13 à 19, les nombres finissent par <strong>-teen</strong>. Attention à l'orthographe : fi<strong>f</strong>teen (pas « fiveteen »), four<strong>teen</strong> (avec un « u »), eigh<strong>teen</strong> (un seul « t »)."}
 ];
 
+/* ============ FICHE 14 : LES MATHS (cahier de maths : calcul mental, opérations, fractions, décimaux, problèmes) ============
+   Toutes les réponses attendues sont CALCULÉES par mCalc() à partir de l'énoncé : on écrit seulement l'opération.
+   Chaque exercice de calcul mental porte un bloc `methode` (affiché avant les questions). */
+const M_L = 'abcdefghijklmnopqrstuvwxyz';
+function mCalc(expr){
+  const e = String(expr).replace(/[\s  ]/g,'').replace(/×/g,'*').replace(/÷/g,'/').replace(/−/g,'-').replace(/,/g,'.');
+  if(!/^[0-9+\-*\/().]+$/.test(e)) throw new Error('mCalc: '+expr);
+  return Math.round(Function('"use strict";return ('+e+')')()*1e6)/1e6;
+}
+/* « 12756 × 10 » devient « 12 756 × 10 » à l'affichage (espace insécable à partir de 4 chiffres) */
+function mFmt(s){
+  return String(s).replace(/\d+(,\d+)?/g, m=>{
+    const p = m.split(','), ip = p[0];
+    const g = ip.length>=4 ? ip.replace(/\B(?=(\d{3})+(?!\d))/g,' ') : ip;
+    return p.length>1 ? g+','+p[1] : g;
+  });
+}
+function mfill(x){ return fill(x, {grp:true}); }
+function mItem(tpl, parts, figure){ return {tpl:tpl, parts:parts, figure:figure}; }
+function mq(expr){ return mItem(mFmt(expr)+' = {0}', [mfill(mCalc(expr))]); }
+function mRows(num, rows){
+  return rows.map((r,i)=>{
+    if(typeof r==='string') r = mq(r);
+    const it = {id:'f14e'+num+M_L[i], t:tmpl(M_L[i]+') '+r.tpl), parts:r.parts};
+    if(r.figure) it.figure = r.figure;
+    return it;
+  });
+}
+function mEx(num, titre, etoiles, topic, consigne, rows, methode){
+  const e = {num:num, titre:titre, etoiles:etoiles, topic:topic, consigne:consigne, items:mRows(num, rows)};
+  if(methode) e.methode = methode;
+  return e;
+}
+/* chaîne de doublements : 35 → ×2 → {0} → ×2 → {1} */
+function mChain(start, n){
+  let tpl = String(start), parts = [], v = start;
+  for(let i=0;i<n;i++){ v = v*2; tpl += '  →  ×2  →  {'+i+'}'; parts.push(mfill(v)); }
+  return mItem(tpl, parts);
+}
+/* distributivité : 18 × 11 = (10 × 18) + (1 × 18) = {0} + {1} = {2} */
+function mDist(label, e1, e2){
+  const a = mCalc(e1), b = mCalc(e2);
+  return mItem(label+' = ('+e1+') + ('+e2+') = {0} + {1} = {2}', [mfill(a), mfill(b), mfill(a+b)]);
+}
+function mVF(txt, truth){ return mItem(txt+' {0}', [mcq(OPT_VRAIFAUX, truth?'v':'f')]); }
+/* estimation : on arrondit chaque nombre à l'unité, puis on calcule */
+function mEstVal(expr){ return mCalc(String(expr).replace(/\d+(,\d+)?/g, m=>String(Math.round(parseFloat(m.replace(',','.')))))); }
+function mEst(expr){ return mItem(mFmt(expr)+' ≈ {0}', [mfill(mEstVal(expr))]); }
+function mEstExact(expr){ return mItem(mFmt(expr)+'\nEstimation : {0}   Résultat exact : {1}', [mfill(mEstVal(expr)), mfill(mCalc(expr))]); }
+function mMiss(a, prod){ return mItem(a+' × {0} = '+prod, [mfill(prod/a)]); }
+function mDiv(a, b){ return mItem(mFmt(String(a))+' ÷ '+b+' : quotient {0} et reste {1}', [mfill(Math.floor(a/b)), mfill(a%b)]); }
+function mEuclid(n, b){ return mItem(n+' = ('+b+' × {0}) + {1}', [mfill(Math.floor(n/b)), mfill(n%b)]); }
+function mBiggest(table, lim){ const m = Math.floor((lim-1)/table)*table; return mItem('Le plus grand nombre de la table de '+table+' inférieur à '+lim+' : {0}', [mfill(m)]); }
+function mMultiples(table, shown, n){
+  let tpl = 'Table de '+table+' : ', parts = [];
+  for(let i=1;i<=n;i++){ if(i<=shown) tpl += (table*i)+' ,  '; else { tpl += '{'+parts.length+'} ,  '; parts.push(mfill(table*i)); } }
+  return mItem(tpl.replace(/ ,  $/,''), parts);
+}
+/* figures de fractions */
+function fracDisk(n, shaded){
+  const R = 46, cx = 50, cy = 50; let g = '';
+  for(let i=0;i<n;i++){
+    const a0 = (i/n)*2*Math.PI - Math.PI/2, a1 = ((i+1)/n)*2*Math.PI - Math.PI/2;
+    const x0 = cx+R*Math.cos(a0), y0 = cy+R*Math.sin(a0), x1 = cx+R*Math.cos(a1), y1 = cy+R*Math.sin(a1);
+    g += '<path d="M'+cx+' '+cy+' L'+x0.toFixed(2)+' '+y0.toFixed(2)+' A'+R+' '+R+' 0 '+((a1-a0)>Math.PI?1:0)+' 1 '+x1.toFixed(2)+' '+y1.toFixed(2)+' Z" fill="'+(i<shaded?'#4a4a4a':'#fff')+'" stroke="#222" stroke-width="1.5"/>';
+  }
+  return '<svg viewBox="-2 -2 104 104" width="104" height="104" role="img" aria-label="Disque partagé en '+n+' parts égales, '+shaded+' coloriées">'+g+'</svg>';
+}
+/* demi-droite graduée : maxInt unités, chaque unité partagée en div parts ; pts = [[lettre, nombre de graduations depuis 0], …] */
+function numLine(maxInt, div, pts){
+  const uw = Math.max(44, Math.min(110, Math.floor(500/maxInt)));
+  const x0 = 24, W = x0 + maxInt*uw + 34, H = 76, y = 42;
+  let g = '<line x1="'+(x0-10)+'" y1="'+y+'" x2="'+(W-8)+'" y2="'+y+'" stroke="currentColor" stroke-width="2"/>'+
+    '<path d="M'+(W-17)+' '+(y-5)+' L'+(W-7)+' '+y+' L'+(W-17)+' '+(y+5)+'" fill="none" stroke="currentColor" stroke-width="2"/>';
+  for(let k=0;k<=maxInt*div;k++){
+    const x = x0 + k*uw/div, big = k%div===0;
+    g += '<line x1="'+x.toFixed(1)+'" y1="'+(y-(big?9:5))+'" x2="'+x.toFixed(1)+'" y2="'+(y+(big?9:5))+'" stroke="currentColor" stroke-width="'+(big?2:1.3)+'"/>';
+    if(big) g += '<text x="'+x.toFixed(1)+'" y="'+(y+27)+'" text-anchor="middle" font-size="14" fill="currentColor" font-family="var(--font-body)">'+(k/div)+'</text>';
+  }
+  pts.forEach(p=>{
+    const x = x0 + p[1]*uw/div;
+    g += '<path d="M'+(x-5)+' '+(y-5)+' L'+(x+5)+' '+(y+5)+' M'+(x+5)+' '+(y-5)+' L'+(x-5)+' '+(y+5)+'" stroke="var(--accent)" stroke-width="2.8" stroke-linecap="round"/>'+
+      '<text x="'+x.toFixed(1)+'" y="'+(y-16)+'" text-anchor="middle" font-size="16" font-weight="700" fill="var(--accent)" font-family="var(--font-body)">'+p[0]+'</text>';
+  });
+  return '<svg class="numline" viewBox="0 0 '+W+' '+H+'" width="'+W+'" height="'+H+'" role="img" aria-label="demi-droite graduée">'+g+'</svg>';
+}
+function mFracSq(cols, rows, shaded){
+  return mItem('La partie coloriée représente la fraction {0}', [frac(shaded.length, cols*rows)], fracSquare(cols, rows, shaded));
+}
+function mFracDisk(n, k){
+  return mItem('La partie coloriée représente la fraction {0}', [frac(k, n)], fracDisk(n, k));
+}
+function mLine(label, maxInt, div, pos){
+  return mItem('Quelle fraction repère le point '+label+' ? {0}', [frac(pos, div)], numLine(maxInt, div, [[label,pos]]));
+}
+function mLineDec(label, maxInt, pos){
+  return mItem('Quel nombre décimal repère le point '+label+' ? {0}', [mfill(pos/10)], numLine(maxInt, 10, [[label,pos]]));
+}
+function mDecomp(n, d){ return mItem(n+'/'+d+' = {0} + {1}', [mfill(Math.floor(n/d)), frac(n%d, d)]); }
+function mFrameFrac(n, d){ return mItem('{0} < '+n+'/'+d+' < {1}', [mfill(Math.floor(n/d)), mfill(Math.floor(n/d)+1)]); }
+function mFrameDec(s){ const v = parseFloat(s.replace(',','.')); return mItem('{0} < '+s+' < {1}', [mfill(Math.floor(v)), mfill(Math.floor(v)+1)]); }
+function mCmp(a, b){
+  const x = parseFloat(String(a).replace(',','.')), y = parseFloat(String(b).replace(',','.'));
+  return mItem(a+' {0} '+b, [mcq(OPT_CMP, x<y?'lt':(x>y?'gt':'eq'))]);
+}
+function mWords(words, n, d){ return mItem(words+' : {0}', [frac(n, d)]); }
+
+const M14_TOPICS = [
+  {id:'mental', emoji:'🧠', label:'Calcul mental',          sub:'les astuces, expliquées avant chaque exercice'},
+  {id:'mult',   emoji:'✖️', label:'Multiplier',             sub:'poser des multiplications'},
+  {id:'div',    emoji:'➗', label:'Diviser',                sub:'division euclidienne : quotient et reste'},
+  {id:'frac',   emoji:'🍕', label:'Les fractions',          sub:'écrire, décomposer, demi-droite graduée'},
+  {id:'dec',    emoji:'🔢', label:'Les nombres décimaux',   sub:'dixièmes, centièmes, comparer, encadrer'},
+  {id:'opdec',  emoji:'➕', label:'Opérations sur les décimaux', sub:'poser, estimer, parenthèses'},
+  {id:'pb',     emoji:'🧩', label:'Problèmes',              sub:'problèmes additifs en une ou deux étapes'}
+];
+
+const M14_LESSON = [
+  {k:'note', text:"Bonjour Madeline ! Cette fiche regroupe les maths de ton cahier : le <strong>calcul mental</strong>, les <strong>multiplications</strong>, les <strong>divisions</strong>, les <strong>fractions</strong>, les <strong>nombres décimaux</strong> et les <strong>problèmes</strong>. Tu peux tout faire d'un coup ou choisir une partie dans le sommaire ci-dessus. Pour le calcul mental, <strong>chaque exercice commence par sa méthode</strong> : lis-la, regarde l'exemple, puis calcule dans ta tête, sans poser l'opération."},
+
+  /* --- Calcul mental --- */
+  {topic:'mental', k:'tag', text:'Calcul mental : mes astuces'},
+  {topic:'mental', k:'note', text:"Calculer de tête, ce n'est pas être très fort en magie : c'est connaître des <strong>astuces</strong>. Le plus souvent, on remplace un calcul difficile par un calcul facile (avec 10, 20, 40, 100…), puis on <strong>corrige</strong>. Chaque exercice ci-dessous t'explique son astuce avant de te laisser calculer. Voici le résumé de toutes les astuces :"},
+  {topic:'mental', k:'table', headers:['Je dois calculer…','Mon astuce','Exemple'], rows:[
+    ['× 10, × 100, × 1 000','je décale les chiffres de 1, 2 ou 3 rangs vers la gauche','36 × 100 = 3 600'],
+    ['un décimal × 10','je décale les chiffres d\'un rang vers la gauche','4,56 × 10 = 45,6'],
+    ['÷ 10','je décale les chiffres d\'un rang vers la droite','43,5 ÷ 10 = 4,35'],
+    ['+ 9, + 19, + 29, + 39','j\'ajoute la dizaine d\'après, puis je retire 1','645 + 39 = 645 + 40 − 1 = 684'],
+    ['+ 8, + 18, + 28, + 38','j\'ajoute la dizaine d\'après, puis je retire 2','645 + 38 = 645 + 40 − 2 = 683'],
+    ['− 9, − 19, − 29, − 39','je retire la dizaine d\'après, puis j\'ajoute 1','718 − 39 = 718 − 40 + 1 = 679'],
+    ['− 8, − 18, − 28, − 38','je retire la dizaine d\'après, puis j\'ajoute 2','76 − 18 = 76 − 20 + 2 = 58'],
+    ['× des dizaines ou des centaines','je calcule avec la table, puis j\'ajoute les zéros','8 × 60 = 8 × 6 × 10 = 480'],
+    ['× 4','je double deux fois','47 × 4 : 94, puis 188'],
+    ['× 8','je double trois fois','56 × 8 : 112, 224, puis 448'],
+    ['× 5','je multiplie par 10, puis je prends la moitié','162 × 5 : 1 620, puis 810'],
+    ['× 11, × 21, × 19…','je découpe un nombre (distributivité)','21 × 35 = 20 × 35 + 35 = 735'],
+    ['additionner des décimaux','chaque chiffre à sa place (unités, dixièmes, centièmes)','3,54 + 0,4 = 3,94'],
+    ['estimer un résultat','j\'arrondis à l\'unité puis je calcule','245,3 + 125,2 ≈ 245 + 125 = 370']
+  ]},
+  {topic:'mental', k:'tip', text:"Avant de calculer, je me demande : « Y a-t-il un nombre presque rond (9, 19, 39, 99…) ou une astuce avec 10, 5, 4 ou 8 ? » Si oui, je m'en sers, puis je corrige. Et si je me trompe, ce n'est pas grave : je relis la méthode de l'exercice."},
+
+  /* --- Multiplier --- */
+  {topic:'mult', k:'tag', text:'Multiplier des nombres entiers'},
+  {topic:'mult', k:'rule', tag:'À savoir', title:'Les tables, d\'abord', desc:"Pour multiplier en posant l'opération, je dois connaître mes tables de multiplication par cœur : c'est ce qui rend tout le reste facile.", ex:"7 × 8 = 56"},
+  {topic:'mult', k:'steps', title:"Multiplier par un nombre à un chiffre : 6 372 × 3", steps:[
+    "Je pose l'opération en alignant les chiffres par colonnes (unités sous les unités).",
+    "Je multiplie les unités : 2 × 3 = 6. J'écris 6.",
+    "Je multiplie les dizaines : 7 × 3 = 21. J'écris 1 et je retiens 2.",
+    "Je multiplie les centaines : 3 × 3 = 9, plus la retenue 2 = 11. J'écris 1 et je retiens 1.",
+    "Je multiplie les milliers : 6 × 3 = 18, plus la retenue 1 = 19. J'écris 19. Résultat : 19 116."
+  ]},
+  {topic:'mult', k:'steps', title:"Multiplier par un nombre à deux chiffres : 46 × 27", steps:[
+    "Je multiplie 46 par les <strong>unités</strong> de 27 : 46 × 7 = 322.",
+    "Je multiplie 46 par les <strong>dizaines</strong> de 27 : 46 × 20 = 920 (j'écris un 0 à droite, puis 46 × 2 = 92).",
+    "J'additionne les deux lignes : 322 + 920 = 1 242."
+  ]},
+
+  /* --- Diviser --- */
+  {topic:'div', k:'tag', text:'La division euclidienne (quotient et reste)'},
+  {topic:'div', k:'rule', tag:'Vocabulaire', title:'Dividende, diviseur, quotient, reste', desc:"Dans 26 ÷ 5, on cherche combien de fois 5 « rentre » dans 26. 26 est le <strong>dividende</strong>, 5 est le <strong>diviseur</strong>. Le <strong>quotient</strong> est le nombre de fois (ici 5) et le <strong>reste</strong> est ce qui n'a pas pu être partagé (ici 1).", ex:"26 ÷ 5 : quotient 5, reste 1"},
+  {topic:'div', k:'rule', tag:'À retenir', title:'L\'égalité de la division', desc:"On peut toujours écrire : dividende = (diviseur × quotient) + reste. Et le <strong>reste est toujours plus petit que le diviseur</strong> (sinon on pourrait encore partager !).", ex:"26 = (5 × 5) + 1, et 1 < 5"},
+  {topic:'div', k:'steps', title:"Trouver le quotient et le reste de 43 ÷ 6", steps:[
+    "Je récite la table de 6 : 6, 12, 18, 24, 30, 36, 42, 48…",
+    "Je cherche le plus grand nombre de la table qui ne dépasse pas 43 : c'est 42 (6 × 7).",
+    "Le quotient est 7. Le reste est 43 − 42 = 1. J'écris 43 = (6 × 7) + 1."
+  ]},
+
+  /* --- Fractions --- */
+  {topic:'frac', k:'tag', text:'Les fractions'},
+  {topic:'frac', k:'rule', tag:'À savoir', title:'Une fraction, c\'est des parts égales', desc:"Quand on partage une figure en parts <strong>égales</strong>, on écrit la fraction avec deux nombres : le <strong>dénominateur</strong> (en bas) dit en combien de parts égales la figure est partagée, le <strong>numérateur</strong> (en haut) dit combien de parts on prend.", ex:"3 parts coloriées sur 8 parts égales : 3/8"},
+  {topic:'frac', k:'rule', tag:'À savoir', title:'Plus petite que 1, égale à 1, plus grande que 1', desc:"Si le numérateur est plus petit que le dénominateur, la fraction est plus petite que 1. Si les deux sont égaux, la fraction vaut 1 (le tout). Si le numérateur est plus grand, la fraction est plus grande que 1.", ex:"3/4 < 1  ;  4/4 = 1  ;  5/4 > 1"},
+  {topic:'frac', k:'rule', tag:'Décomposer', title:'Une fraction plus grande que 1', desc:"On peut l'écrire comme la somme d'un nombre entier et d'une fraction plus petite que 1. Pour savoir combien de « touts » il y a, je fais la division du numérateur par le dénominateur : le quotient est la partie entière, le reste est le nouveau numérateur.", ex:"13/4 : 13 ÷ 4 = 3 reste 1, donc 13/4 = 3 + 1/4"},
+  {topic:'frac', k:'rule', tag:'Demi-droite graduée', title:'Lire une fraction sur une demi-droite', desc:"Si l'unité (de 0 à 1) est partagée en 4 parts égales, chaque graduation vaut 1/4. Je compte les graduations depuis 0 : le point à la 5e graduation est à 5/4. Après 1, je continue à compter : c'est 1 + 1/4.", ex:"5 graduations de 1/4 depuis 0 → 5/4"},
+
+  /* --- Décimaux --- */
+  {topic:'dec', k:'tag', text:'Les nombres décimaux'},
+  {topic:'dec', k:'rule', tag:'À savoir', title:'Les fractions décimales', desc:"Une fraction décimale a pour dénominateur 10, 100, 1 000… Un dixième, c'est 1/10 ; un centième, c'est 1/100. Il y a 10 dixièmes dans une unité et 10 centièmes dans un dixième.", ex:"25/100 = vingt-cinq centièmes = 0,25"},
+  {topic:'dec', k:'table', headers:['dizaines','unités','dixièmes','centièmes'], rows:[['2','9','7','5']]},
+  {topic:'dec', k:'rule', tag:'Lire un nombre', title:'Partie entière et partie décimale', desc:"Dans 29,75 : 29 est la <strong>partie entière</strong> et 0,75 est la <strong>partie décimale</strong>. Le 7 est le chiffre des dixièmes, le 5 est le chiffre des centièmes. On peut le décomposer de plusieurs façons.", ex:"29,75 = 29 + 75/100 = 29 + 0,75 = 29 + 7/10 + 5/100"},
+  {topic:'dec', k:'rule', tag:'Comparer', title:'Comparer deux nombres décimaux', desc:"Je compare d'abord les <strong>parties entières</strong>. Si elles sont égales, je compare les chiffres des dixièmes. S'ils sont égaux aussi, je compare les chiffres des centièmes.", ex:"6,15 > 3,5 (6 > 3)  ;  3,15 < 3,5 (1 dixième < 5 dixièmes)"},
+  {topic:'dec', k:'rule', tag:'Encadrer', title:'Encadrer entre deux entiers consécutifs', desc:"Je cherche le nombre entier juste en dessous et le nombre entier juste au-dessus.", ex:"6 < 6,3 < 7  ;  2 < 2,47 < 3"},
+  {topic:'dec', k:'rule', tag:'Demi-droite graduée', title:'Lire un nombre décimal sur une demi-droite', desc:"Si l'unité est partagée en 10 parts égales, chaque graduation vaut 1 dixième (0,1). Je compte les graduations depuis le dernier entier.", ex:"3 graduations après 1 → 1,3"},
+
+  /* --- Opérations sur les décimaux --- */
+  {topic:'opdec', k:'tag', text:'Opérations sur les nombres décimaux'},
+  {topic:'opdec', k:'rule', tag:'Poser une opération', title:'Additionner et soustraire des décimaux', desc:"Je pose l'opération en alignant les <strong>virgules</strong> les unes sous les autres (unités sous unités, dixièmes sous dixièmes…). Si un nombre a moins de chiffres après la virgule, je complète avec des zéros. Je calcule comme avec des entiers, puis je place la virgule dans le résultat, sous les autres.", ex:"18,4 + 9,7 = 28,1  ;  76 − 2,34 = 73,66 (76 = 76,00)"},
+  {topic:'opdec', k:'rule', tag:'Estimer d\'abord', title:'Vérifier avec un résultat approché', desc:"Avant de calculer, j'arrondis les nombres à l'unité et je calcule de tête : le résultat exact doit être proche de cette estimation. Si ce n'est pas le cas, je me suis trompée !", ex:"18,4 + 9,7 ≈ 18 + 10 = 28, et le résultat exact est 28,1"},
+  {topic:'opdec', k:'rule', tag:'Multiplier', title:'Un décimal × un entier', desc:"Je multiplie comme si la virgule n'existait pas, puis je remets la virgule : le résultat a autant de chiffres après la virgule que le nombre décimal de départ.", ex:"2,35 × 9 : 235 × 9 = 2 115, donc 21,15"},
+  {topic:'opdec', k:'rule', tag:'Parenthèses', title:'Calculer avec des parenthèses', desc:"Dans une suite d'opérations avec des parenthèses, je calcule <strong>d'abord ce qui est entre parenthèses</strong>.", ex:"5 × (9 − 5) = 5 × 4 = 20"},
+
+  /* --- Problèmes --- */
+  {topic:'pb', k:'tag', text:'Résoudre des problèmes additifs'},
+  {topic:'pb', k:'steps', title:"Ma méthode pour un problème", steps:[
+    "<strong>Je cherche</strong> : je lis l'énoncé en entier, je repère ce qu'on me demande et les nombres utiles.",
+    "<strong>Je calcule</strong> : je choisis l'opération. « De plus » ou « au total » → addition. « De moins » ou « il reste » → soustraction.",
+    "<strong>Je réponds</strong> : j'écris une phrase de réponse, avec l'unité (€, kg, m, L…)."
+  ]},
+  {topic:'pb', k:'rule', tag:'Attention', title:'Bien convertir les unités', desc:"Avant de calculer, je mets toutes les mesures dans la même unité. 100 cm = 1 m, donc 13 cm = 0,13 m.", ex:"1,61 m + 13 cm = 1,61 m + 0,13 m = 1,74 m"}
+];
+
+/* ----- Calcul mental : chaque exercice porte sa méthode ----- */
+const M14_MENTAL = [
+  mEx(1, "Multiplier par 10, 100 ou 1 000", 1, 'mental', "Calcule dans ta tête, sans poser l'opération.",
+    ['37 × 10','64 × 100','18 × 1000','350 × 10','905 × 100','72 × 1000','1204 × 10','240 × 100'],
+    {titre:"Je décale les chiffres vers la gauche",
+     texte:"Multiplier par 10, c'est rendre le nombre 10 fois plus grand : chaque chiffre se décale <b>d'un rang vers la gauche</b>. Par 100, il se décale de <b>deux rangs</b>. Par 1 000, de <b>trois rangs</b>. Les places libres à droite se remplissent avec des <b>zéros</b>.",
+     table:{headers:['','centaines de milliers','dizaines de milliers','milliers','centaines','dizaines','unités'], label:true, rows:[
+       ['456','','','','4','5','6'],
+       ['456 × 10','','','4','5','6','0'],
+       ['456 × 100','','4','5','6','0','0'],
+       ['456 × 1 000','4','5','6','0','0','0']]},
+     etapes:["Je regarde par combien je multiplie : 10, 100 ou 1 000.","Je décale chaque chiffre de 1, 2 ou 3 rangs vers la gauche.","Je remplis les places vides avec des zéros."],
+     exemple:["<b>35 × 100</b> : 35 se décale de 2 rangs → <b>3 500</b>","<b>206 × 10</b> : 206 se décale d'un rang → <b>2 060</b>"],
+     astuce:"Les zéros d'un nombre ne disparaissent jamais : 70 × 10 = 700, et pas 70."}),
+  mEx(2, "Multiplier un décimal par 10", 1, 'mental', "Calcule dans ta tête. Écris la virgule avec une virgule (par exemple 4,5).",
+    ['2,5 × 10','13,8 × 10','7,9 × 10','0,3 × 10','5,04 × 10','0,81 × 10','60,2 × 10','10 × 1,47','10 × 308,6','10 × 0,06'],
+    {titre:"Chaque chiffre se décale d'un rang vers la gauche",
+     texte:"Quand on multiplie un nombre décimal par 10, chaque chiffre devient 10 fois plus grand : il se décale <b>d'un rang vers la gauche</b>. Un centième devient un dixième, un dixième devient une unité, une unité devient une dizaine… Dans le tableau, la virgule reste à sa place : ce sont les chiffres qui bougent.",
+     table:{headers:['','centaines','dizaines','unités','dixièmes','centièmes'], label:true, comma:3, rows:[
+       ['43,56','','4','3','5','6'],
+       ['43,56 × 10 = 435,6','4','3','5','6','']]},
+     etapes:["Je place les chiffres dans le tableau de numération.","Je décale chaque chiffre d'un rang vers la gauche.","Je relis le nombre obtenu (la virgule est entre les unités et les dixièmes)."],
+     exemple:["<b>7,41 × 10</b> : 7 unités deviennent 7 dizaines, 4 dixièmes deviennent 4 unités, 1 centième devient 1 dixième → <b>74,1</b>","<b>0,9 × 10</b> : 9 dixièmes deviennent 9 unités → <b>9</b>"],
+     astuce:"Si le dernier chiffre arrive dans les unités, il n'y a plus de virgule : 3,5 × 10 = 35."}),
+  mEx(3, "Défi : multiplier un décimal par 100", 3, 'mental', "Ici, on décale de deux rangs. Écris la virgule avec une virgule.",
+    ['2,5 × 100','0,34 × 100','7,08 × 100','12,6 × 100','0,5 × 100'],
+    {titre:"Multiplier par 100, c'est multiplier par 10 deux fois",
+     texte:"Multiplier par 100, c'est multiplier par 10, puis encore par 10. Chaque chiffre se décale donc de <b>deux rangs vers la gauche</b>. Si on manque de chiffres, on complète avec des zéros.",
+     etapes:["Je multiplie par 10 : je décale d'un rang.","Je multiplie encore par 10 : je décale d'un deuxième rang.","Je complète avec des zéros si besoin."],
+     exemple:["<b>3,5 × 100</b> : 3,5 × 10 = 35, puis 35 × 10 = <b>350</b>","<b>0,34 × 100</b> : 0,34 × 10 = 3,4, puis 3,4 × 10 = <b>34</b>"],
+     astuce:"× 100 pour un décimal : la virgule « avance » de deux chiffres vers la droite."}),
+  mEx(4, "Diviser par 10", 2, 'mental', "Calcule dans ta tête. Écris la virgule avec une virgule.",
+    ['70 ÷ 10','48 ÷ 10','5 ÷ 10','283 ÷ 10','9,6 ÷ 10','0,7 ÷ 10','125,4 ÷ 10','31,2 ÷ 10','1890 ÷ 10','4 ÷ 10'],
+    {titre:"Chaque chiffre se décale d'un rang vers la droite",
+     texte:"Diviser par 10, c'est rendre un nombre 10 fois plus petit : chaque chiffre se décale <b>d'un rang vers la droite</b>. Une dizaine devient une unité, une unité devient un dixième, un dixième devient un centième…",
+     table:{headers:['','dizaines','unités','dixièmes','centièmes'], label:true, comma:2, rows:[
+       ['43,5','4','3','5',''],
+       ['43,5 ÷ 10 = 4,35','','4','3','5']]},
+     etapes:["Je place les chiffres dans le tableau de numération.","Je décale chaque chiffre d'un rang vers la droite.","Je lis le résultat (je n'oublie pas le 0 devant la virgule s'il n'y a pas d'unités)."],
+     exemple:["<b>375 ÷ 10</b> : le 5 des unités devient un dixième → <b>37,5</b>","<b>6 ÷ 10</b> : 6 unités deviennent 6 dixièmes → <b>0,6</b>","<b>0,4 ÷ 10</b> : 4 dixièmes deviennent 4 centièmes → <b>0,04</b>"],
+     astuce:"× 10 : vers la gauche, le nombre grandit. ÷ 10 : vers la droite, le nombre rapetisse."}),
+  mEx(5, "Ajouter 9, 19, 29 ou 39", 2, 'mental', "Calcule dans ta tête, sans poser l'opération.",
+    ['53 + 9','47 + 19','65 + 29','148 + 39','276 + 19','305 + 9','1428 + 29','999 + 39'],
+    {titre:"J'ajoute la dizaine d'après, puis je retire 1",
+     texte:"9, 19, 29 ou 39, c'est <b>presque</b> 10, 20, 30 ou 40 : il manque seulement 1. Alors j'ajoute la dizaine ronde (c'est facile !), et comme j'ai ajouté <b>1 de trop</b>, je le retire à la fin.",
+     etapes:["Je repère le nombre presque rond : 39 est presque 40.","J'ajoute le nombre rond : 326 + 40 = 366.","Je retire ce que j'ai ajouté en trop : 366 − 1 = 365."],
+     exemple:["<b>326 + 39</b> = 326 + 40 − 1 = 366 − 1 = <b>365</b>","<b>45 + 29</b> = 45 + 30 − 1 = 75 − 1 = <b>74</b>"],
+     astuce:"Pour 9 : + 10 puis − 1. Pour 19 : + 20 puis − 1. Pour 29 : + 30 puis − 1. Pour 39 : + 40 puis − 1."}),
+  mEx(6, "Ajouter 8, 18, 28 ou 38", 2, 'mental', "Même idée qu'avant, mais cette fois il manque 2 pour arriver à la dizaine.",
+    ['34 + 8','47 + 18','55 + 28','126 + 38','79 + 8','265 + 18','493 + 28','1215 + 38'],
+    {titre:"J'ajoute la dizaine d'après, puis je retire 2",
+     texte:"8, 18, 28 ou 38, c'est presque 10, 20, 30 ou 40 : il manque <b>2</b>. J'ajoute la dizaine ronde, puis je retire les <b>2</b> que j'ai ajoutés en trop.",
+     etapes:["Je repère le nombre presque rond : 38 est presque 40 (il manque 2).","J'ajoute le nombre rond : 457 + 40 = 497.","Je retire 2 : 497 − 2 = 495."],
+     exemple:["<b>457 + 38</b> = 457 + 40 − 2 = 497 − 2 = <b>495</b>","<b>67 + 18</b> = 67 + 20 − 2 = 87 − 2 = <b>85</b>"],
+     astuce:"Pour 8 et 9, je retire peu : 8 → − 2 ; 9 → − 1. Je ne les confonds pas !"}),
+  mEx(7, "Soustraire 8, 9, 18, 19, 28, 29, 38 ou 39", 2, 'mental', "Calcule dans ta tête. Cette fois, on soustrait !",
+    ['63 − 9','81 − 19','74 − 29','152 − 39','60 − 8','93 − 18','245 − 28','506 − 38','1000 − 9','3150 − 19'],
+    {titre:"Je retire la dizaine d'après, puis j'ajoute ce que j'ai retiré en trop",
+     texte:"Pour soustraire 39, je soustrais 40 (plus facile), mais j'ai retiré <b>1 de trop</b> : je l'ajoute à la fin. Pour soustraire 38, je soustrais 40 puis j'ajoute <b>2</b>.",
+     etapes:["Je repère le nombre presque rond : 39 est presque 40.","Je soustrais le nombre rond : 718 − 40 = 678.","Je rends ce que j'ai retiré en trop : 678 + 1 = 679."],
+     exemple:["<b>718 − 39</b> = 718 − 40 + 1 = 678 + 1 = <b>679</b>","<b>76 − 8</b> = 76 − 10 + 2 = 66 + 2 = <b>68</b>"],
+     astuce:"Soustraire 9, 19, 29, 39 : − (dizaine d'après) puis + 1. Soustraire 8, 18, 28, 38 : − (dizaine d'après) puis + 2."}),
+  mEx(8, "Multiplier par des dizaines ou des centaines", 2, 'mental', "Calcule dans ta tête.",
+    ['6 × 70','8 × 90','4 × 300','7 × 600','5 × 80','9 × 50','30 × 4','200 × 9','3 × 800','40 × 6'],
+    {titre:"Je calcule avec la table, puis j'ajoute les zéros",
+     texte:"70, c'est 7 dizaines ; 700, c'est 7 centaines. Pour multiplier par un nombre de dizaines ou de centaines, je <b>décompose</b> : je multiplie d'abord les chiffres (table de multiplication), puis je multiplie par 10 ou par 100.",
+     etapes:["Je sépare le chiffre et le(s) zéro(s) : 60 = 6 × 10.","Je calcule avec la table : 8 × 6 = 48.","Je multiplie par 10 (ou 100) : 48 × 10 = 480."],
+     exemple:["<b>8 × 60</b> = 8 × (6 × 10) = (8 × 6) × 10 = 48 × 10 = <b>480</b>","<b>3 × 900</b> = (3 × 9) × 100 = 27 × 100 = <b>2 700</b>"],
+     astuce:"Je compte les zéros : 60 en a un, 900 en a deux. Je les ajoute au résultat de la table."}),
+  mEx(9, "Multiplier par 4", 2, 'mental', "Calcule dans ta tête. Les premières lignes te guident pas à pas.",
+    [mChain(35,2), mChain(48,2), '27 × 4','45 × 4','64 × 4','125 × 4','208 × 4','350 × 4'],
+    {titre:"Multiplier par 4, c'est doubler deux fois",
+     texte:"4 = 2 × 2. Multiplier par 4, c'est donc <b>multiplier par 2, puis encore par 2</b>. Doubler est plus facile que de multiplier par 4 directement !",
+     etapes:["Je double le nombre (× 2).","Je double le résultat (× 2).","C'est fini : j'ai multiplié par 4."],
+     exemple:["<b>47 × 4</b> : 47 × 2 = 94, puis 94 × 2 = <b>188</b>","<b>35 × 4</b> : 35 × 2 = 70, puis 70 × 2 = <b>140</b>"],
+     astuce:"Pour doubler un grand nombre, je double les dizaines puis les unités : le double de 94 = 90 × 2 + 4 × 2 = 180 + 8."}),
+  mEx(10, "Multiplier par 8", 3, 'mental', "Les premières lignes te guident : tu doubles trois fois.",
+    [mChain(15,3), mChain(24,3), '35 × 8','42 × 8','75 × 8','120 × 8','305 × 8','500 × 8'],
+    {titre:"Multiplier par 8, c'est doubler trois fois",
+     texte:"8 = 2 × 2 × 2. Multiplier par 8, c'est <b>multiplier par 2, puis par 2, puis encore par 2</b>. C'est la méthode du × 4, avec un doublement de plus.",
+     etapes:["Je double le nombre.","Je double encore le résultat.","Je double une troisième fois : j'ai multiplié par 8."],
+     exemple:["<b>56 × 8</b> : 56 × 2 = 112, puis 112 × 2 = 224, puis 224 × 2 = <b>448</b>","<b>25 × 8</b> : 50, puis 100, puis <b>200</b>"],
+     astuce:"Je peux vérifier avec les tables : 6 × 8 = 48. Et si le nombre est rond, c'est encore plus simple : 500 × 8 = 5 × 8 × 100."}),
+  mEx(11, "Multiplier par 5", 2, 'mental', "Calcule dans ta tête. Écris seulement le résultat final.",
+    ['12 × 5','26 × 5','48 × 5','35 × 5','64 × 5','87 × 5','110 × 5','146 × 5','223 × 5','308 × 5'],
+    {titre:"× 5 : je multiplie par 10, puis je prends la moitié",
+     texte:"5 est la moitié de 10. Multiplier par 5, c'est donc <b>multiplier par 10</b> (je décale les chiffres), puis <b>prendre la moitié</b> du résultat.",
+     etapes:["Je multiplie par 10 : j'ajoute un zéro.","Je prends la moitié du résultat (je le partage en 2).","J'obtiens le résultat × 5."],
+     exemple:["<b>162 × 5</b> : 162 × 10 = 1 620, la moitié de 1 620 est 810 → <b>810</b>","<b>35 × 5</b> : 350, la moitié est <b>175</b>"],
+     astuce:"Pour la moitié, je coupe en dizaines : la moitié de 1 620 = la moitié de 1 600 (800) + la moitié de 20 (10) = 810."}),
+  mEx(12, "Découper un nombre : la distributivité", 3, 'mental', "Les quatre premières lignes sont guidées ; les trois dernières, tu les fais seule.",
+    [mDist('18 × 11','10 × 18','1 × 18'), mDist('24 × 12','10 × 24','2 × 24'), mDist('31 × 35','30 × 35','1 × 35'), mDist('22 × 25','20 × 25','2 × 25'), '14 × 21','33 × 15','41 × 19'],
+    {titre:"Je remplace un nombre par une somme plus simple",
+     texte:"Quand un nombre est proche d'un nombre rond (11 = 10 + 1, 21 = 20 + 1…), je le <b>découpe</b> en une somme. Je multiplie chaque morceau séparément (c'est facile avec 10 ou 20), puis j'<b>additionne</b> les résultats.",
+     etapes:["Je découpe un nombre : 21 = 20 + 1.","Je multiplie chaque morceau : 20 × 35 = 700 et 1 × 35 = 35.","J'additionne : 700 + 35 = 735."],
+     exemple:["<b>21 × 35</b> = (20 × 35) + (1 × 35) = 700 + 35 = <b>735</b>","<b>19 × 11</b> = (10 × 19) + (1 × 19) = 190 + 19 = <b>209</b>"],
+     astuce:"Je découpe toujours le nombre qui me donne un calcul facile avec 10, 20 ou 30."}),
+  mEx(13, "Additionner des nombres décimaux de tête", 2, 'mental', "Écris la virgule avec une virgule.",
+    ['2 + 0,5','4 + 0,08','7 + 3,4','1,3 + 0,6','5,2 + 0,7','2,41 + 0,5','6,35 + 0,04','3,7 + 0,05','8,26 + 0,3','9,95 + 0,05'],
+    {titre:"Chaque chiffre à sa place",
+     texte:"Pour additionner des décimaux de tête, je pense à la <b>valeur de chaque chiffre</b> : 0,4 c'est 4 dixièmes ; 0,07 c'est 7 centièmes. J'ajoute les unités avec les unités, les dixièmes avec les dixièmes, les centièmes avec les centièmes.",
+     table:{headers:['','unités','dixièmes','centièmes'], label:true, comma:1, rows:[
+       ['3,54','3','5','4'],
+       ['+ 0,4','0','4',''],
+       ['= 3,94','3','9','4']]},
+     etapes:["Je repère la valeur du petit nombre : 0,4 = 4 dixièmes.","J'ajoute ces 4 dixièmes aux 5 dixièmes de 3,54 : 5 + 4 = 9 dixièmes.","Les autres chiffres ne changent pas : 3,94."],
+     exemple:["<b>1,2 + 0,07</b> : je n'ai rien dans les centièmes, j'ajoute 7 centièmes → <b>1,27</b>","<b>9,16 + 0,3</b> : 1 + 3 = 4 dixièmes → <b>9,46</b>"],
+     astuce:"Attention aux « retenues » : 9,95 + 0,05, ce sont 95 centièmes + 5 centièmes = 100 centièmes = 1 unité de plus."}),
+  mEx(14, "Soustraire des nombres décimaux de tête", 3, 'mental', "Écris la virgule avec une virgule.",
+    ['9,7 − 5','6 − 0,4','8,5 − 0,3','4,86 − 1','7,23 − 0,2','3,48 − 0,05','5,02 − 0,01','9,3 − 0,4','10 − 0,3'],
+    {titre:"Je retire la bonne valeur, chiffre par chiffre",
+     texte:"Même idée que pour l'addition : je retire des <b>unités</b>, des <b>dixièmes</b> ou des <b>centièmes</b>. Quand le chiffre du dessus est trop petit, je « casse » une unité en 10 dixièmes (ou un dixième en 10 centièmes).",
+     table:{headers:['','unités','dixièmes','centièmes'], label:true, comma:1, rows:[
+       ['5,26','5','2','6'],
+       ['− 0,1','0','1',''],
+       ['= 5,16','5','1','6']]},
+     etapes:["Je repère ce que je retire : 0,1 = 1 dixième.","Je le retire au chiffre des dixièmes : 2 − 1 = 1.","Les autres chiffres ne changent pas : 5,16."],
+     exemple:["<b>4,63 − 0,01</b> : je retire 1 centième → 6 − 1 = 5 centièmes → <b>4,62</b>","<b>7,9 − 0,8</b> : 9 − 8 = 1 dixième → <b>7,1</b>","<b>6 − 0,4</b> : 6 = 5 unités et 10 dixièmes, 10 − 4 = 6 dixièmes → <b>5,6</b>"],
+     astuce:"Quand je ne peux pas retirer (par exemple 3 − 4), j'échange : 1 unité = 10 dixièmes."}),
+  mEx(15, "Estimer un résultat", 2, 'mental', "Arrondis chaque nombre à l'unité, puis calcule de tête. Écris seulement l'estimation.",
+    [mEst('245,3 + 125,2'), mEst('427,3 + 22,8'), mEst('347,9 + 52,68'), mEst('18,4 + 9,7'), mEst('76 − 2,34'), mEst('2,35 × 9'), mEst('98,6 − 41,2'), mEst('6,8 × 5')],
+    {titre:"J'arrondis, puis je calcule de tête",
+     texte:"<b>Estimer</b>, c'est trouver un résultat <b>proche</b> du résultat exact, en calculant facilement. J'arrondis chaque nombre décimal à l'unité (l'entier le plus proche), puis je calcule avec ces nombres simples. C'est très utile pour vérifier qu'un calcul posé n'est pas faux !",
+     etapes:["J'arrondis : si le chiffre des dixièmes est 0, 1, 2, 3 ou 4, je garde l'entier ; s'il est 5, 6, 7, 8 ou 9, je prends l'entier suivant.","Je calcule avec les nombres arrondis.","Mon résultat est une estimation : il n'est pas exact, mais il est proche."],
+     exemple:["<b>245,3 + 125,2</b> ≈ 245 + 125 = <b>370</b>","<b>347,9 + 52,68</b> ≈ 348 + 53 = <b>401</b>","<b>18,4 + 9,7</b> ≈ 18 + 10 = <b>28</b>"],
+     astuce:"7,8 s'arrondit à 8 (8 dixièmes → on monte), mais 7,3 s'arrondit à 7 (3 dixièmes → on garde)."}),
+  mEx(16, "Défi : quelle astuce choisir ?", 3, 'mental', "Pour chaque calcul, choisis l'astuce de ta fiche qui convient. Sans poser l'opération !",
+    ['58 × 10','47 + 19','5 × 36','9 × 80','6,3 ÷ 10','4 × 35','84 − 29','0,7 × 10', mVF('43 × 8 = 344.', true), mVF('7,5 ÷ 10 = 75.', false)],
+    {titre:"Je regarde le calcul, puis je choisis mon astuce",
+     texte:"Avant de calculer, je <b>regarde</b> les nombres : y a-t-il un 10, un 9 ou un 19, un 4, un 5, un 8, un nombre à virgule ? Chaque calcul a son astuce préférée.",
+     table:{headers:['Si je vois…','Je fais…'], label:true, rows:[
+       ['× 10, × 100, × 1 000','je décale vers la gauche'],
+       ['÷ 10 (décimal)','je décale vers la droite'],
+       ['+ ou − 9, 19, 29, 39 (ou 8, 18, 28, 38)','je passe par la dizaine, puis je corrige (1 ou 2)'],
+       ['× 4  /  × 8','je double 2 fois  /  3 fois'],
+       ['× 5','× 10, puis la moitié'],
+       ['× des dizaines (60, 700…)','la table, puis les zéros']]},
+     exemple:["<b>5 × 36</b> : 36 × 10 = 360, la moitié = <b>180</b>","<b>84 − 29</b> : 84 − 30 + 1 = <b>55</b>"],
+     astuce:"Pour « Vrai ou faux ? », je calcule d'abord, puis je compare avec ce qui est écrit."})
+];
+
+/* ----- Multiplier, diviser, fractions, décimaux, opérations, problèmes ----- */
+const M14_OTHER = [
+  /* ===== Multiplier ===== */
+  mEx(17, "Le facteur manquant", 1, 'mult', "Retrouve le nombre qui manque dans la multiplication (utilise tes tables).",
+    [mMiss(7,56), mMiss(6,42), mMiss(9,63), mMiss(4,36), mMiss(8,72), mMiss(5,45), mMiss(7,49), mMiss(9,81)]),
+  mEx(18, "Multiplier par un nombre à un chiffre", 2, 'mult', "Pose l'opération sur ton cahier ou ton brouillon, puis écris le résultat.",
+    ['4718 × 3','4718 × 6','2536 × 4','2536 × 8','7305 × 5','9082 × 9'],
+    {titre:"Multiplier chiffre par chiffre, en partant des unités",
+     texte:"Je pose l'opération en alignant les chiffres. Je multiplie le chiffre du bas par chacun des chiffres du haut, en commençant par la droite, et je note les <b>retenues</b>.",
+     etapes:["Unités : je multiplie, j'écris le chiffre des unités du résultat et je retiens les dizaines.","Dizaines, centaines, milliers : je multiplie, j'ajoute la retenue, j'écris, je retiens.","À la fin, j'écris tout le dernier résultat."],
+     exemple:["<b>6 372 × 3</b> : 2×3=6 ; 7×3=21 (j'écris 1, je retiens 2) ; 3×3=9, +2 = 11 (j'écris 1, je retiens 1) ; 6×3=18, +1 = 19 → <b>19 116</b>"]}),
+  mEx(19, "Multiplier par un nombre à deux chiffres", 3, 'mult', "Pose l'opération sur ton cahier ou ton brouillon, puis écris le résultat.",
+    ['58 × 43','37 × 62','615 × 28','472 × 35','284 × 107','83 × 96'],
+    {titre:"Deux lignes de calcul, puis j'additionne",
+     texte:"Quand le multiplicateur a deux chiffres, je fais <b>deux multiplications</b> : par les unités, puis par les dizaines (en écrivant un 0 à droite), et j'<b>additionne</b> les deux résultats.",
+     etapes:["Je multiplie par le chiffre des unités.","Je multiplie par le chiffre des dizaines, en écrivant d'abord un 0 sur la ligne.","J'additionne les deux lignes."],
+     exemple:["<b>46 × 27</b> : 46 × 7 = 322 ; 46 × 20 = 920 ; 322 + 920 = <b>1 242</b>"],
+     astuce:"Pour vérifier, j'estime : 46 × 27 est proche de 50 × 30 = 1 500. Mon résultat (1 242) est du bon ordre de grandeur."}),
+
+  /* ===== Diviser ===== */
+  mEx(20, "Les divisions des tables", 1, 'div', "Utilise tes tables de multiplication : la division est l'opération contraire.",
+    ['18 ÷ 3','28 ÷ 4','56 ÷ 7','72 ÷ 9','40 ÷ 5','63 ÷ 7','45 ÷ 9','32 ÷ 8','54 ÷ 6','81 ÷ 9']),
+  mEx(21, "Quotient et reste", 2, 'div', "Écris le quotient, puis le reste.",
+    [mDiv(37,5), mDiv(29,4), mDiv(52,6), mDiv(47,8), mDiv(65,9), mDiv(38,7), mDiv(50,7), mDiv(30,6)],
+    {titre:"Je cherche le plus grand multiple du diviseur qui ne dépasse pas le dividende",
+     texte:"Pour calculer 43 ÷ 6, je cherche combien de fois 6 « rentre » dans 43, <b>sans dépasser</b> 43. Je récite la table de 6, puis je regarde ce qu'il reste.",
+     etapes:["Je récite la table de 6 : 6, 12, 18, 24, 30, 36, <b>42</b>, 48… (48 dépasse 43).","Le plus grand multiple qui ne dépasse pas 43 est 42 = 6 × 7. Le quotient est <b>7</b>.","Le reste est 43 − 42 = <b>1</b>."],
+     astuce:"Le reste est toujours plus petit que le diviseur. Si j'obtiens un reste plus grand, c'est que je peux encore partager !"}),
+  mEx(22, "L'égalité de la division", 2, 'div', "Complète : dividende = (diviseur × quotient) + reste.",
+    [mEuclid(14,3), mEuclid(37,6), mEuclid(38,5), mEuclid(44,8), mEuclid(55,9), mEuclid(87,10)],
+    {titre:"dividende = (diviseur × quotient) + reste",
+     texte:"Pour compléter, je cherche le plus grand multiple du diviseur qui ne dépasse pas le nombre de départ : c'est le calcul entre parenthèses. Le reste est ce qu'il faut ajouter pour retrouver le nombre.",
+     exemple:["<b>26 = (5 × ... ) + ...</b> : 5 × 5 = 25 est le plus proche sans dépasser 26 ; il reste 1 → <b>26 = (5 × 5) + 1</b>"]}),
+  mEx(23, "En route vers la division : les tables", 2, 'div', "Complète les listes, puis réponds.",
+    [mMultiples(3,2,8), mMultiples(4,2,8), mBiggest(3,26), mBiggest(3,17), mBiggest(4,29), mBiggest(6,50), mBiggest(7,35), mBiggest(9,50)],
+    {titre:"Réciter la table pour s'approcher du nombre",
+     texte:"Pour trouver le plus grand nombre de la table de 7 inférieur à 40, je récite la table : 7, 14, 21, 28, 35, 42… Je m'arrête juste avant de dépasser 40 : c'est <b>35</b>.",
+     astuce:"« Inférieur à 40 » : le nombre doit être strictement plus petit que 40 (40 lui-même ne compte pas)."}),
+
+  /* ===== Fractions ===== */
+  mEx(24, "Écrire la fraction d'une surface", 1, 'frac', "Écris la fraction de la partie coloriée, sous la forme 3/8 (numérateur, barre /, dénominateur).",
+    [mFracSq(2,2,[0,1,2]), mFracSq(4,1,[0,1,2]), mFracSq(3,2,[0,4]), mFracSq(1,3,[0]), mFracSq(4,2,[0,1,2,3,4]), mFracSq(3,3,[0,1,2,3,4,5,6,7])]),
+  mEx(25, "Écrire la fraction d'un disque", 1, 'frac', "Écris la fraction de la partie coloriée du disque.",
+    [mFracDisk(4,3), mFracDisk(5,2), mFracDisk(6,5), mFracDisk(8,3), mFracDisk(10,7), mFracDisk(12,9)]),
+  mEx(26, "Choisir la bonne figure", 2, 'frac', "Choisis la figure qui représente la fraction demandée.",
+    [mItem("Quelle figure représente 3/4 ? {0}", [fracMcq([fracSquare(4,1,[0]), fracSquare(4,1,[0,1,2]), fracSquare(2,2,[0,1])], fracSquare(4,1,[0,1,2]))]),
+     mItem("Quelle figure représente 2/6 ? {0}", [fracMcq([fracDisk(6,4), fracDisk(3,2), fracDisk(6,2)], fracDisk(6,2))]),
+     mItem("Quelle figure représente 5/8 ? {0}", [fracMcq([fracDisk(8,5), fracDisk(8,3), fracDisk(5,3)], fracDisk(8,5))]),
+     mItem("Quelle figure représente 1/3 ? {0}", [fracMcq([fracSquare(3,1,[0,1]), fracSquare(3,1,[0]), fracSquare(2,2,[0])], fracSquare(3,1,[0]))]),
+     mItem("Pour représenter 3/8, combien de parts faut-il colorier sur une figure de 8 parts égales ? {0}", [mfill(3)]),
+     mItem("Pour colorier 4/5 d'une bande, je la partage en {0} parts égales, puis je colorie {1} parts.", [mfill(5), mfill(4)])],
+    {titre:"Je regarde d'abord le dénominateur, puis le numérateur",
+     texte:"Pour reconnaître une fraction, je compte d'abord <b>le nombre de parts égales</b> de la figure (c'est le dénominateur), puis <b>le nombre de parts coloriées</b> (c'est le numérateur). Attention : les parts doivent toutes être égales !"}),
+  mEx(27, "Décomposer une fraction", 2, 'frac', "Écris la fraction sous la forme d'un nombre entier + une fraction plus petite que 1 (écris la fraction ainsi : 1/4).",
+    [mDecomp(17,5), mDecomp(19,4), mDecomp(25,6), mDecomp(31,9), mDecomp(47,8), mDecomp(23,3)],
+    {titre:"La division m'aide à trouver combien de « touts » il y a",
+     texte:"Une fraction plus grande que 1 contient un ou plusieurs « touts ». Pour les trouver, je fais la <b>division euclidienne</b> du numérateur par le dénominateur : le <b>quotient</b> est le nombre entier, le <b>reste</b> devient le nouveau numérateur.",
+     etapes:["Je divise le numérateur par le dénominateur : 13 ÷ 4 = 3, reste 1.","Le quotient (3) est la partie entière.","Le reste (1) est le numérateur de la fraction qui reste, avec le même dénominateur : 1/4."],
+     exemple:["<b>13/4</b> = 3 + 1/4  (car 13 = 4 × 3 + 1)","<b>5/3</b> = 1 + 2/3  (car 5 = 3 × 1 + 2)"]}),
+  mEx(28, "Encadrer une fraction", 2, 'frac', "Trouve les deux nombres entiers qui encadrent la fraction.",
+    [mFrameFrac(11,3), mFrameFrac(17,5), mFrameFrac(23,4), mFrameFrac(30,7), mFrameFrac(25,8), mFrameFrac(29,6)],
+    {titre:"Entre deux entiers consécutifs",
+     texte:"Pour encadrer une fraction entre deux entiers consécutifs, je la décompose : la partie entière est le premier entier, et le suivant est l'entier juste après.",
+     exemple:["<b>9/2</b> = 4 + 1/2, donc <b>4 < 9/2 < 5</b>"]}),
+  mEx(29, "Lire une fraction sur une demi-droite graduée", 2, 'frac', "Compte les graduations depuis 0. Écris la fraction sous la forme 5/4.",
+    [mLine('A',3,4,5), mLine('B',3,4,9), mLine('C',4,3,5), mLine('D',3,5,8), mLine('E',4,2,7), mLine('F',3,6,13)],
+    {titre:"Je compte les graduations depuis 0",
+     texte:"Je regarde en combien de parts égales l'unité (de 0 à 1) est partagée : c'est le <b>dénominateur</b>. Puis je compte les graduations depuis 0 jusqu'au point : c'est le <b>numérateur</b>. Après 1, on continue à compter sans repartir de zéro.",
+     figure:numLine(3,4,[['A',5]]),
+     exemple:["Ici, l'unité est partagée en 4 parts : chaque graduation vaut 1/4. Le point A est à la 5e graduation : <b>A = 5/4</b> (= 1 + 1/4)."]}),
+  mEx(30, "Entiers et fractions", 2, 'frac', "Complète. Souviens-toi : 1 = 2/2 = 3/3 = 4/4…",
+    [mItem("1 = {0}/5", [mfill(5)]), mItem("2 = {0}/4", [mfill(8)]), mItem("3 = {0}/3", [mfill(9)]), mItem("5 = {0}/2", [mfill(10)]), mItem("6 = {0}/8", [mfill(48)]),
+     mItem("7/4 est {0} 1", [mcq(OPT_CMP,'gt')]), mItem("3/5 est {0} 1", [mcq(OPT_CMP,'lt')]), mItem("6/6 est {0} 1", [mcq(OPT_CMP,'eq')])],
+    {titre:"Un entier, c'est des parts qui ont toutes été comptées",
+     texte:"1 « tout » partagé en 4 parts égales, ce sont 4 parts : 1 = 4/4. Donc 2 touts valent 2 × 4 = 8 parts : 2 = 8/4. Pour écrire un nombre entier en fraction, je multiplie ce nombre par le dénominateur."}),
+
+  /* ===== Décimaux ===== */
+  mEx(31, "Écrire une fraction décimale", 1, 'dec', "Écris chaque fraction avec une barre : par exemple 13/10.",
+    [mWords('Treize dixièmes',13,10), mWords('Huit centièmes',8,100), mWords('Cent-dix-huit dixièmes',118,10), mWords('Cinquante-trois centièmes',53,100), mWords('Quarante-huit dixièmes',48,10), mWords('Sept dixièmes',7,10)],
+    {titre:"Le nom me donne le dénominateur",
+     texte:"« Dixièmes » veut dire dénominateur 10 ; « centièmes » veut dire dénominateur 100. Le nombre que je dis avant est le numérateur : « treize dixièmes » = 13/10."}),
+  mEx(32, "Fractions décimales et nombres décimaux", 2, 'dec', "Écris le nombre décimal avec une virgule, ou la fraction avec une barre.",
+    [mItem("37/10 = {0}", [mfill(3.7)]), mItem("2975/100 = {0}", [mfill(29.75)]), mItem("206/100 = {0}", [mfill(2.06)]), mItem("142/10 = {0}", [mfill(14.2)]),
+     mItem("0,9 = {0}", [frac(9,10)]), mItem("0,25 = {0}", [frac(25,100)]), mItem("5,3 = {0}", [frac(53,10)]), mItem("8,07 = {0}", [frac(807,100)])],
+    {titre:"Je divise par 10 ou par 100 (je décale la virgule)",
+     texte:"Une fraction décimale s'écrit facilement comme un nombre décimal : <b>diviser par 10</b>, c'est décaler d'un rang vers la droite ; <b>diviser par 100</b>, c'est décaler de deux rangs. Dans l'autre sens, j'écris le nombre sans virgule, et je mets 10 ou 100 en dessous.",
+     exemple:["<b>2 975/100</b> = 2 975 ÷ 100 = <b>29,75</b>","<b>0,25</b> a 2 chiffres après la virgule → <b>25/100</b>"]}),
+  mEx(33, "Lire un nombre dans le tableau", 1, 'dec', "Réponds avec un chiffre.",
+    [mItem("Dans 29,75, le chiffre des dixièmes est {0}.", [mfill(7)]), mItem("Dans 29,75, le chiffre des centièmes est {0}.", [mfill(5)]),
+     mItem("Dans 8,36, le chiffre des unités est {0}.", [mfill(8)]), mItem("Dans 8,36, le chiffre des centièmes est {0}.", [mfill(6)]),
+     mItem("Dans 41,08, le chiffre des dizaines est {0}.", [mfill(4)]), mItem("Dans 41,08, le chiffre des dixièmes est {0}.", [mfill(0)])]),
+  mEx(34, "Décomposer un nombre décimal", 2, 'dec', "Complète chaque égalité. Écris les nombres décimaux avec une virgule.",
+    [mItem("7,35 = 7 + {0}/100", [mfill(35)]), mItem("5,08 = 5 + {0}/100", [mfill(8)]), mItem("29,75 = 29 + {0}", [mfill(0.75)]), mItem("54/10 = 5 + {0}/10", [mfill(4)]),
+     mItem("3 + 4/10 = {0}", [mfill(3.4)]), mItem("12 + 6/100 = {0}", [mfill(12.06)]), mItem("26/10 = 20/10 + {0}/10", [mfill(6)]), mItem("7 + 9/10 = {0}/10", [mfill(79)])],
+    {titre:"Chaque chiffre vaut selon sa place",
+     texte:"Un nombre décimal se décompose en une <b>partie entière</b> et une <b>partie décimale</b>. Par exemple 29,75 = 29 + 0,75 = 29 + 75/100. Et 54/10 = 5 + 4/10 : 54 dixièmes, c'est 5 unités et 4 dixièmes.",
+     exemple:["<b>7,35</b> = 7 + 0,35 = 7 + <b>35/100</b>"]}),
+  mEx(35, "Comparer des nombres décimaux", 2, 'dec', "Choisis le bon signe : <, > ou =.",
+    [mCmp('6,15','3,5'), mCmp('3,15','3,5'), mCmp('3,15','3,12'), mCmp('4,07','4,7'), mCmp('0,9','0,85'), mCmp('12,3','12,30'), mCmp('5,6','5,06'), mCmp('1,45','1,5')],
+    {titre:"Je compare d'abord les parties entières, puis les dixièmes, puis les centièmes",
+     texte:"Pour comparer deux nombres décimaux : si les <b>parties entières</b> sont différentes, le plus grand est celui qui a la plus grande partie entière. Si elles sont égales, je compare les <b>dixièmes</b>, et seulement s'ils sont égaux, les <b>centièmes</b>.",
+     exemple:["<b>6,15 > 3,5</b> car 6 > 3","<b>3,15 < 3,5</b> car 1 dixième < 5 dixièmes","<b>3,15 > 3,12</b> car 5 centièmes > 2 centièmes"],
+     astuce:"Ne regarde pas la longueur du nombre : 0,9 est plus grand que 0,85, même si 85 « paraît plus grand » que 9."}),
+  mEx(36, "Encadrer un nombre décimal", 2, 'dec', "Trouve les deux nombres entiers qui encadrent le nombre.",
+    [mFrameDec('6,3'), mFrameDec('2,47'), mFrameDec('18,9'), mFrameDec('0,52'), mFrameDec('35,08'), mFrameDec('99,9')],
+    {titre:"L'entier juste avant et l'entier juste après",
+     texte:"La partie entière du nombre est l'entier juste en dessous. L'entier juste au-dessus, c'est cette partie entière plus 1.",
+     exemple:["<b>6 < 6,3 < 7</b>  ;  <b>2 < 2,47 < 3</b>"]}),
+  mEx(37, "Équivalences : entier, dixièmes, centièmes", 2, 'dec', "Complète en suivant l'exemple : 1 = 10/10 = 100/100.",
+    [mItem("5 = {0}/10 = {1}/100", [mfill(50), mfill(500)]), mItem("12 = {0}/10 = {1}/100", [mfill(120), mfill(1200)]), mItem("8 = {0}/10 = {1}/100", [mfill(80), mfill(800)]), mItem("3 = {0}/10 = {1}/100", [mfill(30), mfill(300)]), mItem("60 = {0}/10 = {1}/100", [mfill(600), mfill(6000)])],
+    {titre:"Une unité, ce sont 10 dixièmes ou 100 centièmes",
+     texte:"Dans 1 unité, il y a 10 dixièmes et 100 centièmes. Donc pour écrire un entier en dixièmes, je le <b>multiplie par 10</b> ; en centièmes, je le <b>multiplie par 100</b>.",
+     exemple:["<b>5</b> = 5 × 10 = <b>50/10</b> = 5 × 100 = <b>500/100</b>"]}),
+  mEx(38, "Lire un nombre décimal sur une demi-droite graduée", 3, 'dec', "Chaque unité est partagée en 10 parts. Écris le nombre décimal avec une virgule.",
+    [mLineDec('A',3,17), mLineDec('B',3,24), mLineDec('C',4,9), mLineDec('D',3,28), mLineDec('E',4,35)],
+    {titre:"Je compte les dixièmes depuis le dernier entier",
+     texte:"Entre deux entiers, il y a 10 graduations, qui valent chacune 1 dixième (0,1). Je repère le dernier entier avant le point, puis je compte combien de graduations je dois encore avancer : le point est à ce nombre de dixièmes après l'entier.",
+     figure:numLine(3,10,[['A',17]]),
+     exemple:["Le point A est après le 1, à 7 graduations de 1 : <b>A = 1,7</b>."]}),
+
+  /* ===== Opérations sur les décimaux ===== */
+  mEx(39, "Additionner des nombres décimaux", 2, 'opdec', "Donne d'abord une estimation (nombres arrondis à l'unité), puis pose l'opération et écris le résultat exact.",
+    [mEstExact('12,6 + 7,85'), mEstExact('34,7 + 5,28'), mEstExact('4,9 + 8,35'), mEstExact('26,45 + 3,7'), mEstExact('56 + 9,08')],
+    {titre:"J'aligne les virgules, puis j'additionne",
+     texte:"Je pose l'addition en mettant <b>virgule sous virgule</b> (unités sous unités, dixièmes sous dixièmes, centièmes sous centièmes). Je complète les places vides avec des zéros, j'additionne comme des entiers, et je mets la virgule dans le résultat.",
+     exemple:["<b>18,4 + 9,7</b> : estimation 18 + 10 = 28 ; résultat exact <b>28,1</b>"]}),
+  mEx(40, "Soustraire des nombres décimaux", 2, 'opdec', "Donne d'abord une estimation (nombres arrondis à l'unité), puis pose l'opération et écris le résultat exact.",
+    [mEstExact('58 − 3,27'), mEstExact('24,5 − 8,76'), mEstExact('90 − 12,4'), mEstExact('15,3 − 9,48'), mEstExact('7 − 2,95')],
+    {titre:"J'aligne les virgules, puis je soustrais",
+     texte:"Même méthode que l'addition : <b>virgule sous virgule</b>, j'ajoute des zéros pour que les deux nombres aient autant de chiffres après la virgule (76 = 76,00), et je soustrais en partant de la droite.",
+     exemple:["<b>76 − 2,34</b> : estimation 76 − 2 = 74 ; résultat exact <b>73,66</b>"]}),
+  mEx(41, "Multiplier un décimal par un entier", 3, 'opdec', "Pose l'opération sur ton cahier ou ton brouillon. Écris le résultat avec une virgule.",
+    ['3,4 × 6','1,25 × 8','2,7 × 5','4,32 × 3','6,15 × 4','2,35 × 9'],
+    {titre:"Je multiplie sans la virgule, puis je la remets",
+     texte:"Je fais comme si la virgule n'existait pas, et je multiplie les deux nombres entiers. Ensuite, je mets la virgule dans le résultat pour qu'il ait <b>autant de chiffres après la virgule</b> que le nombre décimal de départ.",
+     etapes:["Je supprime la virgule : 2,35 devient 235.","Je multiplie : 235 × 9 = 2 115.","Dans 2,35, il y a 2 chiffres après la virgule : j'en mets 2 dans le résultat → 21,15."],
+     astuce:"Je vérifie avec une estimation : 2,35 × 9 est proche de 2 × 9 = 18 (et 21,15 est proche de 18 à quelques unités)."}),
+  mEx(42, "Calculer avec des parenthèses", 2, 'opdec', "Calcule d'abord ce qui est entre parenthèses.",
+    ['6 × (3 + 4)','30 − (12 + 8)','(25 − 5) ÷ 4','8 + (2 × 9)','50 ÷ (2 + 3)','3 × (14 − 9)','(7 + 5) × (9 − 6)'],
+    {titre:"Les parenthèses d'abord",
+     texte:"Dans une suite de calculs avec des parenthèses, je commence toujours par calculer <b>ce qui est entre parenthèses</b>. Ensuite, je fais le reste.",
+     etapes:["Je calcule dans la parenthèse : 9 − 5 = 4.","Je remplace la parenthèse par son résultat : 5 × 4.","Je termine le calcul : 5 × 4 = 20."],
+     exemple:["<b>5 × (9 − 5)</b> = 5 × 4 = <b>20</b>"]}),
+
+  /* ===== Problèmes ===== */
+  mEx(43, "Problèmes en une étape", 2, 'pb', "Pose le calcul sur ton brouillon, puis écris ta réponse. (Écris les nombres décimaux avec une virgule.)",
+    [mItem("Léo a acheté 8 kg de fruits : des pommes et des poires. Il y a 3,5 kg de pommes. Quelle masse de poires a-t-il achetée ? {0} kg", [mfill(8-3.5)]),
+     mItem("Sara mesure 1,43 m. Elle mesure 12 cm de plus que Tom. Quelle est la taille de Tom, en mètres ? {0} m", [mfill(mCalc('1,43 − 0,12'))]),
+     mItem("Le poster de Mia a une aire de 2,15 m². Celui de Noé fait 0,35 m² de plus. Quelle est l'aire du poster de Noé ? {0} m²", [mfill(mCalc('2,15 + 0,35'))]),
+     mItem("Le bidon d'Emma a une contenance de 6,25 L. C'est 1,75 L de moins que le bidon de Hugo. Quelle est la contenance du bidon de Hugo ? {0} L", [mfill(mCalc('6,25 + 1,75'))]),
+     mItem("Lise a construit une bande de papier mesurant 29/10 cm, et Tim une bande mesurant 2 + 7/10 cm. Quelle bande est la plus longue ? {0}", [mcq([{v:'l',l:'Celle de Lise'},{v:'t',l:'Celle de Tim'}],'l')]),
+     mItem("Quel est l'écart de longueur entre les deux bandes de papier de Lise et de Tim ? {0} cm (écris un nombre décimal)", [mfill(mCalc('2,9 − 2,7'))])],
+    {titre:"Je cherche, je calcule, je réponds",
+     texte:"Je lis l'énoncé en entier. Je repère ce que l'on cherche. « De plus » → je pense à une addition ; « de moins » → à une soustraction. Je convertis les unités si besoin (12 cm = 0,12 m).",
+     exemple:["<b>Alexa mesure 1,61 m. Elle mesure 13 cm de plus que Bruno.</b> Bruno mesure moins qu'elle : 1,61 − 0,13 = <b>1,48 m</b>."]}),
+  mEx(44, "Problèmes en deux étapes", 3, 'pb', "Il faut deux calculs. Écris la réponse finale.",
+    [mItem("Zoé achète un cahier à 3,50 €, un stylo à 1,20 € et un classeur à 6,80 €. Combien paie-t-elle en tout ? {0} €", [mfill(mCalc('3,5 + 1,2 + 6,8'))]),
+     mItem("Un sac contient 5 kg de farine. Lina en utilise 1,5 kg, puis 0,75 kg. Combien de kg de farine reste-t-il ? {0} kg", [mfill(mCalc('5 − 1,5 − 0,75'))]),
+     mItem("Paul court 2,4 km le lundi, 1,8 km le mardi et 3,2 km le mercredi. Combien de km a-t-il couru en tout ? {0} km", [mfill(mCalc('2,4 + 1,8 + 3,2'))]),
+     mItem("Maya a 20 €. Elle achète un livre à 12,90 €. Il lui reste de l'argent. Elle voudrait aussi un jeu à 8 €. Combien d'euros lui manque-t-il ? {0} €", [mfill(mCalc('8 − (20 − 12,9)'))])],
+    {titre:"Je découpe le problème en deux petits calculs",
+     texte:"Quand il faut deux calculs, je les fais l'un après l'autre : le résultat du premier calcul sert pour le second. Je peux écrire une phrase pour chaque étape.",
+     exemple:["<b>Maya a 20 €, elle dépense 12,90 €, puis veut un jeu à 8 €.</b> Étape 1 : 20 − 12,90 = 7,10 € (il lui reste). Étape 2 : 8 − 7,10 = <b>0,90 €</b> (il lui manque)."]})
+];
+const M14_EX = M14_MENTAL.concat(M14_OTHER);
+
+/* corrigé : les réponses « figure » sont citées par leur rang */
+function mCorrige(exs){
+  return esCorrige(exs).map((line,i)=>{
+    const ex = exs[i];
+    const svgMcq = ex.items.some(it=>it.parts.some(p=>p.kind==='mcq' && /^<svg/.test(p.options[0].l)));
+    if(!svgMcq) return line;
+    const bits = ex.items.map((it,k)=>{
+      const p = it.parts[0];
+      if(p.kind==='mcq' && /^<svg/.test(p.options[0].l)){
+        const rank = p.options.findIndex(o=>o.v===p.answer)+1;
+        return M_L[k]+') la figure n°'+rank+' (en partant de la gauche)';
+      }
+      return M_L[k]+') '+it.parts.map(q=>displayExpected(q)).join(', ');
+    });
+    return 'Exercice '+ex.num+' ('+ex.titre+') : '+bits.join(' — ')+'.';
+  });
+}
+
 const FICHES = [
 {
   id:1, color:'f1', badge:1, cat:'nougat', title:"Rendre la monnaie",
@@ -3359,6 +3884,14 @@ const FICHES = [
     "Rappel — verbes réguliers : -ar (o, as, a, amos) · -er (o, es, e, emos) · -ir (o, es, e, imos). Irréguliers : tener (tengo, tienes, tiene, tenemos) · jugar (juego, juegas, juega, jugamos) · hay (il y a).",
     "Rappel — mots avec accent : dieciséis, veintidós, veintitrés, veintiséis, cómo, dónde, cuál, cuántos, quién, está, marrón, alemán, francés, papá, mamá, tío, lápiz, pájaro, plátano, sofá, habitación."
   ])
+},
+{
+  id:14, color:'f14', badge:14, cat:'chiffron', title:"Les maths : calcul mental, opérations, fractions et décimaux",
+  eyebrow:"Maths", desc:"Le cahier de maths en une fiche : calcul mental (chaque astuce est expliquée avant l'exercice), multiplications, divisions avec reste, fractions, nombres décimaux et problèmes.",
+  topics: M14_TOPICS,
+  lesson: M14_LESSON,
+  exercises: M14_EX,
+  corrige: mCorrige(M14_EX)
 }
 
 ];
@@ -4165,7 +4698,11 @@ function displayExpected(part){
   if(part.kind==='fraction') return part.num+'/'+part.den;
   if(part.kind==='duration') return part.h+'h'+(part.m<10?'0':'')+part.m;
   if(part.kind==='money') return part.v.toFixed(2).replace('.',',')+' €';
-  if(part.kind==='fill') return String(part.expected).replace('.',',')+(part.unit?(' '+part.unit):'');
+  if(part.kind==='fill'){
+    let t = String(part.expected);
+    if(part.grp){ const q = t.split('.'); q[0] = q[0].replace(/\B(?=(\d{3})+(?!\d))/g,'\u00A0'); t = q.join('.'); }
+    return t.replace('.',',')+(part.unit?(' '+part.unit):'');
+  }
   if(part.kind==='text') return part.expected;
   return '';
 }
@@ -4693,15 +5230,53 @@ function renderParentsHome(){
   const body = document.getElementById('parentsBodyHome');
   body.innerHTML =
     mistakesRecapHtml()+
-    '<p>Les huit fiches couvrent chacune un point à consolider avant le CM1 : rendre la monnaie, lire l’heure, la conjugaison, le compas, le calcul mental, l’espagnol (images à deviner en QCM, salutations, jours, mois, saisons, nombres, alphabet, famille, corps, vêtements, météo, heure), l’espagnol de la Unidad 0 « Lola y Leo » (verbes au présent et vocabulaire, pour l’évaluation écrite du 20 octobre) et la révision des devoirs de la semaine en cours (mots à réviser, dictée, nombres, grammaire, tables… selon ce qui est donné en classe). Chaque fiche commence par une leçon courte (« Je retiens »), puis des exercices du plus facile (★☆☆) au plus difficile (★★★).</p>'+
+    '<p><button type="button" id="exportBilanBtn" class="pin-save-btn">📤 Exporter le bilan (fichier .json)</button> <small>pour le suivi des devoirs avec Claude</small></p>'+
+    '<p>Les neuf fiches couvrent chacune un point à consolider avant le CM1 : rendre la monnaie, lire l’heure, la conjugaison, le compas, le calcul mental, les maths du cahier (calcul mental avec la méthode expliquée avant chaque exercice, multiplications, divisions, fractions, nombres décimaux, problèmes), l’espagnol (images à deviner en QCM, salutations, jours, mois, saisons, nombres, alphabet, famille, corps, vêtements, météo, heure), l’espagnol de la Unidad 0 « Lola y Leo » (verbes au présent et vocabulaire, pour l’évaluation écrite du 20 octobre) et la révision des devoirs de la semaine en cours (mots à réviser, dictée, nombres, grammaire, tables… selon ce qui est donné en classe). Chaque fiche commence par une leçon courte (« Je retiens »), puis des exercices du plus facile (★☆☆) au plus difficile (★★★).</p>'+
     '<p><strong>Conseils :</strong> une fiche par jour suffit (15 minutes) ; laissez Madeline chercher seule après avoir relu « Je retiens » à voix haute ; si les deux derniers exercices d’une fiche restent difficiles, ce n’est pas grave — ils sont volontairement un peu au-dessus du niveau strict.</p>'+
     '<p><strong>Deux mécaniques particulières :</strong> la fiche « Le compas » demande un vrai compas et une feuille de papier — l’énoncé est dans l’application, le tracé (et parfois la mesure au fil d’une règle) se fait à la main, et Madeline coche elle-même si c’est réussi après avoir comparé avec le modèle affiché ; ses derniers exercices font découvrir, cercle après cercle, ce qui se passe quand deux cercles se touchent ou se croisent.</p>'+
     '<p><strong>Dans cette version interactive</strong>, en dehors des séances avec vous, chaque question ne se joue qu’une fois : une réponse fausse ne peut pas être retentée, Madeline est prévenue qu’elle la reverra avec vous. Le récapitulatif ci-dessus liste tout ce qu’il reste à corriger, avec une recommandation par fiche ; chaque fiche se termine désormais par un exercice « 🔁 Entraînement supplémentaire » aux questions inédites, pensé pour rejouer sur les points ratés sans jamais retomber sur une question déjà vue. Le corrigé complet de chaque fiche reste aussi disponible dans l’encadré grisé, en bas de chaque fiche.</p>'+
     '<p><strong>Quand vous travaillez avec elle</strong>, activez le « 👪 Parent » en haut de l’écran (avec le code ci-dessous) pour que Madeline puisse corriger une erreur tout de suite, sans attendre : les questions déjà ratées se rouvrent, et les nouvelles erreurs ne se verrouillent plus tant que le mode est actif.</p>'+
     '<p><strong>Programme de référence :</strong> cycle 2, arrêté du 22 octobre 2024 (JO du 25/10/2024, BO n°41 du 31/10/2024, NOR MENE2415135A), applicable depuis la rentrée 2025.</p>'+
-    '<p>Bon courage à Madeline, et bravo d’avance pour les huit étoiles !</p>'+
+    '<p>Bon courage à Madeline, et bravo d’avance pour les neuf étoiles !</p>'+
     parentPinBoxHtml()+
     parentRequestBoxHtml();
+  const eb = document.getElementById('exportBilanBtn');
+  if(eb) eb.addEventListener('click', exportBilan);
+}
+
+/* Bilan de progression exporté en JSON (lu par la tâche « Bilan des devoirs de Madeline ») */
+function buildBilan(){
+  const mistakes = collectMistakes();
+  return {
+    exportedAt: new Date().toISOString(),
+    totalStars: totalStars(),
+    fiches: FICHES.map(f=>{
+      const st = ficheStats(f);
+      const exercises = f.exercises.map(ex=>{
+        let total=0, resolved=0, correct=0;
+        ex.items.forEach(it=>{
+          const s = state.items[it.id];
+          if(it.custom){ total+=1; if(s&&s.resolved){ resolved+=1; if(s.correct) correct+=1; } return; }
+          total += it.parts.length;
+          if(s&&s.parts) s.parts.forEach(p=>{ if(isPartLocked(p)){ resolved+=1; if(p.status==='resolved-correct') correct+=1; } });
+        });
+        const topic = (f.topics||[]).find(t=>t.id===ex.topic);
+        return {num:ex.num, titre:ex.titre, topic:ex.topic||null, topicLabel:topic?topic.label:null, total, resolved, correct};
+      });
+      return {id:f.id, num:dispNum(f.id), title:f.title, rotating:!!f.rotating, total:st.total, resolved:st.resolved, correct:st.correctCount, stars:st.stars, complete:st.complete, exercises,
+        mistakes: mistakes.filter(m=>m.ficheId===f.id).map(m=>({exNum:m.exNum, text:m.text, correct:m.correct}))};
+    })
+  };
+}
+function exportBilan(){
+  try{
+    const blob = new Blob([JSON.stringify(buildBilan(),null,1)], {type:'application/json'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'bilan-madeline.json';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=>URL.revokeObjectURL(a.href), 2000);
+  }catch(e){ alert("Export impossible : "+e.message); }
 }
 
 /* ============ STARFIELD ============ */
